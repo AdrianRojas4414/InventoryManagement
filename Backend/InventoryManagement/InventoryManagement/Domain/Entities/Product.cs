@@ -1,6 +1,31 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace InventoryManagement.Domain.Entities;
 
-public class Product
+[Table("Product")]
+public class Product : AuditableEntity
 {
+    [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.None)] 
+    public short Id { get; set; }
 
+    [Required]
+    [MaxLength(100)]
+    public string Name { get; set; }
+
+    public string? Description { get; set; }
+
+    public short TotalStock { get; set; }
+
+    // Relación con Category
+    [ForeignKey("Category")]
+    public byte CategoryId { get; set; }
+    public virtual Category Category { get; set; }
+    
+    // Propiedad de navegación: un producto es ofrecido por muchos proveedores
+    public virtual ICollection<SupplierProduct> SupplierProducts { get; set; }
+
+    // Propiedad de navegación: un producto está en muchos detalles de compra
+    public virtual ICollection<PurchaseDetail> PurchaseDetails { get; set; }
 }
