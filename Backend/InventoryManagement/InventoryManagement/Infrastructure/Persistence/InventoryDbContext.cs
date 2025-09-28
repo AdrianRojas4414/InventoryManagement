@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using InventoryManagement.Domain.Entities; 
 
-namespace Infrastructure.Persistence;
+namespace InventoryManagement.Infrastructure.Persistence;
 
 public class InventoryDbContext : DbContext
 {
@@ -18,5 +18,15 @@ public class InventoryDbContext : DbContext
     public DbSet<SupplierProduct> SupplierProducts { get; set; }
     public DbSet<ProductPriceHistory> ProductPriceHistories { get; set; }
 
-    
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<PurchaseDetail>()
+            .HasKey(pd => new { pd.PurchaseId, pd.ProductId });
+
+        modelBuilder.Entity<SupplierProduct>()
+            .HasKey(sp => new { sp.SupplierId, sp.ProductId });
+        
+        modelBuilder.Entity<ProductPriceHistory>()
+            .HasKey(ph => new { ph.ProductId, ph.SupplierId, ph.PurchaseId });
+    }
 }
