@@ -1,11 +1,40 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36518.9 d17.14
+VisualStudioVersion = 17.14.36518.9
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "InventoryManagement", "InventoryManagement", "{E42642A8-2C21-C9FC-D95C-85221AE5E9E5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "InventoryManagement\Infrastructure\Infrastructure.csproj", "{CD7A1198-51E5-4C69-B822-504CC6C5D75E}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CD7A1198-51E5-4C69-B822-504CC6C5D75E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD7A1198-51E5-4C69-B822-504CC6C5D75E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD7A1198-51E5-4C69-B822-504CC6C5D75E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{CD7A1198-51E5-4C69-B822-504CC6C5D75E}.Debug|x64.Build.0 = Debug|Any CPU
+		{CD7A1198-51E5-4C69-B822-504CC6C5D75E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CD7A1198-51E5-4C69-B822-504CC6C5D75E}.Debug|x86.Build.0 = Debug|Any CPU
+		{CD7A1198-51E5-4C69-B822-504CC6C5D75E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD7A1198-51E5-4C69-B822-504CC6C5D75E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD7A1198-51E5-4C69-B822-504CC6C5D75E}.Release|x64.ActiveCfg = Release|Any CPU
+		{CD7A1198-51E5-4C69-B822-504CC6C5D75E}.Release|x64.Build.0 = Release|Any CPU
+		{CD7A1198-51E5-4C69-B822-504CC6C5D75E}.Release|x86.ActiveCfg = Release|Any CPU
+		{CD7A1198-51E5-4C69-B822-504CC6C5D75E}.Release|x86.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CD7A1198-51E5-4C69-B822-504CC6C5D75E} = {E42642A8-2C21-C9FC-D95C-85221AE5E9E5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {05BE9BC2-71D2-4D7C-9DA6-FE9F8E6AE053}
