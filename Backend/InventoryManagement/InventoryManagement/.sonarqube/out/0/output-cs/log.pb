@@ -1,0 +1,1 @@
+Roslyn version: 4.14.0.0Language version: CSharp12!Concurrent execution: enabled√æFile 'C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Application\obj\Debug\net8.0\Application.GlobalUsings.g.cs' was recognized as generated

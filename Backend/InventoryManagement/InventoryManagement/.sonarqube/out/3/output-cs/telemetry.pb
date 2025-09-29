@@ -1,0 +1,1 @@
+‘R{C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\InventoryManagement.csproj¢net8.0òCSharp12
