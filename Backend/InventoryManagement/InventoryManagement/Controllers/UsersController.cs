@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using InventoryManagement.Domain.Entities;
 using InventoryManagement.Infrastructure.Persistence;
 using InventoryManagement.Application.DTOs;
+using Microsoft.EntityFrameworkCore;
 
 [ApiController]
 [Route("api/[controller]")]

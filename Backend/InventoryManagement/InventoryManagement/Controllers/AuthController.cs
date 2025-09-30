@@ -21,7 +21,7 @@ namespace InventoryManagement.Controllers
         {
             if (loginDto == null || string.IsNullOrEmpty(loginDto.Username) || string.IsNullOrEmpty(loginDto.Password))
             {
-                return BadRequest("Usuario o contraseña inválidos.");
+                return BadRequest("Usuario o contrasenia invalidos.");
             }
 
             // Buscar usuario por nombre de usuario
@@ -32,11 +32,11 @@ namespace InventoryManagement.Controllers
                 return Unauthorized("Usuario no encontrado.");
             }
 
-            // Validación simple de contraseña
-            // En producción, aquí deberías comparar con un hash seguro
+            // Validacion simple de contrasenia
+            // En produccion, aqui deberias comparar con un hash seguro
             if (user.PasswordHash != loginDto.Password)
             {
-                return Unauthorized("Contraseña incorrecta.");
+                return Unauthorized("Contrasenia incorrecta.");
             }
 
             Response.Cookies.Append("UserId", user.Id.ToString(), new CookieOptions { HttpOnly = true });
