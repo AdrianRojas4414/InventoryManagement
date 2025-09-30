@@ -1,0 +1,1 @@
+‹RuC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Domain.csproj¢net8.0òCSharp12

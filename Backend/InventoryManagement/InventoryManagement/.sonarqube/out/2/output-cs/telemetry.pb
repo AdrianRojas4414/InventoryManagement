@@ -1,0 +1,1 @@
+œR…C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Infrastructure\Infrastructure.csproj¢net8.0òCSharp12
