@@ -1,83 +1,45 @@
-﻿using Application.DTOs;
-using Application.Interfaces;
-using Domain.Entities;
-using Microsoft.AspNetCore.Mvc;
+using InventoryManagement.Application.Interfaces;
+using InventoryManagement.Domain.Entities;
+using InventoryManagement.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
-namespace Controllers
+namespace InventoryManagement.Infrastructure.Persistence.Repositories
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class UsersController : ControllerBase
+    public class UserRepository : IUserRepository
     {
-        private readonly IUserRepository _userRepository;
+        private readonly InventoryDbContext _context;
 
-        public UsersController(IUserRepository userRepository)
+        public UserRepository(InventoryDbContext context)
         {
-            _userRepository = userRepository;
+            _context = context;
         }
 
-        // GET: api/users
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserDto>>> GetAllUsers()
+        public async Task<User?> GetByUsernameAsync(string username)
         {
-            var users = await _userRepository.GetAllAsync();
-
-            return Ok(users.Select(u => new UserDto
-            {
-                Id = u.Id,
-                Username = u.Username,
-                Role = u.Role,
-                IsActive = u.IsActive
-            }));
+            return await _context.Users
+                                 .FirstOrDefaultAsync(u => u.Username == username);
         }
 
-        // POST: api/users
-        [HttpPost]
-        public async Task<ActionResult<UserDto>> CreateUser([FromBody] UserDto dto)
+        public async Task AddUserAsync(User user)
         {
-            var user = new User
-            {
-                Username = dto.Username,
-                PasswordHash = "TEMP_HASH", // TODO: encrypt password properly
-                Role = dto.Role,
-                IsActive = dto.IsActive,
-                CreationDate = DateTime.UtcNow,
-                ModificationDate = DateTime.UtcNow
-            };
-
-            var created = await _userRepository.AddAsync(user);
-
-            return Ok(new UserDto
-            {
-                Id = created.Id,
-                Username = created.Username,
-                Role = created.Role,
-                IsActive = created.IsActive
-            });
+            await _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync();
         }
 
-        // PATCH: api/users/{id}/deactivate
-        [HttpPatch("{id}/deactivate")]
-        public async Task<IActionResult> DeactivateUser(ushort id)
+        public async Task UpdateUserAsync(User user)
         {
-            var success = await _userRepository.DeactivateAsync(id);
-
-            if (!success)
-                return NotFound(new { message = "User not found" });
-
-            return Ok(new { message = "User deactivated (soft delete)" });
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
         }
 
-        // PATCH: api/users/{id}/activate
-        [HttpPatch("{id}/activate")]
-        public async Task<IActionResult> ActivateUser(ushort id)
+        public async Task<List<User>> GetAllUsersAsync()
         {
-            var success = await _userRepository.ActivateAsync(id);
+            return await _context.Users.ToListAsync();
+        }
 
-            if (!success)
-                return NotFound(new { message = "User not found" });
-
-            return Ok(new { message = "User reactivated" });
+        public async Task<User?> GetByIdAsync(short id)
+        {
+            return await _context.Users.FindAsync(id);
         }
     }
 }
