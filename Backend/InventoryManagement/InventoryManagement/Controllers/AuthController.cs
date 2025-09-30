@@ -39,6 +39,9 @@ namespace InventoryManagement.Controllers
                 return Unauthorized("Contraseña incorrecta.");
             }
 
+            Response.Cookies.Append("UserId", user.Id.ToString(), new CookieOptions { HttpOnly = true });
+            Response.Cookies.Append("UserRole", user.Role, new CookieOptions { HttpOnly = true });
+
             // Preparar respuesta con datos del usuario
             var response = new LoginResponseDto
             {
