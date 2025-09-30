@@ -1,5 +1,5 @@
 ﻿using InventoryManagement.Domain.Entities;
-namespace InventoryManagement.Application.Interfaces
+namespace InventoryManagement.Application.Interfaces;
 public interface IUserRepository
 {
     Task<User?> GetByUsernameAsync(string username);

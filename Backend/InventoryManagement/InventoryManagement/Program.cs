@@ -1,5 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using InventoryManagement.Infrastructure.Persistence;
+using InventoryManagement.Application.Interfaces;
+using InventoryManagement.Infrastructure.Repositories;
+using InventoryManagement.Application.Interfaces;
+using InventoryManagement.Infrastructure.Repositories;
 using DotNetEnv; 
 using System.IO;
 // using MySql.EntityFrameworkCore;
@@ -21,6 +25,8 @@ builder.Services.AddDbContext<InventoryDbContext>(options =>
 );
 
 // Add services to the container.
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
