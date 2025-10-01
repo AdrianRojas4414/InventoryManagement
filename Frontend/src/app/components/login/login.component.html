@@ -15,8 +15,12 @@
       </button>
     </mat-form-field>
 
-    <button mat-raised-button color="primary" type="submit" [disabled]="!loginForm.form.valid">Ingresar</button>
+    <button mat-raised-button color="primary" type="submit" class="full-width">
+        Ingresar
+    </button>
+    @if (error) {
+        <p class="error">{{ error }}</p>
+    }
 
-    <p *ngIf="error" class="error">{{ error }}</p>
   </form>
 </div>

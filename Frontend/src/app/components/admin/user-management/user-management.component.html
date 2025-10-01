@@ -1,0 +1,74 @@
+<h2>Administrar Empleados</h2>
+
+<!-- Botón para mostrar el formulario -->
+<button mat-raised-button color="primary" (click)="toggleForm()">
+  {{ showForm ? 'Cancelar' : 'Agregar Empleado' }}
+</button>
+
+<!-- Formulario para nuevo empleado -->
+<div *ngIf="showForm" class="form-container">
+  <form (ngSubmit)="crear()" #empleadoForm="ngForm">
+    <mat-form-field>
+      <mat-label>Usuario</mat-label>
+      <input matInput [(ngModel)]="nuevo.username" name="username" required />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Contraseña</mat-label>
+      <input matInput [(ngModel)]="nuevo.password" name="password" required type="password" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Nombre</mat-label>
+      <input matInput [(ngModel)]="nuevo.firstName" name="firstName" required />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Apellido</mat-label>
+      <input matInput [(ngModel)]="nuevo.lastName" name="lastName" required />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Segundo Apellido</mat-label>
+      <input matInput [(ngModel)]="nuevo.secondLastName" name="secondLastName" />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Rol</mat-label>
+      <select matNativeControl [(ngModel)]="nuevo.role" name="role" required>
+        <option value="Admin">Admin</option>
+        <option value="User">User</option>
+      </select>
+    </mat-form-field>
+
+    <button mat-raised-button color="accent" type="submit" [disabled]="!empleadoForm.form.valid">
+      Guardar
+    </button>
+  </form>
+</div>
+
+<!-- Lista de empleados -->
+<table class="empleados-table">
+  <thead>
+    <tr>
+      <th>Usuario</th>
+      <th>Nombre</th>
+      <th>Apellido</th>
+      <th>Rol</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let e of empleados">
+      <td>{{e.username}}</td>
+      <td>{{e.firstName}}</td>
+      <td>{{e.lastName}}</td>
+      <td>{{e.role}}</td>
+      <td>
+        <button mat-stroked-button color="warn" (click)="eliminar(e.id)">Eliminar</button>
+        <button mat-stroked-button color="accent" (click)="cambiarRol(e,'Admin')">Hacer Admin</button>
+        <button mat-stroked-button color="accent" (click)="cambiarRol(e,'User')">Hacer User</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
