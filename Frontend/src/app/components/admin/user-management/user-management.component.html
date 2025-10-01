@@ -1,74 +1,95 @@
-<h2>Administrar Empleados</h2>
+<div class="header">
+  <h1>User Management</h1>
+  <p class="subtitle">Manage employees, assign roles, and control access</p>
+  <button mat-raised-button color="primary" (click)="toggleForm()">
+    <mat-icon>{{ showForm ? 'close' : 'person_add' }}</mat-icon>
+    {{ showForm ? 'Cancel' : 'Add User' }}
+  </button>
+</div>
 
-<!-- Botón para mostrar el formulario -->
-<button mat-raised-button color="primary" (click)="toggleForm()">
-  {{ showForm ? 'Cancelar' : 'Agregar Empleado' }}
-</button>
-
-<!-- Formulario para nuevo empleado -->
-<div *ngIf="showForm" class="form-container">
-  <form (ngSubmit)="crear()" #empleadoForm="ngForm">
-    <mat-form-field>
-      <mat-label>Usuario</mat-label>
-      <input matInput [(ngModel)]="nuevo.username" name="username" required />
+<!-- Form section -->
+<div *ngIf="showForm" class="card form-card">
+  <form (ngSubmit)="createUser()" #userForm="ngForm" class="form-grid">
+    <mat-form-field appearance="outline">
+      <mat-label>Username</mat-label>
+      <input matInput [(ngModel)]="newUser.username" name="username" required />
     </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Contraseña</mat-label>
-      <input matInput [(ngModel)]="nuevo.password" name="password" required type="password" />
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input matInput [(ngModel)]="newUser.password" name="password" required type="password" />
     </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Nombre</mat-label>
-      <input matInput [(ngModel)]="nuevo.firstName" name="firstName" required />
+    <mat-form-field appearance="outline">
+      <mat-label>First Name</mat-label>
+      <input matInput [(ngModel)]="newUser.firstName" name="firstName" required />
     </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Apellido</mat-label>
-      <input matInput [(ngModel)]="nuevo.lastName" name="lastName" required />
+    <mat-form-field appearance="outline">
+      <mat-label>Last Name</mat-label>
+      <input matInput [(ngModel)]="newUser.lastName" name="lastName" required />
     </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Segundo Apellido</mat-label>
-      <input matInput [(ngModel)]="nuevo.secondLastName" name="secondLastName" />
+    <mat-form-field appearance="outline">
+      <mat-label>Second Last Name</mat-label>
+      <input matInput [(ngModel)]="newUser.secondLastName" name="secondLastName" />
     </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>Rol</mat-label>
-      <select matNativeControl [(ngModel)]="nuevo.role" name="role" required>
-        <option value="Admin">Admin</option>
-        <option value="User">User</option>
-      </select>
+    <mat-form-field appearance="outline">
+      <mat-label>Role</mat-label>
+      <mat-select [(ngModel)]="newUser.role" name="role" required>
+        <mat-option value="Admin">Admin</mat-option>
+        <mat-option value="Employee">Employee</mat-option>
+        <mat-option value="User">User</mat-option>
+      </mat-select>
     </mat-form-field>
 
-    <button mat-raised-button color="accent" type="submit" [disabled]="!empleadoForm.form.valid">
-      Guardar
-    </button>
+    <div class="form-actions">
+      <button mat-raised-button color="accent" type="submit" [disabled]="!userForm.form.valid">
+        Save
+      </button>
+    </div>
   </form>
 </div>
 
-<!-- Lista de empleados -->
-<table class="empleados-table">
-  <thead>
-    <tr>
-      <th>Usuario</th>
-      <th>Nombre</th>
-      <th>Apellido</th>
-      <th>Rol</th>
-      <th>Acciones</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let e of empleados">
-      <td>{{e.username}}</td>
-      <td>{{e.firstName}}</td>
-      <td>{{e.lastName}}</td>
-      <td>{{e.role}}</td>
-      <td>
-        <button mat-stroked-button color="warn" (click)="eliminar(e.id)">Eliminar</button>
-        <button mat-stroked-button color="accent" (click)="cambiarRol(e,'Admin')">Hacer Admin</button>
-        <button mat-stroked-button color="accent" (click)="cambiarRol(e,'User')">Hacer User</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<!-- Users table -->
+<div class="card">
+  <table class="custom-table">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Role</th>
+        <th class="actions">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let u of users">
+        <td>{{ u.username }}</td>
+        <td>{{ u.firstName }}</td>
+        <td>{{ u.lastName }}</td>
+        <td>
+          <span class="badge" [ngClass]="{
+            'badge-admin': u.role === 'Admin',
+            'badge-employee': u.role === 'Employee',
+            'badge-user': u.role === 'User'
+          }">
+            {{ u.role }}
+          </span>
+        </td>
+        <td class="actions">
+          <button mat-stroked-button color="warn" (click)="deleteUser(u.id)">
+            Delete
+          </button>
+          <button mat-stroked-button color="primary" (click)="updateRole(u,'Admin')">
+            Make Admin
+          </button>
+          <button mat-stroked-button color="accent" (click)="updateRole(u,'User')">
+            Make User
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

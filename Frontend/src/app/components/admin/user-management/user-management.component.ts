@@ -4,20 +4,30 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
 import { UsersService, User, CreateUserDto } from '../../../services/users.service';
 
 @Component({
   selector: 'app-user-management',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatButtonModule, MatInputModule, MatFormFieldModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatButtonModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatSelectModule
+  ],
   templateUrl: './user-management.component.html',
   styleUrls: ['./user-management.component.css']
 })
-export class UserManagementComponent  implements OnInit {
-  empleados: User[] = [];
+export class UserManagementComponent implements OnInit {
+  users: User[] = [];
   showForm = false;
 
-  nuevo: CreateUserDto = {
+  newUser: CreateUserDto = {
     username: '',
     password: '',
     firstName: '',
@@ -26,33 +36,33 @@ export class UserManagementComponent  implements OnInit {
     role: 'User'
   };
 
-  constructor(private empleadosService: UsersService) {}
+  constructor(private usersService: UsersService) {}
 
   ngOnInit(): void {
-    this.load();
+    this.loadUsers();
   }
 
-  load() {
-    this.empleadosService.list().subscribe(data => (this.empleados = data));
+  loadUsers() {
+    this.usersService.list().subscribe(data => (this.users = data));
   }
 
   toggleForm() {
     this.showForm = !this.showForm;
   }
 
-  crear() {
-    this.empleadosService.create(this.nuevo).subscribe(() => {
-      this.load();
-      this.nuevo = { username: '', password: '', firstName: '', lastName: '', secondLastName: '', role: 'User' };
+  createUser() {
+    this.usersService.create(this.newUser).subscribe(() => {
+      this.loadUsers();
+      this.newUser = { username: '', password: '', firstName: '', lastName: '', secondLastName: '', role: 'User' };
       this.showForm = false;
     });
   }
 
-  eliminar(id: number) {
-    this.empleadosService.remove(id).subscribe(() => this.load());
+  deleteUser(id: number) {
+    this.usersService.remove(id).subscribe(() => this.loadUsers());
   }
 
-  cambiarRol(u: User, rol: string) {
-    this.empleadosService.updateRole(u.id, rol).subscribe(() => this.load());
+  updateRole(user: User, role: string) {
+    this.usersService.updateRole(user.id, role).subscribe(() => this.loadUsers());
   }
 }
