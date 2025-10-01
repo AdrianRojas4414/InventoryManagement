@@ -2,21 +2,19 @@ using Microsoft.EntityFrameworkCore;
 using InventoryManagement.Infrastructure.Persistence;
 using InventoryManagement.Application.Interfaces;
 using InventoryManagement.Infrastructure.Repositories;
-using InventoryManagement.Application.Interfaces;
-using InventoryManagement.Infrastructure.Repositories;
-using DotNetEnv; 
+using DotNetEnv;
 using System.IO;
-// using MySql.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Cargar variables de entorno
 Env.Load(Path.Combine(Directory.GetCurrentDirectory(), "..", ".env"));
 
 // Construye la cadena de conexión
 var dbHost = "localhost";
 var dbName = "inventorymanagementdb";
-var dbUser = Env.GetString("DB_USER"); 
-var dbPass = Env.GetString("DB_PASSWORD"); 
+var dbUser = Env.GetString("DB_USER");
+var dbPass = Env.GetString("DB_PASSWORD");
 
 var connectionString = $"Server={dbHost};Database={dbName};User={dbUser};Password={dbPass};";
 
@@ -24,25 +22,41 @@ builder.Services.AddDbContext<InventoryDbContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
 );
 
-// Add services to the container.
+// Repositorios
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
 
+// Controllers y Swagger
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Configuración de CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngular",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod()
+                  .AllowCredentials();
+        });
+});
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Swagger solo en desarrollo
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
+// Redirección HTTPS
 app.UseHttpsRedirection();
+
+app.UseCors("AllowAngular");
 
 app.UseAuthorization();
 
