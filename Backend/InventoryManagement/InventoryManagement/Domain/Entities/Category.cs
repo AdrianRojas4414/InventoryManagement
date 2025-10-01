@@ -11,10 +11,10 @@ public class Category : AuditableEntity
 
     [Required]
     [MaxLength(50)]
-    public string Name { get; set; }
+    public string? Name { get; set; }
 
     public string? Description { get; set; }
 
     // Propiedad de navegación: una categoría tiene muchos productos
-    public virtual ICollection<Product> Products { get; set; }
+    public required virtual ICollection<Product> Products { get; set; }
 }

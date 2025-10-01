@@ -17,7 +17,7 @@ namespace InventoryManagement.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
+        public async Task<IActionResult> Login([FromBody] InventoryManagement.Application.DTOs.LoginDto loginDto)
         {
             if (loginDto == null || string.IsNullOrEmpty(loginDto.Username) || string.IsNullOrEmpty(loginDto.Password))
             {
@@ -39,8 +39,8 @@ namespace InventoryManagement.Controllers
                 return Unauthorized("Contrasenia incorrecta.");
             }
 
-            Response.Cookies.Append("UserId", user.Id.ToString(), new CookieOptions { HttpOnly = true });
-            Response.Cookies.Append("UserRole", user.Role, new CookieOptions { HttpOnly = true });
+            Response.Cookies.Append("UserId", user.Id.ToString(), new CookieOptions { HttpOnly = true, Secure = true });
+            Response.Cookies.Append("UserRole", user.Role, new CookieOptions { HttpOnly = true, Secure = true });
 
             // Preparar respuesta con datos del usuario
             var response = new LoginResponseDto

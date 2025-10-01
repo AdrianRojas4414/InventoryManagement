@@ -4,6 +4,8 @@ using InventoryManagement.Domain.Entities;
 using InventoryManagement.Application.DTOs;
 using Microsoft.EntityFrameworkCore; 
 
+namespace InventoryManagement.Controllers;
+
 [ApiController]
 [Route("api/[controller]")]
 public class SuppliersController : ControllerBase

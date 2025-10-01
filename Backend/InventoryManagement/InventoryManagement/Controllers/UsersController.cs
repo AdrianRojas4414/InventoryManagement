@@ -4,11 +4,14 @@ using InventoryManagement.Infrastructure.Persistence;
 using InventoryManagement.Application.DTOs;
 using Microsoft.EntityFrameworkCore;
 
+namespace InventoryManagement.Controllers;
+
 [ApiController]
 [Route("api/[controller]")]
 public class UsersController : ControllerBase
 {
     private readonly InventoryDbContext _context;
+    private const string AdminRole = "Admin";
 
     // El DbContext se inyecta gracias a la configuración en Program.cs
     public UsersController(InventoryDbContext context)
@@ -19,7 +22,7 @@ public class UsersController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateUser([FromBody] CreateUserDto userDto, [FromHeader] string userRole)
     {
-        if (userRole != "Admin")
+        if (userRole != AdminRole)
         {
             return Forbid("Solo administradores pueden crear usuarios.");
         }
@@ -31,13 +34,13 @@ public class UsersController : ControllerBase
 
         var newUser = new User
         {
-            Username = userDto.Username,
+            Username = userDto.Username!,
             // falta hashear la contraseña
-            PasswordHash = userDto.Password,
-            FirstName = userDto.FirstName,
-            LastName = userDto.LastName,
+            PasswordHash = userDto.Password!,
+            FirstName = userDto.FirstName!,
+            LastName = userDto.LastName!,
             SecondLastName = userDto.SecondLastName,
-            Role = userDto.Role,
+            Role = userDto.Role!,
             Status = 1,
             CreationDate = DateTime.UtcNow,
             ModificationDate = DateTime.UtcNow,
@@ -52,7 +55,7 @@ public class UsersController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeactivateUser(short id, [FromHeader] string userRole)
     {
-        if (userRole != "Admin")
+        if (userRole != AdminRole)
             return Forbid("Solo administradores pueden dar de baja usuarios.");
 
         var user = await _context.Users.FindAsync(id);
@@ -71,11 +74,18 @@ public class UsersController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateUser(short id, [FromBody] CreateUserDto userDto, [FromHeader] string userRole)
     {
-        if (userRole != "Admin")
+        if (userRole != AdminRole)
             return Forbid("Solo administradores pueden actualizar usuarios.");
+
+        if (userDto == null)
+            return BadRequest("Los datos del usuario son requeridos.");
+
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
 
         var user = await _context.Users.FindAsync(id);
         if (user == null) return NotFound("Usuario no encontrado.");
+
 
         user.Username = userDto.Username;
         user.FirstName = userDto.FirstName;
@@ -94,7 +104,7 @@ public class UsersController : ControllerBase
     public async Task<IActionResult> UpdateUserRole(short id, [FromBody] string newRole)
     {
         var userRole = Request.Cookies["UserRole"];
-        if (userRole != "Admin") return Forbid("Solo administradores pueden cambiar roles.");
+        if (userRole != AdminRole) return Forbid("Solo administradores pueden cambiar roles.");
 
         var user = await _context.Users.FindAsync(id);
         if (user == null) return NotFound("Usuario no encontrado.");

@@ -14,118 +14,19 @@
         {
           "ruleId": "CS8618",
           "level": "warning",
-          "message": "Non-nullable property 'Username' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "message": "Non-nullable property 'Products' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/Adrian/source/repos/InventoryManagement/Backend/InventoryManagement/InventoryManagement/Application/DTOs/CreateUserDto.cs",
-                "region": {
-                  "startLine": 5,
-                  "startColumn": 19,
-                  "endLine": 5,
-                  "endColumn": 27
-                }
-              }
-            }
-          ],
-          "relatedLocations": [
-            {
-              "physicalLocation": {
-                "uri": "file:///C:/Users/Adrian/source/repos/InventoryManagement/Backend/InventoryManagement/InventoryManagement/Application/DTOs/CreateUserDto.cs",
-                "region": {
-                  "startLine": 5,
-                  "startColumn": 19,
-                  "endLine": 5,
-                  "endColumn": 27
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CS8618",
-          "level": "warning",
-          "message": "Non-nullable property 'Password' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/Adrian/source/repos/InventoryManagement/Backend/InventoryManagement/InventoryManagement/Application/DTOs/CreateUserDto.cs",
-                "region": {
-                  "startLine": 6,
-                  "startColumn": 19,
-                  "endLine": 6,
-                  "endColumn": 27
-                }
-              }
-            }
-          ],
-          "relatedLocations": [
-            {
-              "physicalLocation": {
-                "uri": "file:///C:/Users/Adrian/source/repos/InventoryManagement/Backend/InventoryManagement/InventoryManagement/Application/DTOs/CreateUserDto.cs",
-                "region": {
-                  "startLine": 6,
-                  "startColumn": 19,
-                  "endLine": 6,
-                  "endColumn": 27
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CS8618",
-          "level": "warning",
-          "message": "Non-nullable property 'FirstName' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/Adrian/source/repos/InventoryManagement/Backend/InventoryManagement/InventoryManagement/Application/DTOs/CreateUserDto.cs",
-                "region": {
-                  "startLine": 7,
-                  "startColumn": 19,
-                  "endLine": 7,
-                  "endColumn": 28
-                }
-              }
-            }
-          ],
-          "relatedLocations": [
-            {
-              "physicalLocation": {
-                "uri": "file:///C:/Users/Adrian/source/repos/InventoryManagement/Backend/InventoryManagement/InventoryManagement/Application/DTOs/CreateUserDto.cs",
-                "region": {
-                  "startLine": 7,
-                  "startColumn": 19,
-                  "endLine": 7,
-                  "endColumn": 28
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
-          "ruleId": "CS8618",
-          "level": "warning",
-          "message": "Non-nullable property 'LastName' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/Adrian/source/repos/InventoryManagement/Backend/InventoryManagement/InventoryManagement/Application/DTOs/CreateUserDto.cs",
+                "uri": "file:///C:/Users/Adrian/source/repos/InventoryManagement/Backend/InventoryManagement/InventoryManagement/Infrastructure/Persistence/InventoryDbContext.cs",
                 "region": {
                   "startLine": 8,
-                  "startColumn": 19,
+                  "startColumn": 12,
                   "endLine": 8,
-                  "endColumn": 27
+                  "endColumn": 30
                 }
               }
             }
@@ -133,12 +34,12 @@
           "relatedLocations": [
             {
               "physicalLocation": {
-                "uri": "file:///C:/Users/Adrian/source/repos/InventoryManagement/Backend/InventoryManagement/InventoryManagement/Application/DTOs/CreateUserDto.cs",
+                "uri": "file:///C:/Users/Adrian/source/repos/InventoryManagement/Backend/InventoryManagement/InventoryManagement/Infrastructure/Persistence/InventoryDbContext.cs",
                 "region": {
-                  "startLine": 8,
-                  "startColumn": 19,
-                  "endLine": 8,
-                  "endColumn": 27
+                  "startLine": 11,
+                  "startColumn": 27,
+                  "endLine": 11,
+                  "endColumn": 35
                 }
               }
             }
@@ -150,16 +51,19 @@
         {
           "ruleId": "CS8618",
           "level": "warning",
-          "message": "Non-nullable property 'Role' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "message": "Non-nullable property 'Suppliers' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/Adrian/source/repos/InventoryManagement/Backend/InventoryManagement/InventoryManagement/Application/DTOs/CreateUserDto.cs",
+                "uri": "file:///C:/Users/Adrian/source/repos/InventoryManagement/Backend/InventoryManagement/InventoryManagement/Infrastructure/Persistence/InventoryDbContext.cs",
                 "region": {
-                  "startLine": 10,
-                  "startColumn": 19,
-                  "endLine": 10,
-                  "endColumn": 23
+                  "startLine": 8,
+                  "startColumn": 12,
+                  "endLine": 8,
+                  "endColumn": 30
                 }
               }
             }
@@ -167,12 +71,255 @@
           "relatedLocations": [
             {
               "physicalLocation": {
-                "uri": "file:///C:/Users/Adrian/source/repos/InventoryManagement/Backend/InventoryManagement/InventoryManagement/Application/DTOs/CreateUserDto.cs",
+                "uri": "file:///C:/Users/Adrian/source/repos/InventoryManagement/Backend/InventoryManagement/InventoryManagement/Infrastructure/Persistence/InventoryDbContext.cs",
                 "region": {
-                  "startLine": 10,
-                  "startColumn": 19,
-                  "endLine": 10,
-                  "endColumn": 23
+                  "startLine": 12,
+                  "startColumn": 28,
+                  "endLine": 12,
+                  "endColumn": 37
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'Categories' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/Adrian/source/repos/InventoryManagement/Backend/InventoryManagement/InventoryManagement/Infrastructure/Persistence/InventoryDbContext.cs",
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 12,
+                  "endLine": 8,
+                  "endColumn": 30
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/Adrian/source/repos/InventoryManagement/Backend/InventoryManagement/InventoryManagement/Infrastructure/Persistence/InventoryDbContext.cs",
+                "region": {
+                  "startLine": 13,
+                  "startColumn": 28,
+                  "endLine": 13,
+                  "endColumn": 38
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'Users' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/Adrian/source/repos/InventoryManagement/Backend/InventoryManagement/InventoryManagement/Infrastructure/Persistence/InventoryDbContext.cs",
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 12,
+                  "endLine": 8,
+                  "endColumn": 30
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/Adrian/source/repos/InventoryManagement/Backend/InventoryManagement/InventoryManagement/Infrastructure/Persistence/InventoryDbContext.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 24,
+                  "endLine": 14,
+                  "endColumn": 29
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'Purchases' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/Adrian/source/repos/InventoryManagement/Backend/InventoryManagement/InventoryManagement/Infrastructure/Persistence/InventoryDbContext.cs",
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 12,
+                  "endLine": 8,
+                  "endColumn": 30
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/Adrian/source/repos/InventoryManagement/Backend/InventoryManagement/InventoryManagement/Infrastructure/Persistence/InventoryDbContext.cs",
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 28,
+                  "endLine": 15,
+                  "endColumn": 37
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'PurchaseDetails' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/Adrian/source/repos/InventoryManagement/Backend/InventoryManagement/InventoryManagement/Infrastructure/Persistence/InventoryDbContext.cs",
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 12,
+                  "endLine": 8,
+                  "endColumn": 30
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/Adrian/source/repos/InventoryManagement/Backend/InventoryManagement/InventoryManagement/Infrastructure/Persistence/InventoryDbContext.cs",
+                "region": {
+                  "startLine": 17,
+                  "startColumn": 34,
+                  "endLine": 17,
+                  "endColumn": 49
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'SupplierProducts' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/Adrian/source/repos/InventoryManagement/Backend/InventoryManagement/InventoryManagement/Infrastructure/Persistence/InventoryDbContext.cs",
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 12,
+                  "endLine": 8,
+                  "endColumn": 30
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/Adrian/source/repos/InventoryManagement/Backend/InventoryManagement/InventoryManagement/Infrastructure/Persistence/InventoryDbContext.cs",
+                "region": {
+                  "startLine": 18,
+                  "startColumn": 35,
+                  "endLine": 18,
+                  "endColumn": 51
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "CS8618",
+          "level": "warning",
+          "message": "Non-nullable property 'ProductPriceHistories' must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring the property as nullable.",
+          "suppressionStates": [
+            "suppressedInSource"
+          ],
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/Adrian/source/repos/InventoryManagement/Backend/InventoryManagement/InventoryManagement/Infrastructure/Persistence/InventoryDbContext.cs",
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 12,
+                  "endLine": 8,
+                  "endColumn": 30
+                }
+              }
+            }
+          ],
+          "relatedLocations": [
+            {
+              "physicalLocation": {
+                "uri": "file:///C:/Users/Adrian/source/repos/InventoryManagement/Backend/InventoryManagement/InventoryManagement/Infrastructure/Persistence/InventoryDbContext.cs",
+                "region": {
+                  "startLine": 19,
+                  "startColumn": 39,
+                  "endLine": 19,
+                  "endColumn": 60
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S2068",
+          "level": "warning",
+          "message": "\"password\" detected here, make sure this is not a hard-coded credential.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/Adrian/source/repos/InventoryManagement/Backend/InventoryManagement/InventoryManagement/appsettings.json",
+                "region": {
+                  "startLine": 3,
+                  "startColumn": 27,
+                  "endLine": 3,
+                  "endColumn": 105
                 }
               }
             }
@@ -211,18 +358,60 @@
           }
         },
         {
-          "ruleId": "S2094",
+          "ruleId": "S125",
           "level": "warning",
-          "message": "Remove this empty class, write its code or make it an \"interface\".",
+          "message": "Remove this commented out code.",
           "locations": [
             {
               "resultFile": {
-                "uri": "file:///C:/Users/Adrian/source/repos/InventoryManagement/Backend/InventoryManagement/InventoryManagement/Application/Class1.cs",
+                "uri": "file:///C:/Users/Adrian/source/repos/InventoryManagement/Backend/InventoryManagement/InventoryManagement/Program.cs",
                 "region": {
-                  "startLine": 3,
-                  "startColumn": 14,
-                  "endLine": 3,
-                  "endColumn": 20
+                  "startLine": 7,
+                  "startColumn": 1,
+                  "endLine": 7,
+                  "endColumn": 36
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S4487",
+          "level": "warning",
+          "message": "Remove this unread private field '_logger' or refactor the code to use its value.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/Adrian/source/repos/InventoryManagement/Backend/InventoryManagement/InventoryManagement/Controllers/WeatherForecastController.cs",
+                "region": {
+                  "startLine": 14,
+                  "startColumn": 57,
+                  "endLine": 14,
+                  "endColumn": 64
+                }
+              }
+            }
+          ],
+          "properties": {
+            "warningLevel": 1
+          }
+        },
+        {
+          "ruleId": "S6966",
+          "level": "warning",
+          "message": "Await RunAsync instead.",
+          "locations": [
+            {
+              "resultFile": {
+                "uri": "file:///C:/Users/Adrian/source/repos/InventoryManagement/Backend/InventoryManagement/InventoryManagement/Program.cs",
+                "region": {
+                  "startLine": 49,
+                  "startColumn": 1,
+                  "endLine": 49,
+                  "endColumn": 10
                 }
               }
             }
@@ -234,7 +423,7 @@
         {
           "ruleId": "S3904",
           "level": "warning",
-          "message": "Provide an 'AssemblyVersion' attribute for assembly 'Application'.",
+          "message": "Provide an 'AssemblyVersion' attribute for assembly 'InventoryManagement'.",
           "properties": {
             "warningLevel": 1
           }
@@ -272,6 +461,39 @@
             ]
           }
         },
+        "S125": {
+          "id": "S125",
+          "shortDescription": "Sections of code should not be commented out",
+          "fullDescription": "Commented-out code distracts the focus from the actual executed code. It creates a noise that increases maintenance code. And because it is never executed, it quickly becomes out of date and invalid.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-125",
+          "properties": {
+            "category": "Major Code Smell",
+            "isEnabledByDefault": true,
+            "tags": [
+              "C#",
+              "MainSourceScope",
+              "TestSourceScope",
+              "SonarWay"
+            ]
+          }
+        },
+        "S2068": {
+          "id": "S2068",
+          "shortDescription": "Hard-coded credentials are security-sensitive",
+          "fullDescription": "Because it is easy to extract strings from an application source code or binary, credentials should not be hard-coded. This is particularly true for applications that are distributed or that are open-source.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-2068",
+          "properties": {
+            "category": "Blocker Security Hotspot",
+            "isEnabledByDefault": true,
+            "tags": [
+              "C#",
+              "MainSourceScope",
+              "SonarWay"
+            ]
+          }
+        },
         "S2094": {
           "id": "S2094",
           "shortDescription": "Classes should not be empty",
@@ -301,6 +523,40 @@
             "tags": [
               "C#",
               "MainSourceScope",
+              "SonarWay"
+            ]
+          }
+        },
+        "S4487": {
+          "id": "S4487",
+          "shortDescription": "Unread \"private\" fields should be removed",
+          "fullDescription": "Private fields which are written but never read are a case of \"dead store\". Changing the value of such a field is useless and most probably indicates an error in the code.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-4487",
+          "properties": {
+            "category": "Critical Code Smell",
+            "isEnabledByDefault": true,
+            "tags": [
+              "C#",
+              "MainSourceScope",
+              "TestSourceScope",
+              "SonarWay"
+            ]
+          }
+        },
+        "S6966": {
+          "id": "S6966",
+          "shortDescription": "Awaitable method should be used",
+          "fullDescription": "In an async method, any blocking operations should be avoided.",
+          "defaultLevel": "warning",
+          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-6966",
+          "properties": {
+            "category": "Major Code Smell",
+            "isEnabledByDefault": true,
+            "tags": [
+              "C#",
+              "MainSourceScope",
+              "TestSourceScope",
               "SonarWay"
             ]
           }

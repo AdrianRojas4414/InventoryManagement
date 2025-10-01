@@ -14,7 +14,7 @@ public class ProductPriceHistory
     public DateTime PurchaseDate { get; set; }
     
     // Propiedades de navegación
-    public virtual Product Product { get; set; }
-    public virtual Supplier Supplier { get; set; }
-    public virtual Purchase Purchase { get; set; }
+    public required virtual Product Product { get; set; }
+    public required virtual Supplier Supplier { get; set; }
+    public required virtual Purchase Purchase { get; set; }
 }
