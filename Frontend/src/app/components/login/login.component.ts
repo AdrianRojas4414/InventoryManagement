@@ -35,10 +35,11 @@ export class LoginComponent {
       const role = localStorage.getItem('role');
 
       if (role === 'Admin') {
-        this.router.navigate(['/admin']);
-      } else {
-        this.router.navigate(['/']);
-      }
+      this.router.navigate(['/admin/products']);
+    } else {
+      this.router.navigate(['/']);
+    }
+
     }).catch(err => {
       console.error('Login error:', err);
       this.error = 'Credenciales inválidas o usuario no encontrado';
