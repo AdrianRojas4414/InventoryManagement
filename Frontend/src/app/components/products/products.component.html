@@ -1,61 +1,150 @@
 <div>
-<app-sidebar></app-sidebar>
-<main>
-    <h1>Products</h1>
-    <h2>Manage your product inventory and track stock levels</h2>
-    <button class="add">+ Add Category</button>
-    <button class="add">+ Add Product</button>
-    <div class="table-container">
-    <table class="product-table">
+  <app-sidebar></app-sidebar>
+  <main>
+    <header class="header">
+      <h1>Products</h1>
+      <h2>Manage your product inventory and track stock levels</h2>
+      <div class="actions">
+        <button class="add" (click)="openProductForm()">+ Add Product</button>
+        <button class="add" (click)="openCategoryForm()">+ Add Category</button>
+      </div>
+    </header>
+
+    <ng-container *ngIf="showCategoryForm">
+      <div class="modal-backdrop">
+        <div class="form-card">
+          <h3>{{ editCategoryMode ? 'Edit Category' : 'Add New Category' }}</h3>
+          <form (ngSubmit)="saveCategory()">
+            <div class="form-group">
+              <label for="category-name">Category Name</label>
+              <input id="category-name" [(ngModel)]="currentCategory.name" name="name" required placeholder="Ej: Nombre de la categoría">
+            </div>
+            <div class="form-group">
+              <label for="category-description">Description</label>
+              <input id="category-description" [(ngModel)]="currentCategory.description" name="description" required placeholder="Ej: Descripción de la categoría">
+            </div>
+            <div class="form-actions">
+              <button type="button" class="cancel" (click)="closeFormCategory()">Cancel</button>
+              <button type="submit" class="add">{{ editCategoryMode ? 'Save Changes' : 'Add' }}</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Modal Producto -->
+    <ng-container *ngIf="showProductForm">
+      <div class="modal-backdrop">
+        <div class="form-card">
+          <h3>{{ editProductMode ? 'Edit Product' : 'Add New Product' }}</h3>
+          <form (ngSubmit)="saveProduct()">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="product-name">Product Name</label>
+                <input id="product-name" [(ngModel)]="currentProduct.name" name="name" required>
+              </div>
+              <div class="form-group">
+                <label for="product-description">Description</label>
+                <input id="product-description" [(ngModel)]="currentProduct.description" name="description" required>
+              </div>
+              <div class="form-group">
+                <label for="product-category">Category</label>
+                <select id="product-category" [(ngModel)]="currentProduct.category" name="category" required>
+                  <option *ngFor="let cat of categories" [value]="cat.name">{{ cat.name }}</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="product-stock">Stock</label>
+                <input id="product-stock" type="number" [(ngModel)]="currentProduct.stock" name="stock" required>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="button" class="cancel" (click)="closeForm()">Cancel</button>
+              <button type="submit" class="add">{{ editProductMode ? 'Save Changes' : 'Add Product' }}</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Confirm Disable (Producto) -->
+    <app-confirm-modal
+      *ngIf="disableProductMode"
+      title="Confirm Disable"
+      [message]="'Are you sure you want to disable product (ID: ' + currentProduct.id + ')?'"
+      (onCancel)="closeDisableConfirm()"
+      (onConfirm)="confirmDisableProduct()">
+    </app-confirm-modal>
+
+    <!-- Confirm Disable (Categoría) -->
+    <app-confirm-modal
+      *ngIf="disableCategoryMode"
+      title="Confirm Disable"
+      [message]="'Are you sure you want to disable category ' + currentCategory.name + '?'"
+      (onCancel)="closeDisableConfirmCategory()"
+      (onConfirm)="confirmDisableCategory()">
+    </app-confirm-modal>
+
+    <!-- Tabla Productos -->
+    <section class="table-container">
+      <table class="product-table">
         <thead>
-            <tr>
-                <th>Product ID</th>
-                <th>Product Name</th>
-                <th>Category</th>
-                <th>Current Price</th>
-                <th>Stock</th>
-                <th>Status</th>
-                <th></th> </tr>
+          <tr>
+            <th>ID</th><th>Name</th><th>Category</th><th>Description</th><th>Stock</th><th>Status</th><th></th>
+          </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>001</td>
-                <td>Office Chair Executive</td>
-                <td><span class="category-tag">Furniture</span></td>
-                <td>$110.00</td>
-                <td>45</td>
-                <td><span class="status-tag status-active">ACTIVE</span></td>
-                <td><span class="options-icon">...</span></td>
-            </tr>
-            <tr>
-                <td>002</td>
-                <td>Laptop Stand Adjustable</td>
-                <td><span class="category-tag">Electronics</span></td>
-                <td>$24.99</td>
-                <td><span class="stock-low">5</span></td>
-                <td><span class="status-tag status-desactive">DESACTIVE</span></td>
-                <td><span class="options-icon">...</span></td>
-            </tr>
-            <tr>
-                <td>003</td>
-                <td>Wireless Mouse Ergonomic</td>
-                <td><span class="category-tag">Electronics</span></td>
-                <td>$8.50</td>
-                <td>120</td>
-                <td><span class="status-tag status-active">ACTIVE</span></td>
-                <td><span class="options-icon">...</span></td>
-            </tr>
-            <tr>
-                <td>004</td>
-                <td>Desk Lamp LED</td>
-                <td><span class="category-tag">Electronics</span></td>
-                <td>$35.00</td>
-                <td><span class="stock-out">0</span></td>
-                <td><span class="status-tag status-active">ACTIVE</span></td>
-                <td><span class="options-icon">...</span></td>
-            </tr>
+          <tr *ngFor="let product of products">
+            <td>{{ product.id }}</td>
+            <td>{{ product.name }}</td>
+            <td><span class="category-tag">{{ product.category }}</span></td>
+            <td>{{ product.description | slice:0:30 }}{{ product.description.length > 30 ? '...' : '' }}</td>
+            <td [ngClass]="{
+                'stock-low': product.stock > 0 && product.stock <= 10,
+                'stock-out': product.stock === 0
+            }">{{ product.stock }}</td>
+            <td>
+              <span [ngClass]="product.disabled ? 'status-desactive' : 'status-active'">
+                {{ product.disabled ? 'DESACTIVE' : 'ACTIVE' }}
+              </span>
+            </td>
+            <td class="options-cell">
+              <span class="options-icon" (click)="toggleOptions(product)">...</span>
+              <div class="options-menu" *ngIf="product.showOptions">
+                <button (click)="editProduct(product)">Edit</button>
+                <button (click)="disableProduct(product)">Disable</button>
+              </div>
+            </td>
+          </tr>
         </tbody>
-    </table>
-</div>
-</main>
+      </table>
+    </section>
+
+    <!-- Tabla Categorías -->
+    <section class="table-container">
+      <table class="product-table">
+        <thead>
+          <tr><th>Name</th><th>Description</th><th>Status</th><th></th></tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let category of categories">
+            <td>{{ category.name }}</td>
+            <td>{{ category.description | slice:0:40 }}{{ category.description.length > 40 ? '...' : '' }}</td>
+            <td>
+              <span [ngClass]="category.disabled ? 'status-desactive' : 'status-active'">
+                {{ category.disabled ? 'DESACTIVE' : 'ACTIVE' }}
+              </span>
+            </td>
+            <td class="options-cell">
+              <span class="options-icon" (click)="toggleOptionsCategory(category)">...</span>
+              <div class="options-menu" *ngIf="category.showOptions">
+                <button (click)="editCategory(category)">Edit</button>
+                <button (click)="disableCategory(category)">Disable</button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
 </div>
