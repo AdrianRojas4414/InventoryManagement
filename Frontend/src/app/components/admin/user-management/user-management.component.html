@@ -1,96 +1,100 @@
-<div class="header">
-  <h1>Gestión de Usuarios</h1>
-  <p class="subtitle">Administra empleados, asigna roles y controla accesos</p>
-  <button mat-raised-button color="primary" (click)="toggleForm()">
-    <mat-icon>{{ showForm ? 'close' : 'person_add' }}</mat-icon>
-    {{ showForm ? 'Cancelar' : 'Agregar Usuario' }}
-  </button>
-</div>
-
-<!-- Formulario -->
-<div *ngIf="showForm" class="card form-card">
-  <form (ngSubmit)="createUser()" #userForm="ngForm" class="form-grid">
-    <mat-form-field appearance="outline">
-      <mat-label>Usuario</mat-label>
-      <input matInput [(ngModel)]="newUser.username" name="username" required />
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Contraseña</mat-label>
-      <input matInput [(ngModel)]="newUser.password" name="password" required type="password" />
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Nombre</mat-label>
-      <input matInput [(ngModel)]="newUser.firstName" name="firstName" required />
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Apellido</mat-label>
-      <input matInput [(ngModel)]="newUser.lastName" name="lastName" required />
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Segundo Apellido</mat-label>
-      <input matInput [(ngModel)]="newUser.secondLastName" name="secondLastName" />
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Rol</mat-label>
-      <mat-select [(ngModel)]="newUser.role" name="role" required>
-        <mat-option value="Admin">Administrador</mat-option>
-        <mat-option value="Employee">Empleado</mat-option>
-        <mat-option value="User">Usuario</mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <div class="form-actions">
-      <button mat-raised-button color="accent" type="submit" [disabled]="!userForm.form.valid">
-        Guardar
+<div>
+    <app-sidebar></app-sidebar>
+  <main class="content">
+    <div class="header">
+      <h1>Gestión de Usuarios</h1>
+      <p class="subtitle">Administra empleados, asigna roles y controla accesos</p>
+      <button mat-raised-button color="primary" (click)="toggleForm()">
+        <mat-icon>{{ showForm ? 'close' : 'person_add' }}</mat-icon>
+        {{ showForm ? 'Cancelar' : 'Agregar Usuario' }}
       </button>
     </div>
-  </form>
-</div>
 
-<!-- Tabla de usuarios -->
-<div class="card">
-  <table class="custom-table">
-    <thead>
-      <tr>
-        <th>Usuario</th>
-        <th>Nombre</th>
-        <th>Apellido</th>
-        <th>Rol</th>
-        <th class="actions">Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let u of users">
-        <td>{{ u.username }}</td>
-        <td>{{ u.firstName }}</td>
-        <td>{{ u.lastName }}</td>
-        <td>
-          <span class="badge" [ngClass]="{
-            'badge-admin': u.role === 'Admin',
-            'badge-employee': u.role === 'Employee',
-            'badge-user': u.role === 'User'
-          }">
-            <!-- Mostramos el rol traducido -->
-            {{ u.role === 'Admin' ? 'Administrador' : (u.role === 'Employee' ? 'Empleado' : 'Usuario') }}
-          </span>
-        </td>
-        <td class="actions">
-          <button mat-stroked-button color="warn" (click)="deleteUser(u.id)">
-            Eliminar
+    <!-- Formulario -->
+    <div *ngIf="showForm" class="card form-card">
+      <form (ngSubmit)="createUser()" #userForm="ngForm" class="form-grid">
+        <mat-form-field appearance="outline">
+          <mat-label>Usuario</mat-label>
+          <input matInput [(ngModel)]="newUser.username" name="username" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Contraseña</mat-label>
+          <input matInput [(ngModel)]="newUser.password" name="password" required type="password" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Nombre</mat-label>
+          <input matInput [(ngModel)]="newUser.firstName" name="firstName" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Apellido</mat-label>
+          <input matInput [(ngModel)]="newUser.lastName" name="lastName" required />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Segundo Apellido</mat-label>
+          <input matInput [(ngModel)]="newUser.secondLastName" name="secondLastName" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Rol</mat-label>
+          <mat-select [(ngModel)]="newUser.role" name="role" required>
+            <mat-option value="Admin">Administrador</mat-option>
+            <mat-option value="Employee">Empleado</mat-option>
+            <mat-option value="User">Usuario</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="form-actions">
+          <button mat-raised-button color="accent" type="submit" [disabled]="!userForm.form.valid">
+            Guardar
           </button>
-          <button mat-stroked-button color="primary" (click)="updateRole(u,'Admin')">
-            Hacer Administrador
-          </button>
-          <button mat-stroked-button color="accent" (click)="updateRole(u,'User')">
-            Hacer Usuario
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+        </div>
+      </form>
+    </div>
+
+    <!-- Tabla -->
+    <div class="card">
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>Usuario</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Rol</th>
+            <th class="actions">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let u of users">
+            <td>{{ u.username }}</td>
+            <td>{{ u.firstName }}</td>
+            <td>{{ u.lastName }}</td>
+            <td>
+              <span class="badge" [ngClass]="{
+                'badge-admin': u.role === 'Admin',
+                'badge-employee': u.role === 'Employee',
+                'badge-user': u.role === 'User'
+              }">
+                {{ u.role === 'Admin' ? 'Administrador' : (u.role === 'Employee' ? 'Empleado' : 'Usuario') }}
+              </span>
+            </td>
+            <td class="actions">
+              <button mat-stroked-button color="warn" (click)="deleteUser(u.id)">
+                Eliminar
+              </button>
+              <button mat-stroked-button color="primary" (click)="updateRole(u,'Admin')">
+                Hacer Administrador
+              </button>
+              <button mat-stroked-button color="accent" (click)="updateRole(u,'User')">
+                Hacer Usuario
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
 </div>

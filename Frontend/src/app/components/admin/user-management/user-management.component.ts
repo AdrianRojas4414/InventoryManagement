@@ -7,7 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
 import { UsersService, User, CreateUserDto } from '../../../services/users.service';
-
+import { SidebarComponent } from '../../sidebar/sidebar.component';
 @Component({
   selector: 'app-user-management',
   standalone: true,
@@ -18,7 +18,8 @@ import { UsersService, User, CreateUserDto } from '../../../services/users.servi
     MatInputModule,
     MatFormFieldModule,
     MatIconModule,
-    MatSelectModule
+    MatSelectModule,
+    SidebarComponent
   ],
   templateUrl: './user-management.component.html',
   styleUrls: ['./user-management.component.css']

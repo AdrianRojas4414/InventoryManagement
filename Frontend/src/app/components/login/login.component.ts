@@ -30,20 +30,18 @@ export class LoginComponent {
 
   constructor(private auth: AuthService, private router: Router) {}
 
-  async onSubmit() 
-  {
-    try {
-      await this.auth.login(this.username, this.password);
+  onSubmit() {
+    this.auth.login(this.username, this.password).then(() => {
       const role = localStorage.getItem('role');
+
       if (role === 'Admin') {
-        this.router.navigate(['/admin/user-management']);
+        this.router.navigate(['/admin']);
       } else {
-        // aún no tienes componente employee, así que mejor:
         this.router.navigate(['/']);
       }
-    } catch (err: any) {
-        console.error('Login error:', err);
-        this.error = 'Credenciales inválidas o usuario no encontrado';
-    }
-   }
+    }).catch(err => {
+      console.error('Login error:', err);
+      this.error = 'Credenciales inválidas o usuario no encontrado';
+    });
+  }
 }
