@@ -2,8 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using InventoryManagement.Infrastructure.Persistence;
 using InventoryManagement.Application.Interfaces;
 using InventoryManagement.Infrastructure.Repositories;
-using InventoryManagement.Application.Interfaces;
-using InventoryManagement.Infrastructure.Repositories;
 using DotNetEnv; 
 using System.IO;
 // using MySql.EntityFrameworkCore;

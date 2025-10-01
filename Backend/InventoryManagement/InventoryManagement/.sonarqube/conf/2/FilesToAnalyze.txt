@@ -1,3 +1,0 @@
-﻿C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Infrastructure\Class1.cs
-C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Infrastructure\Persistence\InventoryDbContext.cs
-C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Infrastructure\Repositories\ProductRepository.cs

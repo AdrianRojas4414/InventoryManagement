@@ -12,6 +12,6 @@ public class SupplierProduct : AuditableEntity
     public decimal ProductCost { get; set; }
 
     // Propiedades de navegación
-    public virtual Supplier Supplier { get; set; }
-    public virtual Product Product { get; set; }
+    public required virtual Supplier Supplier { get; set; }
+    public required virtual Product Product { get; set; }
 }
