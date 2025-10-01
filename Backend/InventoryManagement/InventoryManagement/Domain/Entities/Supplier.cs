@@ -11,22 +11,28 @@ public class Supplier : AuditableEntity
 
     [Required]
     [MaxLength(100)]
-    public string Name { get; set; }
+    [Column("name")]
+    public string Name { get; set; } = null!;
 
     [MaxLength(20)]
+    [Column("nit")]
     public string? Nit { get; set; }
 
+    [Column("address")]
     public string? Address { get; set; }
 
     [MaxLength(25)]
+    [Column("phone")]
     public string? Phone { get; set; }
 
     [MaxLength(100)]
+    [Column("email")]
     public string? Email { get; set; }
 
     [MaxLength(100)]
+    [Column("contact_name")]
     public string? ContactName { get; set; }
     
     // Propiedad de navegación: un proveedor ofrece muchos productos
-    public virtual ICollection<SupplierProduct> SupplierProducts { get; set; }
+    public virtual ICollection<SupplierProduct> SupplierProducts { get; set; } = new List<SupplierProduct>();
 }

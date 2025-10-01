@@ -3,7 +3,7 @@ using InventoryManagement.Domain.Entities;
 using InventoryManagement.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
-namespace InventoryManagement.Infrastructure.Persistence.Repositories
+namespace InventoryManagement.Infrastructure.Repositories
 {
     public class UserRepository : IUserRepository
     {
