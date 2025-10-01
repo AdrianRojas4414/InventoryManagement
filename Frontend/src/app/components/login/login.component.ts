@@ -11,7 +11,14 @@ import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatIconModule
+  ],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
@@ -23,17 +30,20 @@ export class LoginComponent {
 
   constructor(private auth: AuthService, private router: Router) {}
 
-  async onSubmit() {
+  async onSubmit() 
+  {
     try {
       await this.auth.login(this.username, this.password);
       const role = localStorage.getItem('role');
       if (role === 'Admin') {
-        this.router.navigate(['/admin/employee']);
+        this.router.navigate(['/admin/user-management']);
       } else {
-        this.router.navigate(['/employee']);
+        // aún no tienes componente employee, así que mejor:
+        this.router.navigate(['/']);
       }
-    } catch {
-      this.error = 'Credenciales inválidas o usuario no encontrado';
+    } catch (err: any) {
+        console.error('Login error:', err);
+        this.error = 'Credenciales inválidas o usuario no encontrado';
     }
-  }
+   }
 }

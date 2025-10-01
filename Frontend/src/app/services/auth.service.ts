@@ -11,7 +11,7 @@ interface LoginResponse {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private base = `${API_URL}/Auth`;
+  private base = `${API_URL}/auth`;
 
   constructor(private http: HttpClient) {}
 
@@ -41,3 +41,4 @@ export class AuthService {
     return localStorage.getItem('role') === 'Admin';
   }
 }
+

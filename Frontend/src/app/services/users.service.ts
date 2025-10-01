@@ -23,7 +23,7 @@ export interface CreateUserDto {
 
 @Injectable({ providedIn: 'root' })
 export class UsersService {
-  private base = `${API_URL}/Users`;
+  private base = `${API_URL}/users`;
 
   constructor(private http: HttpClient) {}
 
