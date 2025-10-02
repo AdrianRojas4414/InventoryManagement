@@ -25,6 +25,8 @@ builder.Services.AddDbContext<InventoryDbContext>(options =>
 // Repositorios
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 // Controllers y Swagger
 builder.Services.AddControllers();

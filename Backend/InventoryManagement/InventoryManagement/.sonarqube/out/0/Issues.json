@@ -358,27 +358,6 @@
           }
         },
         {
-          "ruleId": "S125",
-          "level": "warning",
-          "message": "Remove this commented out code.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/Adrian/source/repos/InventoryManagement/Backend/InventoryManagement/InventoryManagement/Program.cs",
-                "region": {
-                  "startLine": 7,
-                  "startColumn": 1,
-                  "endLine": 7,
-                  "endColumn": 36
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
           "ruleId": "S4487",
           "level": "warning",
           "message": "Remove this unread private field '_logger' or refactor the code to use its value.",
@@ -408,9 +387,9 @@
               "resultFile": {
                 "uri": "file:///C:/Users/Adrian/source/repos/InventoryManagement/Backend/InventoryManagement/InventoryManagement/Program.cs",
                 "region": {
-                  "startLine": 49,
+                  "startLine": 65,
                   "startColumn": 1,
-                  "endLine": 49,
+                  "endLine": 65,
                   "endColumn": 10
                 }
               }
@@ -458,23 +437,6 @@
             "tags": [
               "Compiler",
               "Telemetry"
-            ]
-          }
-        },
-        "S125": {
-          "id": "S125",
-          "shortDescription": "Sections of code should not be commented out",
-          "fullDescription": "Commented-out code distracts the focus from the actual executed code. It creates a noise that increases maintenance code. And because it is never executed, it quickly becomes out of date and invalid.",
-          "defaultLevel": "warning",
-          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-125",
-          "properties": {
-            "category": "Major Code Smell",
-            "isEnabledByDefault": true,
-            "tags": [
-              "C#",
-              "MainSourceScope",
-              "TestSourceScope",
-              "SonarWay"
             ]
           }
         },

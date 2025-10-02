@@ -1,35 +1,36 @@
 Ö
-sC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\WeatherForecast.cs 8r	±
-kC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Program.cs(8j$r	 "%&'()+-/1xÇ	 "%'(+-/1Õ
+sC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\WeatherForecast.cs 8r	ƒ
+kC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Program.cs.8j
+"18r+ #$%&'()*+,-/234569;=?AxÇ #%&(/2459;=?AÕ
 éC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Infrastructure\Repositories\UserRepository.cs 8r&	
- !#$%&()*+,-Ç	 %*ù
-ÇC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\PurchaseDetail.cs 8jr	ò
-|C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\Purchase.cs 
-8
-jr	
-¡
+ !#$%&()*+,-Ç	 %*À
+íC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Infrastructure\Repositories\SupplierRepository.cs 8jr	
+ "#$%&'Ç$%†
+ëC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Infrastructure\Repositories\ProductRepository.csr	¡
 ëC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Infrastructure\Persistence\InventoryDbContext.cs 8r	
  Ç¢
 xC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\User.cs 8r 	
  !"$%&'(ù
 ÉC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\SupplierProduct.cs 
 8
-jr	•
-|C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\Supplier.cs 8j$r	
- !"%&À
-íC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Infrastructure\Repositories\SupplierRepository.cs 8jr	
- "#$%&'Ç$%†
-ëC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Infrastructure\Repositories\ProductRepository.csr	§
+jr	ù
+ÇC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\PurchaseDetail.cs 8jr	§
 áC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\ProductPriceHistory.cs 8jr	
 û
 {C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\Product.cs 8jr	
-ó
+ò
+|C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\Purchase.cs 
+8
+jr	
+ó
 |C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\Category.cs 8jr	
 ú
 ÉC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\AuditableEntity.cs 
 8
 r	
-∫
+•
+|C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\Supplier.cs 8j$r	
+ !"%&∫
 âC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Controllers\WeatherForecastController.cs 8r	
  Ç
 Æ
@@ -50,9 +51,9 @@ r
 çC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Application\Interfaces\IProductRepository.csrü
 ÜC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Application\DTOs\UpdateSupplierDto.cs 8r
 	
-Çú
-ÖC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Application\DTOs\LoginResponseDto.cs 8rÇâ
-C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Application\DTOs\ProductDto.csrç
+Çâ
+C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Application\DTOs\ProductDto.csrú
+ÖC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Application\DTOs\LoginResponseDto.cs 8rÇç
 }C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Application\DTOs\LoginDto.cs 8ró
 ÇC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Application\DTOs\CreateUserDto.cs 8r
 	

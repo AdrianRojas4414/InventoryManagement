@@ -5,23 +5,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InventoryManagement.Infrastructure.Repositories;
 
-public class ProductRepository : IProductRepository
+public class CategoryRepository : ICategoryRepository
 {
     private readonly InventoryDbContext _context;
 
-    public ProductRepository(InventoryDbContext context)
+    public CategoryRepository(InventoryDbContext context)
     {
         _context = context;
     }
 
-    public async Task<List<Product>> GetAllAsync()
+    public async Task AddAsync(Category category)
     {
-        return await _context.Products.ToListAsync();
-    }
-
-    public async Task AddAsync(Product product)
-    {
-        await _context.Products.AddAsync(product);
+        await _context.Categories.AddAsync(category);
         await _context.SaveChangesAsync();
     }
 }
