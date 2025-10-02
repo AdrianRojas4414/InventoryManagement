@@ -11,7 +11,6 @@ namespace InventoryManagement.Controllers;
 public class ProductsController : ControllerBase
 {
     private readonly IProductRepository _productRepository;
-    private const string AdminRole = "Admin";
 
     public ProductsController(IProductRepository productRepository)
     {

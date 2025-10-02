@@ -55,7 +55,7 @@ sC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\In
 set" %
 ;% &
 }' (
-} Æ%
+} û)
 kC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Program.cs
 var 
 builder 
@@ -197,141 +197,167 @@ AutoDetect5 ?
 (C D
 )D E
 ;E F
-builder 
-. 
-Services 
-. 
-AddControllers 
-(  
-)  !
-;! "
-builder 
-. 
-Services 
-. #
-AddEndpointsApiExplorer (
-(( )
-)) *
-;* +
+builder 
+. 
+Services 
+. 
+	AddScoped 
+< 
+ICategoryRepository .
+,. /
+CategoryRepository0 B
+>B C
+(C D
+)D E
+;E F
+builder 
+. 
+Services 
+. 
+	AddScoped 
+< 
+IProductRepository -
+,- .
+ProductRepository/ @
+>@ A
+(A B
+)B C
+;C D
 builder   
 .   
 Services   
-.   
-AddSwaggerGen   
-(   
-)    
-;    !
-builder## 
-.## 
-Services## 
-.## 
-AddCors## 
-(## 
-options##  
-=>##! #
-{$$ 
-options%% 
-.%% 
-	AddPolicy%% 
-(%% 
-$str%% $
-,%%$ %
-policy&& 
-=>&& 
-{'' 	
-policy(( 
-.(( 
-WithOrigins(( 
-((( 
-$str(( 6
-)((6 7
-.)) 
-AllowAnyHeader)) !
-())! "
-)))" #
-.** 
-AllowAnyMethod** !
-(**! "
-)**" #
-.++ 
-AllowCredentials++ #
-(++# $
-)++$ %
-;++% &
-},, 	
-),,	 
+.   
+AddControllers   
+(    
+)    !
+;  ! "
+builder!! 
+.!! 
+Services!! 
+.!! #
+AddEndpointsApiExplorer!! (
+(!!( )
+)!!) *
+;!!* +
+builder"" 
+."" 
+Services"" 
+."" 
+AddSwaggerGen"" 
+("" 
+)""  
+;""  !
+builder%% 
+.%% 
+Services%% 
+.%% 
+AddCors%% 
+(%% 
+options%%  
+=>%%! #
+{&& 
+options'' 
+.'' 
+	AddPolicy'' 
+('' 
+$str'' $
+,''$ %
+policy(( 
+=>(( 
+{)) 	
+policy** 
+.** 
+WithOrigins** 
+(** 
+$str** 6
+)**6 7
+.++ 
+AllowAnyHeader++ !
+(++! "
+)++" #
+.,, 
+AllowAnyMethod,, !
+(,,! "
+),," #
+.-- 
+AllowCredentials-- #
+(--# $
+)--$ %
+;--% &
+}.. 	
+)..	 
 
-;,,
+;..
  
-}-- 
-)-- 
-;-- 
-var// 
-app// 
-=// 	
-builder//
+}// 
+)// 
+;// 
+var11 
+app11 
+=11 	
+builder11
  
-.// 
-Build// 
-(// 
-)// 
-;// 
-if22 
-(22 
-app22 
-.22 
-Environment22 
-.22 
-IsDevelopment22 !
-(22! "
-)22" #
-)22# $
-{33 
+.11 
+Build11 
+(11 
+)11 
+;11 
+if44 
+(44 
 app44 
-.44 
+.44 
+Environment44 
+.44 
+IsDevelopment44 !
+(44! "
+)44" #
+)44# $
+{55 
+app66 
+.66 
 
-UseSwagger44 
-(44 
-)44 
-;44 
-app55 
-.55 
-UseSwaggerUI55 
-(55 
-)55 
-;55 
-}66 
-app99 
-.99 
-UseHttpsRedirection99 
-(99 
-)99 
-;99 
+UseSwagger66 
+(66 
+)66 
+;66 
+app77 
+.77 
+UseSwaggerUI77 
+(77 
+)77 
+;77 
+}88 
 app;; 
-.;; 
-UseCors;; 
-(;; 
-$str;; 
-);; 
-;;; 
+.;; 
+UseHttpsRedirection;; 
+(;; 
+);; 
+;;; 
 app== 
-.== 
-UseAuthorization== 
-(== 
-)== 
-;== 
+.== 
+UseCors== 
+(== 
+$str== 
+)== 
+;== 
 app?? 
-.?? 
-MapControllers?? 
-(?? 
-)?? 
-;?? 
+.?? 
+UseAuthorization?? 
+(?? 
+)?? 
+;?? 
 appAA 
-.AA 
-RunAA 
-(AA 
-)AA 	
-;AA	 
+.AA 
+MapControllersAA 
+(AA 
+)AA 
+;AA 
+appCC 
+.CC 
+RunCC 
+(CC 
+)CC 	
+;CC	 
 ·
 éC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Infrastructure\Repositories\UserRepository.cs
 	namespace 	
@@ -671,7 +697,7 @@ UseSwagger44 
 )%%( )
 ;%%) *
 }&& 
-}'' ∫
+}'' ¨
 ëC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Infrastructure\Repositories\ProductRepository.cs
 	namespace 	
 InventoryManagement
@@ -686,8 +712,163 @@ UseSwagger44 
 ProductRepository 
 :  
 IProductRepository! 3
-{		 
-} ∂
+{		 
+private
+
+ 
+readonly
+
+ 
+InventoryDbContext
+
+ '
+_context
+
+( 0
+;
+
+0 1
+public 
+
+ProductRepository 
+( 
+InventoryDbContext /
+context0 7
+)7 8
+{ 
+_context 
+= 
+context 
+; 
+} 
+public 
+
+async 
+Task 
+< 
+List 
+< 
+Product "
+>" #
+># $
+GetAllAsync% 0
+(0 1
+)1 2
+{ 
+return 
+await 
+_context 
+. 
+Products &
+.& '
+ToListAsync' 2
+(2 3
+)3 4
+;4 5
+} 
+public 
+
+async 
+Task 
+AddAsync 
+( 
+Product &
+product' .
+). /
+{ 
+await 
+_context 
+. 
+Products 
+.  
+AddAsync  (
+(( )
+product) 0
+)0 1
+;1 2
+await 
+_context 
+. 
+SaveChangesAsync '
+(' (
+)( )
+;) *
+} 
+} ç
+
+íC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Infrastructure\Repositories\CategoryRepository.cs
+	namespace 	
+InventoryManagement
+ 
+. 
+Infrastructure ,
+., -
+Repositories- 9
+;9 :
+public 
+class 
+CategoryRepository 
+:  !
+ICategoryRepository" 5
+{		 
+private
+
+ 
+readonly
+
+ 
+InventoryDbContext
+
+ '
+_context
+
+( 0
+;
+
+0 1
+public 
+
+CategoryRepository 
+( 
+InventoryDbContext 0
+context1 8
+)8 9
+{ 
+_context 
+= 
+context 
+; 
+} 
+public 
+
+async 
+Task 
+AddAsync 
+( 
+Category '
+category( 0
+)0 1
+{ 
+await 
+_context 
+. 
+
+Categories !
+.! "
+AddAsync" *
+(* +
+category+ 3
+)3 4
+;4 5
+await 
+_context 
+. 
+SaveChangesAsync '
+(' (
+)( )
+;) *
+} 
+} ∂
 ëC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Infrastructure\Persistence\InventoryDbContext.cs
 	namespace 	
 InventoryManagement
@@ -1533,7 +1714,123 @@ PurchaseId 
 set3 6
 ;6 7
 }8 9
-} Œ
+} Ø
+|C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\Purchase.cs
+	namespace 	
+InventoryManagement
+ 
+. 
+Domain $
+.$ %
+Entities% -
+;- .
+[ 
+Table 
+( 
+$str 
+) 
+] 
+public 
+class 
+Purchase 
+: 
+AuditableEntity '
+{ 
+[		 
+Key		 
+]		 	
+public
+
+ 
+
+int
+
+ 
+Id
+
+ 
+{
+
+ 
+get
+
+ 
+;
+
+ 
+set
+
+ 
+;
+
+ 
+}
+
+ 
+[ 
+Column 
+( 
+TypeName 
+= 
+$str '
+)' (
+]( )
+public 
+
+decimal 
+TotalPurchase  
+{! "
+get# &
+;& '
+set( +
+;+ ,
+}- .
+[ 
+
+ForeignKey 
+( 
+$str 
+) 
+] 
+public 
+
+short 
+
+SupplierId 
+{ 
+get !
+;! "
+set# &
+;& '
+}( )
+public 
+
+required 
+virtual 
+Supplier $
+Supplier% -
+{. /
+get0 3
+;3 4
+set5 8
+;8 9
+}: ;
+public 
+
+required 
+virtual 
+ICollection '
+<' (
+PurchaseDetail( 6
+>6 7
+PurchaseDetails8 G
+{H I
+getJ M
+;M N
+setO R
+;R S
+}T U
+} Œ
 áC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\ProductPriceHistory.cs
 	namespace 	
 InventoryManagement
@@ -1667,7 +1964,7 @@ PurchaseId
 set5 8
 ;8 9
 }: ;
-} «
+} —
 {C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\Product.cs
 	namespace 	
 InventoryManagement
@@ -1715,236 +2012,176 @@ PurchaseId
 3 4
 ]
 
-4 5
-public 
+4 5
+[ 
+Column 
+( 
+$str 
+) 
+] 
+public 
 
-short 
-Id 
-{ 
-get 
-; 
-set 
-; 
-}  !
-[ 
-Required 
-] 
-[ 
-	MaxLength 
-( 
-$num 
-) 
-] 
-public 
-
-required 
-string 
-Name 
-{  !
-get" %
-;% &
-set' *
-;* +
-}, -
+short 
+Id 
+{ 
+get 
+; 
+set 
+; 
+}  !
+[ 
+Required 
+] 
+[ 
+	MaxLength 
+( 
+$num 
+) 
+] 
+[ 
+Column 
+( 
+$str 
+) 
+] 
 public 
 
-string 
-? 
-Description 
-{  
-get! $
-;$ %
-set& )
-;) *
-}+ ,
-public 
-
-short 
-
-TotalStock 
-{ 
-get !
-;! "
-set# &
-;& '
-}( )
-[ 
-
-ForeignKey 
-( 
-$str 
-) 
-] 
+string 
+Name 
+{ 
+get 
+; 
+set !
+;! "
+}# $
+=% &
+null' +
+!+ ,
+;, -
+[ 
+Column 
+( 
+$str 
+) 
+] 
+public 
+
+string 
+? 
+Description 
+{  
+get! $
+;$ %
+set& )
+;) *
+}+ ,
+[ 
+Column 
+( 
+$str 
+) 
+] 
 public 
-
-byte 
+
+short 
 
-CategoryId 
-{ 
-get  
-;  !
-set" %
-;% &
-}' (
-public 
-
-required 
-virtual 
-Category $
-Category% -
-{. /
-get0 3
-;3 4
-set5 8
-;8 9
-}: ;
+TotalStock 
+{ 
+get !
+;! "
+set# &
+;& '
+}( )
+=* +
+$num, -
+;- .
+[ 
+
+ForeignKey 
+( 
+$str 
+) 
+] 
+[ 
+Column 
+( 
+$str 
+) 
+] 
 public 
 
-required 
-virtual 
-ICollection '
-<' (
-SupplierProduct( 7
->7 8
-SupplierProducts9 I
-{J K
-getL O
-;O P
-setQ T
-;T U
-}V W
-public 
-
-required 
-virtual 
-ICollection '
-<' (
-PurchaseDetail( 6
->6 7
-PurchaseDetails8 G
-{H I
-getJ M
-;M N
-setO R
-;R S
-}T U
-} Ø
-|C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\Purchase.cs
-	namespace 	
-InventoryManagement
- 
-. 
-Domain $
-.$ %
-Entities% -
-;- .
-[ 
-Table 
-( 
-$str 
-) 
-] 
-public 
-class 
-Purchase 
-: 
-AuditableEntity '
-{ 
-[		 
-Key		 
-]		 	
-public
-
- 
-
-int
-
- 
-Id
-
- 
-{
-
- 
-get
-
- 
-;
-
- 
-set
-
- 
-;
-
- 
-}
-
- 
-[ 
-Column 
-( 
-TypeName 
-= 
-$str '
-)' (
-]( )
-public 
+required 
+short 
+
+CategoryId $
+{% &
+get' *
+;* +
+set, /
+;/ 0
+}1 2
+public 
 
-decimal 
-TotalPurchase  
-{! "
-get# &
-;& '
-set( +
-;+ ,
-}- .
-[ 
-
-ForeignKey 
-( 
-$str 
-) 
-] 
-public 
-
-short 
-
-SupplierId 
-{ 
-get !
-;! "
-set# &
-;& '
-}( )
-public 
-
-required 
-virtual 
-Supplier $
-Supplier% -
-{. /
-get0 3
-;3 4
-set5 8
-;8 9
-}: ;
-public 
-
-required 
-virtual 
-ICollection '
-<' (
-PurchaseDetail( 6
->6 7
-PurchaseDetails8 G
-{H I
-getJ M
-;M N
-setO R
-;R S
-}T U
-} õ
+virtual 
+Category 
+Category $
+{% &
+get' *
+;* +
+set, /
+;/ 0
+}1 2
+=3 4
+null5 9
+!9 :
+;: ;
+public   
+
+virtual   
+ICollection   
+<   
+SupplierProduct   .
+>  . /
+SupplierProducts  0 @
+{  A B
+get  C F
+;  F G
+set  H K
+;  K L
+}  M N
+=  O P
+new  Q T
+List  U Y
+<  Y Z
+SupplierProduct  Z i
+>  i j
+(  j k
+)  k l
+;  l m
+public## 
+
+virtual## 
+ICollection## 
+<## 
+PurchaseDetail## -
+>##- .
+PurchaseDetails##/ >
+{##? @
+get##A D
+;##D E
+set##F I
+;##I J
+}##K L
+=##M N
+new##O R
+List##S W
+<##W X
+PurchaseDetail##X f
+>##f g
+(##g h
+)##h i
+;##i j
+}$$ Ñ
 |C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\Category.cs
 	namespace 	
 InventoryManagement
@@ -1968,82 +2205,106 @@ SupplierId 
 { 
 [		 
 Key		 
-]		 	
-public
+]		 	
+[
 
- 
-
-byte
+ 
+Column
 
- 
-Id
+ 
+(
 
- 
-{
+ 
+$str
 
- 
-get
+ 
+)
 
- 
-;
+ 
+]
 
- 
-set
-
- 
-;
-
- 
-}
-
-  
-[ 
-Required 
-] 
-[ 
-	MaxLength 
-( 
-$num 
-) 
-] 
-public 
-
-string 
-? 
-Name 
-{ 
-get 
-; 
-set "
-;" #
-}$ %
+ 
+public 
+
+short 
+Id 
+{ 
+get 
+; 
+set 
+; 
+}  !
+[ 
+Required 
+] 
+[ 
+	MaxLength 
+( 
+$num 
+) 
+] 
+[ 
+Column 
+( 
+$str 
+) 
+] 
 public 
-
-string 
-? 
-Description 
-{  
-get! $
-;$ %
-set& )
-;) *
-}+ ,
-public 
 
-required 
-virtual 
-ICollection '
-<' (
-Product( /
->/ 0
-Products1 9
-{: ;
-get< ?
-;? @
-setA D
-;D E
-}F G
-} †
+required 
+string 
+Name 
+{  !
+get" %
+;% &
+set' *
+;* +
+}, -
+=. /
+null0 4
+!4 5
+;5 6
+[ 
+Column 
+( 
+$str 
+) 
+] 
+public 
+
+string 
+? 
+Description 
+{  
+get! $
+;$ %
+set& )
+;) *
+}+ ,
+public 
+
+virtual 
+ICollection 
+< 
+Product &
+>& '
+Products( 0
+{1 2
+get3 6
+;6 7
+set8 ;
+;; <
+}= >
+=? @
+newA D
+ListE I
+<I J
+ProductJ Q
+>Q R
+(R S
+)S T
+;T U
+} †
 ÉC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\AuditableEntity.cs
 	namespace 	
 InventoryManagement
@@ -3443,32 +3704,335 @@ FromHeaderVVC M
 )gg9 :
 ;gg: ;
 }hh 
-}ii í
+}ii ∑
 ÇC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Controllers\ProductsController.cs
-	namespace 	
-InventoryManagement
+	namespace 	
+InventoryManagement
  
-. 
-Controllers )
-;) *
-[ 
-ApiController 
-] 
-[ 
-Route 
-( 
-$str 
-) 
-] 
-public		 
-class		 
-ProductsController		 
-:		  !
-ControllerBase		" 0
-{
+. 
+Controllers )
+;) *
+[		 
+ApiController		 
+]		 
+[
 
- 
-} ™!
+ 
+Route
+
+ 
+(
+
+ 
+$str
+
+ 
+)
+
+ 
+]
+
+ 
+public 
+class 
+ProductsController 
+:  !
+ControllerBase" 0
+{ 
+private 
+readonly 
+IProductRepository '
+_productRepository( :
+;: ;
+public 
+
+ProductsController 
+( 
+IProductRepository 0
+productRepository1 B
+)B C
+{ 
+_productRepository 
+= 
+productRepository .
+;. /
+} 
+[ 
+HttpGet 
+] 
+public 
+
+async 
+Task 
+< 
+IActionResult #
+># $
+GetAllProducts% 3
+(3 4
+)4 5
+{ 
+var 
+products 
+= 
+await 
+_productRepository /
+./ 0
+GetAllAsync0 ;
+(; <
+)< =
+;= >
+return 
+Ok 
+( 
+products 
+) 
+; 
+} 
+[ 
+HttpPost 
+] 
+public 
+
+async 
+Task 
+< 
+IActionResult #
+># $
+CreateProduct% 2
+(2 3
+[3 4
+FromBody4 <
+]< =
+CreateProductDto> N
+
+productDtoO Y
+,Y Z
+[[ \
+
+FromHeader\ f
+]f g
+shorth m
+userIdn t
+)t u
+{ 
+var   
+
+newProduct   
+=   
+new   
+Product   $
+{!! 	
+Id"" 
+="" 
+
+productDto"" 
+."" 
+Id"" 
+,"" 
+Name## 
+=## 
+
+productDto## 
+.## 
+Name## "
+,##" #
+Description$$ 
+=$$ 
+
+productDto$$ $
+.$$$ %
+Description$$% 0
+,$$0 1
+
+CategoryId%% 
+=%% 
+
+productDto%% #
+.%%# $
+
+CategoryId%%$ .
+,%%. /
+
+TotalStock&& 
+=&& 
+
+productDto&& #
+.&&# $
+
+TotalStock&&$ .
+,&&. /
+Status'' 
+='' 
+$num'' 
+,'' 
+CreationDate(( 
+=(( 
+DateTime(( #
+.((# $
+UtcNow(($ *
+,((* +
+ModificationDate)) 
+=)) 
+DateTime)) '
+.))' (
+UtcNow))( .
+,)). /
+CreatedByUserId** 
+=** 
+userId** $
+}++ 	
+;++	 
+
+await-- 
+_productRepository--  
+.--  !
+AddAsync--! )
+(--) *
+
+newProduct--* 4
+)--4 5
+;--5 6
+return.. 
+Ok.. 
+(.. 
+
+newProduct.. 
+).. 
+;.. 
+}// 
+}00 ⁄
+ÇC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Controllers\CategoryController.cs
+	namespace 	
+InventoryManagement
+ 
+. 
+Controllers )
+;) *
+[ 
+ApiController 
+] 
+[		 
+Route		 
+(		 
+$str		 
+)		 
+]		 
+public
+
+ 
+class
+
+  
+CategoriesController
+
+ !
+:
+
+" #
+ControllerBase
+
+$ 2
+{ 
+private 
+readonly 
+ICategoryRepository (
+_categoryRepository) <
+;< =
+public 
+ 
+CategoriesController 
+(  
+ICategoryRepository  3
+categoryRepository4 F
+)F G
+{ 
+_categoryRepository 
+= 
+categoryRepository 0
+;0 1
+} 
+[ 
+HttpPost 
+] 
+public 
+
+async 
+Task 
+< 
+IActionResult #
+># $
+CreateCategory% 3
+(3 4
+[4 5
+FromBody5 =
+]= >
+CreateCategoryDto? P
+categoryDtoQ \
+,\ ]
+[] ^
+
+FromHeader^ h
+]h i
+shortj o
+userIdp v
+)v w
+{ 
+var 
+newCategory 
+= 
+new 
+Category &
+{ 	
+Name 
+= 
+categoryDto 
+. 
+Name #
+,# $
+Description 
+= 
+categoryDto %
+.% &
+Description& 1
+,1 2
+Status 
+= 
+$num 
+, 
+CreationDate 
+= 
+DateTime #
+.# $
+UtcNow$ *
+,* +
+ModificationDate 
+= 
+DateTime '
+.' (
+UtcNow( .
+,. /
+CreatedByUserId 
+= 
+userId $
+} 	
+;	 
+
+await!! 
+_categoryRepository!! !
+.!!! "
+AddAsync!!" *
+(!!* +
+newCategory!!+ 6
+)!!6 7
+;!!7 8
+return## 
+Ok## 
+(## 
+newCategory## 
+)## 
+;## 
+}$$ 
+}%% ™!
 ~C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Controllers\AuthController.cs
 	namespace 	
 InventoryManagement
@@ -3842,22 +4406,62 @@ Interfaces* 4
 ;
 
 ' (
-} á
+} ¡
 çC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Application\Interfaces\IProductRepository.cs
-	namespace 	
-InventoryManagement
+	namespace 	
+InventoryManagement
  
-. 
-Application )
-.) *
+. 
+Application )
+.) *
 
-Interfaces* 4
-;4 5
-public 
-	interface 
-IProductRepository #
-{ 
-} Ø
+Interfaces* 4
+;4 5
+public 
+	interface 
+IProductRepository #
+{ 
+Task 
+< 	
+List	 
+< 
+Product 
+> 
+> 
+GetAllAsync #
+(# $
+)$ %
+;% &
+Task 
+AddAsync	 
+( 
+Product 
+product !
+)! "
+;" #
+} ä
+éC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Application\Interfaces\ICategoryRepository.cs
+	namespace 	
+InventoryManagement
+ 
+. 
+Application )
+.) *
+
+Interfaces* 4
+;4 5
+public 
+	interface 
+ICategoryRepository $
+{ 
+Task 
+AddAsync	 
+( 
+Category 
+category #
+)# $
+;$ %
+} Ø
 ÜC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Application\DTOs\UpdateSupplierDto.cs
 	namespace 	
 InventoryManagement
@@ -3961,22 +4565,7 @@ Interfaces* 4
 }
 
 + ,
-} Ê
-C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Application\DTOs\ProductDto.cs
-	namespace 	
-InventoryManagement
- 
-. 
-Application )
-.) *
-DTOs* .
-;. /
-public 
-class 
-
-ProductDto 
-{ 
-} ‰
+} ‰
 ÖC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Application\DTOs\LoginResponseDto.cs
 	namespace 	
 InventoryManagement
@@ -4270,4 +4859,126 @@ ProductDto 
 }
 
 + ,
-} 
+} Œ
+
+ÖC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Application\DTOs\CreateProductDto.cs
+	namespace 	
+InventoryManagement
+ 
+. 
+Application )
+.) *
+DTOs* .
+;. /
+public 
+class 
+CreateProductDto 
+{ 
+public 
+
+required 
+short 
+Id 
+{ 
+get "
+;" #
+set$ '
+;' (
+}) *
+public 
+
+required 
+string 
+Name 
+{  !
+get" %
+;% &
+set' *
+;* +
+}, -
+=. /
+string0 6
+.6 7
+Empty7 <
+;< =
+public 
+
+string 
+? 
+Description 
+{  
+get! $
+;$ %
+set& )
+;) *
+}+ ,
+public 
+
+required 
+short 
+
+CategoryId $
+{% &
+get' *
+;* +
+set, /
+;/ 0
+}1 2
+public		 
+
+short		 
+
+TotalStock		 
+{		 
+get		 !
+;		! "
+set		# &
+;		& '
+}		( )
+=		* +
+$num		, -
+;		- .
+}
+
+ •
+ÜC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Application\DTOs\CreateCategoryDto.cs
+	namespace 	
+InventoryManagement
+ 
+. 
+Application )
+.) *
+DTOs* .
+;. /
+public 
+class 
+CreateCategoryDto 
+{ 
+public 
+
+required 
+string 
+Name 
+{  !
+get" %
+;% &
+set' *
+;* +
+}, -
+=. /
+string0 6
+.6 7
+Empty7 <
+;< =
+public 
+
+string 
+? 
+Description 
+{  
+get! $
+;$ %
+set& )
+;) *
+}+ ,
+} 
