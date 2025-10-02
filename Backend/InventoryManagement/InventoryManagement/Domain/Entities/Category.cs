@@ -8,7 +8,7 @@ public class Category : AuditableEntity
 {
     [Key]
     [Column("id")]
-    public byte Id { get; set; }
+    public short Id { get; set; }
 
     [Required]
     [MaxLength(100)]
