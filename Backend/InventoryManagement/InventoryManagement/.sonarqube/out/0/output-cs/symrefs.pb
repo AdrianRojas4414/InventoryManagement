@@ -8,9 +8,9 @@ sC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\In
 
 		 
 
- ‹
-kC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Program.csD
-		         ""
+ Ç
+kC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Program.csL
+         ## //
  
  
 ! '
@@ -21,8 +21,10 @@ kC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\In
  
 S Y
   %@ P
-2 9 H
-"" %% '' (( ++ -- // 11 ¹
+2 9 
+##  %% 
+&& (( P
+// 22 44 55 99 ;; == ?? AA ¹
 ŽC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Infrastructure\Repositories\UserRepository.cs
 
  Z
@@ -44,37 +46,29 @@ kC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\In
 ##& 6
 
 ((! -
-((4 6**2 4Ù
-‚C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\PurchaseDetail.cs
+((4 6**2 4‘
+’C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Infrastructure\Repositories\SupplierRepository.cs
 
- 
-
- 
-
-		 
-
- 
-
- 
-
-% -
-
-$ +Æ
-|C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\Purchase.cs
-
- 
-
+ P
 
 
- 
+( 0     $$ %% 
+1 8 
 
-  
+! -
+4 62 4
 
- 
+& 1
+. /3 4
 
-% -
+ 
+( 0* 2
 
-8 GÀ
+"" !
+""+ 3$$" * 
+‘C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Infrastructure\Repositories\ProductRepository.cs
+
+ À
 ‘C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Infrastructure\Persistence\InventoryDbContext.cs
  / A
 C JS Z
@@ -131,50 +125,22 @@ xC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\In
 
 % -
 
-$ +ê
-|C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\Supplier.cs
+$ +Ù
+‚C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\PurchaseDetail.cs
 
- 
+ 
 
-
-
- 
+ 
 
- 
+		 
 
- 
+ 
 
- 
+ 
 
- 
+% -
 
- 
-
-"" 
-
-%%0 @‘
-’C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Infrastructure\Repositories\SupplierRepository.cs
-
- P
-
-
-( 0     $$ %% 
-1 8 
-
-! -
-4 62 4
-
-& 1
-. /3 4
-
- 
-( 0* 2
-
-"" !
-""+ 3$$" * 
-‘C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Infrastructure\Repositories\ProductRepository.cs
-
- ö
+$ +ö
 ‡C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\ProductPriceHistory.cs
 
   
@@ -214,7 +180,22 @@ xC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\In
 
 9 I
 
-8 Gº
+8 GÆ
+|C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\Purchase.cs
+
+ 
+
+
+
+ 
+
+  
+
+ 
+
+% -
+
+8 Gº
 |C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\Category.cs
 
  
@@ -242,7 +223,28 @@ xC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\In
 
  
 
- &š
+ &ê
+|C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\Supplier.cs
+
+ 
+
+
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+"" 
+
+%%0 @š
 ‰C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Controllers\WeatherForecastController.cs
  & 6- F
 		% . 3 <
@@ -385,7 +387,10 @@ xC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\In
 
 
 
- ¸
+ 
+C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Application\DTOs\ProductDto.cs
+
+ ¸
 …C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Application\DTOs\LoginResponseDto.cs
 
  
@@ -394,10 +399,7 @@ xC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\In
 
  
 
- 
-C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Application\DTOs\ProductDto.cs
-
- £
+ £
 }C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Application\DTOs\LoginDto.cs
 
  
