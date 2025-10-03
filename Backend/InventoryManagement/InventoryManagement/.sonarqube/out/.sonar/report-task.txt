@@ -2,5 +2,5 @@ projectKey=InventoryManagement
 serverUrl=http://localhost:9000
 serverVersion=25.9.0.112764
 dashboardUrl=http://localhost:9000/dashboard?id=InventoryManagement
-ceTaskId=55716a67-f7ef-418e-899e-551fa68d4258
-ceTaskUrl=http://localhost:9000/api/ce/task?id=55716a67-f7ef-418e-899e-551fa68d4258
+ceTaskId=2958613e-dec5-4da4-b9c0-5634fffc2424
+ceTaskUrl=http://localhost:9000/api/ce/task?id=2958613e-dec5-4da4-b9c0-5634fffc2424

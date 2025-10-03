@@ -7,14 +7,17 @@ namespace InventoryManagement.Domain.Entities;
 public class Category : AuditableEntity
 {
     [Key]
-    public byte Id { get; set; }
+    [Column("id")]
+    public short Id { get; set; }
 
     [Required]
-    [MaxLength(50)]
-    public string? Name { get; set; }
+    [MaxLength(100)]
+    [Column("name")]
+    public required string Name { get; set; } = null!;
 
+    [Column("description")]
     public string? Description { get; set; }
 
     // Propiedad de navegación: una categoría tiene muchos productos
-    public required virtual ICollection<Product> Products { get; set; }
+    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 }

@@ -7,25 +7,30 @@ namespace InventoryManagement.Domain.Entities;
 public class Product : AuditableEntity
 {
     [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.None)] 
+    [DatabaseGenerated(DatabaseGeneratedOption.None)]
+    [Column("id")]
     public short Id { get; set; }
 
     [Required]
     [MaxLength(100)]
-    public required string Name { get; set; }
+    [Column("name")]
+    public string Name { get; set; } = null!;
 
+    [Column("description")]
     public string? Description { get; set; }
 
-    public short TotalStock { get; set; }
+    [Column("total_stock")]
+    public short TotalStock { get; set; } = 0;
 
-    // Relación con Category
     [ForeignKey("Category")]
-    public byte CategoryId { get; set; }
-    public required virtual Category Category { get; set; }
-    
+    [Column("id_category")]
+    public required short CategoryId { get; set; }
+
+    public virtual Category Category { get; set; } = null!;
+
     // Propiedad de navegación: un producto es ofrecido por muchos proveedores
-    public required virtual ICollection<SupplierProduct> SupplierProducts { get; set; }
+    public virtual ICollection<SupplierProduct> SupplierProducts { get; set; } = new List<SupplierProduct>();
 
     // Propiedad de navegación: un producto está en muchos detalles de compra
-    public required virtual ICollection<PurchaseDetail> PurchaseDetails { get; set; }
+    public virtual ICollection<PurchaseDetail> PurchaseDetails { get; set; } = new List<PurchaseDetail>();
 }
