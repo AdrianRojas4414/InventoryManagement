@@ -2,11 +2,11 @@
   <app-sidebar></app-sidebar>
   <main>
     <header class="header">
-      <h1>Products</h1>
-      <h2>Manage your product inventory and track stock levels</h2>
+      <h1>Productos</h1>
+      <h2>Administre su inventario de productos y realice un seguimiento de los niveles de existencias</h2>
       <div class="actions">
-        <button class="add" (click)="openProductForm()">+ Add Product</button>
-        <button class="add" (click)="openCategoryForm()">+ Add Category</button>
+        <button class="add" (click)="openProductForm()">+ Agregar Producto</button>
+        <button class="add" (click)="openCategoryForm()">+ Agregar Categoria</button>
       </div>
     </header>
 
@@ -14,19 +14,19 @@
     <ng-container *ngIf="showCategoryForm">
       <div class="modal-backdrop">
         <div class="form-card">
-          <h3>{{ editCategoryMode ? 'Edit Category' : 'Add New Category' }}</h3>
+          <h3>{{ editCategoryMode ? 'Editar Categoria' : 'Agregar Nueva Categoria' }}</h3>
           <form (ngSubmit)="saveCategory()">
             <div class="form-group">
-              <label for="category-name">Category Name</label>
+              <label for="category-name">Nombre de la Categoria</label>
               <input id="category-name" [(ngModel)]="currentCategory.name" name="name" required>
             </div>
             <div class="form-group">
-              <label for="category-description">Description</label>
+              <label for="category-description">Descripcion</label>
               <input id="category-description" [(ngModel)]="currentCategory.description" name="description" required>
             </div>
             <div class="form-actions">
-              <button type="button" class="cancel" (click)="closeFormCategory()">Cancel</button>
-              <button type="submit" class="add">{{ editCategoryMode ? 'Save Changes' : 'Add' }}</button>
+              <button type="button" class="cancel" (click)="closeFormCategory()">Cancelar</button>
+              <button type="submit" class="add">{{ editCategoryMode ? 'Guardar Cambios' : 'Agregar' }}</button>
             </div>
           </form>
         </div>
@@ -37,19 +37,19 @@
     <ng-container *ngIf="showProductForm">
       <div class="modal-backdrop">
         <div class="form-card">
-          <h3>{{ editProductMode ? 'Edit Product' : 'Add New Product' }}</h3>
+          <h3>{{ editProductMode ? 'Editar Producto' : 'Agregar Nuevo Producto' }}</h3>
           <form (ngSubmit)="saveProduct()">
             <div class="form-grid">
               <div class="form-group">
-                <label for="product-name">Product Name</label>
+                <label for="product-name">Nombre del Producto</label>
                 <input id="product-name" [(ngModel)]="currentProduct.name" name="name" required>
               </div>
               <div class="form-group">
-                <label for="product-description">Description</label>
+                <label for="product-description">Descripcion</label>
                 <input id="product-description" [(ngModel)]="currentProduct.description" name="description" required>
               </div>
               <div class="form-group">
-                <label for="product-category">Category</label>
+                <label for="product-category">Categoria</label>
                 <select id="product-category" [(ngModel)]="currentProduct.categoryId" name="categoryId" required>
                   <option *ngFor="let cat of categories" [value]="cat.id">{{ cat.name }}</option>
                 </select>
@@ -61,7 +61,7 @@
             </div>
             <div class="form-actions">
               <button type="button" class="cancel" (click)="closeForm()">Cancel</button>
-              <button type="submit" class="add">{{ editProductMode ? 'Save Changes' : 'Add Product' }}</button>
+              <button type="submit" class="add">{{ editProductMode ? 'Guardar Cambios' : 'Agregar Producto' }}</button>
             </div>
           </form>
         </div>
@@ -74,9 +74,9 @@
         <thead>
           <tr>
             <th>ID</th>
-            <th>Name</th>
-            <th>Category</th>
-            <th>Description</th>
+            <th>Nombre</th>
+            <th>Categoria</th>
+            <th>Descripcion</th>
             <th>Stock</th>
           </tr>
         </thead>
@@ -101,8 +101,8 @@
         <thead>
           <tr>
             <th>ID</th>
-            <th>Name</th>
-            <th>Description</th>
+            <th>Nombre</th>
+            <th>Descripcion</th>
           </tr>
         </thead>
         <tbody>
