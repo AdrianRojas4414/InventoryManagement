@@ -10,22 +10,8 @@ app-sidebar {
 
 main{
    flex-grow: 1; 
-    padding: 30px;
-    overflow-y:hidden;
-}
-
-:root {
-    --text-color: #343a40;
-    --light-text-color: #6c757d;
-    --border-color: #edf0f3;
-    --active-blue: #007bff;
-    --low-stock-orange: #ffc107;
-    --out-of-stock-red: #dc3545;
-    --tag-bg-light: #e9ecef;
-    --primary-blue: #007bff;
-    --text-dark: #343a40;
-    --text-light: #6c757d;
-    --bg-light: #f8f9fa;
+   padding: 30px;
+   overflow-y:hidden;
 }
 
 .table-container {
@@ -181,4 +167,33 @@ input:focus {
 
 .options-menu button:hover {
     background-color: #f0f4f8;
+}
+
+.status-active {
+  background-color: #28a745; 
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: inline-block;
+  text-align: center;
+}
+
+.status-desactive {
+  background-color: #dc3545;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: inline-block;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+    app-sidebar {
+        width: 80px;
+        flex-shrink: 0; 
+    }
 }

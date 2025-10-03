@@ -11,9 +11,6 @@ import { HttpBackend } from '@angular/common/http';
   standalone: true
 })
 export class SidebarComponent {
-  isSidebarCollapsed = signal(false); 
-  isMobile = signal(false); 
-  isSidebarOpen = signal(false); 
 
   private readonly BREAKPOINT = 768;
 
@@ -25,43 +22,7 @@ export class SidebarComponent {
     { name: 'Usuario', icon: 'person', route: '/user-management' },
   ];
   
-  constructor(private router: Router) {
-    if (typeof window !== 'undefined') {
-      this.checkWindowSize();
-    }
-  }
-
-  @HostListener('window:resize')
-  onResize() {
-    this.checkWindowSize();
-  }
-
-  private checkWindowSize() {
-    if (typeof window === 'undefined') return;
-    
-    const isCurrentlyMobile = window.innerWidth <= this.BREAKPOINT;
-    this.isMobile.set(isCurrentlyMobile);
-
-    if (!isCurrentlyMobile) {
-      this.isSidebarOpen.set(false);
-    }
-  }
-
-  toggleSidebar(event: MouseEvent) {
-    event.stopPropagation();
-    
-    if (this.isMobile()) {
-      this.isSidebarOpen.update(value => !value);
-    } else {
-      this.isSidebarCollapsed.update(value => !value);
-    }
-  }
-  
-  closeSidebarOnMobile(event: MouseEvent) {
-    if (this.isMobile() && this.isSidebarOpen()) {
-      this.isSidebarOpen.set(false);
-    }
-  }
+  constructor(private router: Router) {  }
 
   isRouteActive(route: string): boolean {
     return this.router.url === route;
@@ -71,21 +32,10 @@ export class SidebarComponent {
     if (route === '#') return;
     
     this.router.navigate([route]);
-    
-    if (this.isMobile()) {
-      this.isSidebarOpen.set(false);
-    }
   }
 
   getSidebarClasses(): string {
     let classes = 'sidebar';
-    
-    if (this.isMobile()) {
-      classes += this.isSidebarOpen() ? ' mobile-open' : '';
-    } else {
-      classes += this.isSidebarCollapsed() ? ' sidebar-collapsed' : ' sidebar-expanded';
-    }
-    
     return classes;
   }
   

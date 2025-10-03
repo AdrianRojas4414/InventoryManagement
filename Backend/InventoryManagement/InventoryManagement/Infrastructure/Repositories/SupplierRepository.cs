@@ -22,7 +22,7 @@ public class SupplierRepository : ISupplierRepository
     public async Task<List<Supplier>> GetAllAsync()
     {
         // Solo mostramos los proveedores que están activos (status = 1)
-        return await _context.Suppliers.Where(s => s.Status == 1).ToListAsync();
+        return await _context.Suppliers.ToListAsync();
     }
 
     public async Task AddAsync(Supplier supplier)

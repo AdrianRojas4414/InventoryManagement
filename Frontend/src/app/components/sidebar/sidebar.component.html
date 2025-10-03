@@ -3,10 +3,6 @@
         <div class="logo-container">
             <span class="header-title">Inventory Pro</span>
         </div>
-        
-        <button class="menu-toggle-btn" (click)="toggleSidebar($event)" type="button">
-            <span class="material-icons">menu</span>    
-        </button>
     </div>
     
     <nav class="nav-container">
@@ -20,9 +16,3 @@
         </a>
     </nav>
 </aside>
-
-<div 
-    *ngIf="isMobile() && isSidebarOpen()"
-    class="sidebar-overlay"
-    (click)="closeSidebarOnMobile($event)">
-</div>

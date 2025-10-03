@@ -4,7 +4,7 @@
     <h1>Suppliers</h1>
     <h2>Manage your suppliers and their contact information</h2>
 
-    <button class="add" (click)="openSupplierForm()">+ Add Supplier</button>
+    <button class="add" (click)="openForm()">+ Add Supplier</button>
 
     <div class="modal-backdrop" *ngIf="showForm || editMode">
       <div class="form-card">
@@ -55,6 +55,7 @@
             <th>Phone</th>
             <th>Email</th>
             <th>Contact Name</th>
+            <th>Status</th>
             <th></th>
           </tr>
         </thead>
@@ -67,11 +68,19 @@
             <td>{{ supplier.phone }}</td>
             <td>{{ supplier.email }}</td>
             <td>{{ supplier.contactName }}</td>
+            <td>
+              <span [ngClass]="supplier.status ? 'status-active' : 'status-desactive'">{{ supplier.status ? 'ACTIVE' : 'DESACTIVE' }}</span>
+            </td>
             <td class="options-cell">
               <span class="options-icon" (click)="toggleOptions(supplier)">...</span>
               <div class="options-menu" *ngIf="supplier.showOptions">
-                <button (click)="editSupplier(supplier)">Edit</button>
-                <button (click)="disableSupplier(supplier)">Disable</button>
+                <ng-container *ngIf="supplier.status === 1">
+                  <button (click)="openForm(supplier)">Edit</button>
+                  <button (click)="disableSupplier(supplier)">Disable</button>
+                </ng-container>
+                <ng-container *ngIf="supplier.status === 0">
+                  <button (click)="enableSupplier(supplier)">Enable</button>
+                </ng-container>
               </div>
             </td>
           </tr>
