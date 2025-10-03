@@ -10,6 +10,7 @@
       </div>
     </header>
 
+    <!-- Formulario Categoría -->
     <ng-container *ngIf="showCategoryForm">
       <div class="modal-backdrop">
         <div class="form-card">
@@ -17,11 +18,11 @@
           <form (ngSubmit)="saveCategory()">
             <div class="form-group">
               <label for="category-name">Category Name</label>
-              <input id="category-name" [(ngModel)]="currentCategory.name" name="name" required placeholder="Ej: Nombre de la categoría">
+              <input id="category-name" [(ngModel)]="currentCategory.name" name="name" required>
             </div>
             <div class="form-group">
               <label for="category-description">Description</label>
-              <input id="category-description" [(ngModel)]="currentCategory.description" name="description" required placeholder="Ej: Descripción de la categoría">
+              <input id="category-description" [(ngModel)]="currentCategory.description" name="description" required>
             </div>
             <div class="form-actions">
               <button type="button" class="cancel" (click)="closeFormCategory()">Cancel</button>
@@ -32,7 +33,7 @@
       </div>
     </ng-container>
 
-    <!-- Modal Producto -->
+    <!-- Formulario Producto -->
     <ng-container *ngIf="showProductForm">
       <div class="modal-backdrop">
         <div class="form-card">
@@ -49,13 +50,13 @@
               </div>
               <div class="form-group">
                 <label for="product-category">Category</label>
-                <select id="product-category" [(ngModel)]="currentProduct.category" name="category" required>
-                  <option *ngFor="let cat of categories" [value]="cat.name">{{ cat.name }}</option>
+                <select id="product-category" [(ngModel)]="currentProduct.categoryId" name="categoryId" required>
+                  <option *ngFor="let cat of categories" [value]="cat.id">{{ cat.name }}</option>
                 </select>
               </div>
               <div class="form-group">
                 <label for="product-stock">Stock</label>
-                <input id="product-stock" type="number" [(ngModel)]="currentProduct.stock" name="stock" required>
+                <input id="product-stock" type="number" [(ngModel)]="currentProduct.totalStock" name="totalStock" required>
               </div>
             </div>
             <div class="form-actions">
@@ -67,53 +68,36 @@
       </div>
     </ng-container>
 
-    <!-- Confirm Disable (Producto) -->
-    <app-confirm-modal
-      *ngIf="disableProductMode"
-      title="Confirm Disable"
-      [message]="'Are you sure you want to disable product (ID: ' + currentProduct.id + ')?'"
-      (onCancel)="closeDisableConfirm()"
-      (onConfirm)="confirmDisableProduct()">
-    </app-confirm-modal>
-
     <!-- Tabla Productos -->
     <section class="table-container">
       <table class="product-table">
         <thead>
           <tr>
-            <th>ID</th><th>Name</th><th>Category</th><th>Description</th><th>Stock</th><th>Status</th><th></th>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Description</th>
+            <th>Stock</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let product of products">
             <td>{{ product.id }}</td>
             <td>{{ product.name }}</td>
-            <td><span class="category-tag">{{ product.category }}</span></td>
-            <td>{{ product.description | slice:0:30 }}{{ product.description.length > 30 ? '...' : '' }}</td>
+            <td><span class="category-tag">{{ product.categoryName }}</span></td>
+            <td class="description">{{ product.description }}</td>
             <td [ngClass]="{
-                'stock-low': product.stock > 0 && product.stock <= 10,
-                'stock-out': product.stock === 0
-            }">{{ product.stock }}</td>
-            <td>
-              <span [ngClass]="product.disabled ? 'status-desactive' : 'status-active'">
-                {{ product.disabled ? 'DESACTIVE' : 'ACTIVE' }}
-              </span>
-            </td>
-            <td class="options-cell">
-              <span class="options-icon" (click)="toggleOptions(product)">...</span>
-              <div class="options-menu" *ngIf="product.showOptions">
-                <button (click)="editProduct(product)">Edit</button>
-                <button (click)="disableProduct(product)">Disable</button>
-              </div>
-            </td>
+                'stock-low': product.totalStock > 0 && product.totalStock <= 10,
+                'stock-out': product.totalStock === 0
+            }">{{ product.totalStock }}</td>
           </tr>
         </tbody>
       </table>
     </section>
 
     <!-- Tabla Categorías -->
-    <section class="table-container"id="table-category">
-      <table class="product-table" >
+    <section class="table-container">
+      <table class="product-table">
         <thead>
           <tr>
             <th>ID</th>
@@ -125,7 +109,7 @@
           <tr *ngFor="let category of categories">
             <td>{{ category.id }}</td>
             <td>{{ category.name }}</td>
-            <td id="description">{{ category.description}}</td>
+            <td class="description">{{ category.description }}</td>
           </tr>
         </tbody>
       </table>

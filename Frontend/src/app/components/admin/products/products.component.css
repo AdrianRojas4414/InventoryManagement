@@ -23,11 +23,6 @@ main{
     overflow-x: hidden;
 }
 
-#table-category {
-    max-height: 160px;
-    margin-bottom: 0;
-}
-
 .product-table {
     width: 100%;
     border-collapse: collapse;
@@ -55,6 +50,11 @@ main{
     padding: 15px 12px;
     vertical-align: middle;
     font-size: 1rem;
+}
+
+.description{
+    white-space: normal;
+    word-break: break-word;
 }
 
 .status-active {
