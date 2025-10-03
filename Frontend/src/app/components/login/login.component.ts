@@ -32,14 +32,7 @@ export class LoginComponent {
 
   onSubmit() {
     this.auth.login(this.username, this.password).then(() => {
-      const role = localStorage.getItem('role');
-
-      if (role === 'Admin') {
-      this.router.navigate(['/admin/products']);
-    } else {
-      this.router.navigate(['/']);
-    }
-
+      this.router.navigate(['products']);
     }).catch(err => {
       console.error('Login error:', err);
       this.error = 'Credenciales inválidas o usuario no encontrado';
