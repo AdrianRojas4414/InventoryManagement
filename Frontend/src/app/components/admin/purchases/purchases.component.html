@@ -1,1 +1,72 @@
-<p>purchases works!</p>
+<div>
+    <app-sidebar></app-sidebar>
+    <main>
+        <header class="header">
+            <h1>Compras</h1>
+            <h2>Gestione las compras y vea sus detalles</h2>
+            <div class="actions">
+                <button class="add">+ Agregar Compra</button>
+            </div>
+        </header>
+        <section class="table-container">
+            <table class="product-table">
+                <thead>
+                    <tr>
+                        <th style="width: 50px;"></th>
+                        <th>ID</th>
+                        <th>Fecha</th>
+                        <th>Proveedor</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let purchase of purchases">
+                        <!-- Fila principal -->
+                        <tr class="main-row" (click)="toggleDetails(purchase)" [class.expanded]="purchase.expanded">
+                            <td class="expand-cell">
+                                <span class="chevron" [class.rotated]="purchase.expanded">
+                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                        <path d="M6 5L10 8L6 11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </span>
+                            </td>
+                            <td>{{ purchase.id }}</td>
+                            <td>{{ purchase.fecha }}</td>
+                            <td>{{ purchase.proveedor }}</td>
+                            <td><strong>{{ purchase.total }}</strong></td>
+                        </tr>
+                        
+                        <!-- Fila de detalles expandible -->
+                        <tr class="details-row" [class.show]="purchase.expanded">
+                            <td colspan="5" class="details-cell">
+                                <div class="details-wrapper">
+                                    <div class="details-content">
+                                        <h3 class="details-title">Detalles de la Compra</h3>
+                                        <table class="details-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Producto</th>
+                                                    <th>Cantidad</th>
+                                                    <th>Precio Unitario</th>
+                                                    <th>Subtotal</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let detalle of purchase.detalles">
+                                                    <td>{{ detalle.producto }}</td>
+                                                    <td>{{ detalle.cantidad }}</td>
+                                                    <td>{{ detalle.precioUnitario }} BOB</td>
+                                                    <td><strong>{{ getSubtotal(detalle) }} BOB</strong></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+        </section>
+    </main>
+</div>
