@@ -34,4 +34,13 @@ public class CategoriesController : ControllerBase
 
         return Ok(newCategory);
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAllCategories()
+    {
+        var categories = await _categoryRepository.GetAllAsync();
+        var activeCategories = categories.ToList();
+
+        return Ok(activeCategories);
+    }
 }

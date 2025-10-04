@@ -2,60 +2,56 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SidebarComponent } from '../../sidebar/sidebar.component';
 import { CommonModule } from '@angular/common';
-import { ConfirmModalComponent } from '../../confirm-modal/confirm-modal.component';
-
-interface Product {
-  id: number;
-  name: string;
-  category: string;
-  description: string;
-  stock: number;
-  showOptions?: boolean;
-  disabled?: boolean;
-}
-
-interface Category {
-  name: string;
-  description: string;
-  disabled?: boolean;
-  showOptions?: boolean;
-}
+import { CategoryService, Category } from '../../../services/category.service';
+import { ProductService, Product, CreateProductDto } from '../../../services/product.service';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [FormsModule, SidebarComponent, CommonModule, ConfirmModalComponent],
+  imports: [FormsModule, SidebarComponent, CommonModule],
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css']
 })
 export class ProductsComponent {
-  categories: Category[] = [
-    { name: 'Electronics', description: 'All electronic products' },
-    { name: 'Furniture', description: 'Office and home furniture', disabled: true }
-  ];
-
-  products: Product[] = [
-    { id: 1, name: 'Office Chair Executive', category: 'Furniture', description: 'Bla bla bla', stock: 45 },
-    { id: 2, name: 'Laptop Stand Adjustable', category: 'Electronics', description: 'Bla bla bla', stock: 5, disabled: true },
-    { id: 3, name: 'Wireless Mouse Ergonomic', category: 'Electronics', description: 'Bla bla bla', stock: 120 },
-    { id: 4, name: 'Desk Lamp LED', category: 'Electronics', description: 'Bla bla bla', stock: 0 },
-    { id: 5, name: 'Office Chair Executive', category: 'Furniture', description: 'Bla bla bla', stock: 45 },
-    { id: 6, name: 'Laptop Stand Adjustable', category: 'Electronics', description: 'Bla bla bla', stock: 5, disabled: true }
-  ];
+  categories: Category[] = [];
+  products: (Product & { categoryName?: string })[] = [];
 
   showProductForm = false;
   editProductMode = false;
-  disableProductMode = false;
 
   showCategoryForm = false;
   editCategoryMode = false;
-  disableCategoryMode = false;
 
-  currentProduct: Product = {} as Product;
+  currentProduct: Product & { categoryId?: number } = {} as Product;
   currentEditProduct: Product | null = null;
 
   currentCategory: Category = { name: '', description: '' };
   currentEditCategory: Category | null = null;
+
+  userId = Number(localStorage.getItem('userId'));
+
+  constructor(private categoryService: CategoryService, private productService: ProductService) {}
+
+  ngOnInit(): void {
+    this.loadCategories();
+  }
+
+  loadCategories(): void {
+    this.categoryService.getCategories().subscribe(data => {
+      this.categories = data;
+      this.loadProducts(); // aseguramos que categories esté cargado antes de mapear productos
+    });
+  }
+
+  loadProducts(): void {
+    this.productService.getProducts().subscribe(data => {
+      // Agregamos categoryName para usar en el template
+      this.products = data.map(p => ({
+        ...p,
+        categoryName: this.categories.find(c => c.id === p.categoryId)?.name || 'Unknown'
+      }));
+    });
+  }
 
   openProductForm(): void {
     this.resetModals();
@@ -71,75 +67,43 @@ export class ProductsComponent {
     this.currentCategory = { name: '', description: '' };
   }
 
-  editProduct(product: Product): void {
-    this.resetModals();
-    this.showProductForm = true;
-    this.editProductMode = true;
-    this.currentProduct = { ...product };
-    this.currentEditProduct = product;
-  }
-
-  editCategory(category: Category): void {
-    this.resetModals();
-    this.showCategoryForm = true;
-    this.editCategoryMode = true;
-    this.currentCategory = { ...category };
-    this.currentEditCategory = category;
-  }
-
   saveProduct(): void {
     if (this.editProductMode && this.currentEditProduct) {
-      Object.assign(this.currentEditProduct, this.currentProduct);
+      // Aquí iría la lógica de edición (PUT) si tu backend lo soporta
     } else {
-      this.currentProduct.id = this.products.length + 1;
-      this.products.push({ ...this.currentProduct });
+      const newProduct: CreateProductDto = {
+        id: 0, // Backend genera el id
+        name: this.currentProduct.name,
+        description: this.currentProduct.description,
+        categoryId: this.currentProduct.categoryId!,
+        totalStock: this.currentProduct.totalStock
+      };
+
+      this.productService.createProduct(newProduct, this.userId)
+        .subscribe(() => {
+          this.loadProducts();
+          this.closeForm();
+        });
     }
-    this.closeForm();
   }
 
   saveCategory(): void {
     if (this.editCategoryMode && this.currentEditCategory) {
-      Object.assign(this.currentEditCategory, this.currentCategory);
+      // Lógica de edición si la agregas al backend
     } else {
-      this.categories.push({ ...this.currentCategory });
+      this.categoryService.addCategory(this.currentCategory, this.userId)
+        .subscribe(() => {
+          this.loadCategories();
+          this.closeFormCategory();
+        });
     }
-    this.closeFormCategory();
-  }
-
-  disableProduct(product: Product): void {
-    this.resetModals();
-    this.disableProductMode = true;
-    this.currentProduct = product;
-  }
-
-  confirmDisableProduct(): void {
-    if (this.currentProduct) {
-      this.currentProduct.disabled = true;
-    }
-    this.closeDisableConfirm();
-  }
-
-  disableCategory(category: Category): void {
-    this.resetModals();
-    this.disableCategoryMode = true;
-    this.currentCategory = category;
-  }
-
-  confirmDisableCategory(): void {
-    if (this.currentCategory) {
-      this.currentCategory.disabled = true;
-    }
-    this.closeDisableConfirmCategory();
   }
 
   resetModals(): void {
     this.showProductForm = false;
     this.editProductMode = false;
-    this.disableProductMode = false;
-
     this.showCategoryForm = false;
     this.editCategoryMode = false;
-    this.disableCategoryMode = false;
   }
 
   closeForm(): void {
@@ -150,21 +114,5 @@ export class ProductsComponent {
   closeFormCategory(): void {
     this.showCategoryForm = false;
     this.editCategoryMode = false;
-  }
-
-  closeDisableConfirm(): void {
-    this.disableProductMode = false;
-  }
-
-  closeDisableConfirmCategory(): void {
-    this.disableCategoryMode = false;
-  }
-
-  toggleOptionsCategory(category: Category): void {
-    category.showOptions = !category.showOptions;
-  }
-
-  toggleOptions(product: Product): void {
-    product.showOptions = !product.showOptions;
   }
 }

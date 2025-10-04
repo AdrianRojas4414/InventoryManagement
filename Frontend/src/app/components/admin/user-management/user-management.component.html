@@ -1,16 +1,16 @@
 <div>
-    <app-sidebar></app-sidebar>
-  <main class="content">
-    <div class="header">
+  <app-sidebar></app-sidebar>
+  <main>
+    <header class="header">
       <h1>Gestión de Usuarios</h1>
-      <p class="subtitle">Administra empleados, asigna roles y controla accesos</p>
-      <button mat-raised-button color="primary" (click)="toggleForm()">
-        <mat-icon>{{ showForm ? 'close' : 'person_add' }}</mat-icon>
-        {{ showForm ? 'Cancelar' : 'Agregar Usuario' }}
-      </button>
-    </div>
+      <h2>Administra empleados, asigna roles y controla accesos</h2>
+      <div class="actions">
+        <button (click)="toggleForm()" class="add">
+          {{ showForm ? '- Cancelar' : '+ Agregar Usuario' }}
+        </button>
+      </div>
+    </header>
 
-    <!-- Formulario -->
     <div *ngIf="showForm" class="card form-card">
       <form (ngSubmit)="createUser()" #userForm="ngForm" class="form-grid">
         <mat-form-field appearance="outline">

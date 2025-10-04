@@ -14,31 +14,13 @@ main{
     overflow-y:hidden;
 }
 
-:root {
-    --text-color: #343a40;
-    --light-text-color: #6c757d;
-    --border-color: #e9ecef;
-    --active-blue: #007bff;
-    --low-stock-orange: #ffc107;
-    --out-of-stock-red: #dc3545;
-    --tag-bg-light: #e9ecef;
-    --primary-blue: #007bff;
-    --text-dark: #343a40;
-    --text-light: #6c757d;
-    --bg-light: #f8f9fa;
-}
-
 .table-container {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
     margin: 24px 0px;
     max-height: 270px;
     overflow-y: auto;
-}
-
-#table-category {
-    max-height: 165px;
-    margin-bottom: 0;
+    overflow-x: hidden;
 }
 
 .product-table {
@@ -62,13 +44,17 @@ main{
 .product-table tbody tr {
     border-bottom: 1px solid var(--border-color);
     transition: background-color 0.15s;
-
 }
 
 .product-table tbody td {
     padding: 15px 12px;
     vertical-align: middle;
     font-size: 1rem;
+}
+
+.description{
+    white-space: normal;
+    word-break: break-word;
 }
 
 .status-active {
@@ -190,4 +176,17 @@ input:focus {
 
 .options-menu button:hover {
     background-color: #f0f4f8;
+}
+
+@media (max-width: 768px) {
+    app-sidebar {
+        width: 80px;
+        flex-shrink: 0; 
+    }
+}
+
+#description{
+    white-space: normal;      /* Permite que el texto se quiebre en varias líneas */
+    word-break: break-word;   /* Rompe palabras largas si es necesario */
+    max-width: auto;    
 }

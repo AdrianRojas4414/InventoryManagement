@@ -1,18 +1,18 @@
 <div>
   <app-sidebar></app-sidebar>
   <main>
-    <h1>Suppliers</h1>
-    <h2>Manage your suppliers and their contact information</h2>
+    <h1>Proveedores</h1>
+    <h2>Gestiona a tus proveedores y su información de contacto</h2>
 
-    <button class="add" (click)="openSupplierForm()">+ Add Supplier</button>
+    <button class="add" (click)="openForm()">+ Agregar Proveedor</button>
 
     <div class="modal-backdrop" *ngIf="showForm || editMode">
       <div class="form-card">
-        <h3>{{ editMode ? 'Edit Supplier' : 'Add New Supplier' }}</h3>
+        <h3>{{ editMode ? 'Editar Proveedor' : 'Agregar Nuevo Proveedor' }}</h3>
         <form (ngSubmit)="saveSupplier()" #supplierForm="ngForm">
           <div class="form-grid">
             <div class="form-group">
-              <label for="name">Name</label>
+              <label for="name">Nombre</label>
               <input type="text" id="name" name="name" [(ngModel)]="currentSupplier.name" placeholder="Ej: Tech Solutions Inc" required>
             </div>
             <div class="form-group">
@@ -20,24 +20,24 @@
               <input type="text" id="nit" name="nit" [(ngModel)]="currentSupplier.nit" placeholder="Ej: 12345678-9" required>
             </div>
             <div class="form-group">
-              <label for="phone">Phone</label>
+              <label for="phone">Telefono</label>
               <input type="tel" id="phone" name="phone" [(ngModel)]="currentSupplier.phone" placeholder="Ej: +1 (555) 123-4567">
             </div>
             <div class="form-group">
-              <label for="email">Email</label>
+              <label for="email">Correo Electronico</label>
               <input type="email" id="email" name="email" [(ngModel)]="currentSupplier.email" placeholder="Ej: contact@supplier.com">
             </div>
             <div class="form-group">
-              <label for="contactName">Contact Name</label>
+              <label for="contactName">Nombre de Contacto</label>
               <input type="text" id="contactName" name="contactName" [(ngModel)]="currentSupplier.contactName" placeholder="Nombre de la persona clave">
             </div>
             <div class="form-group">
-              <label for="address">Address</label>
+              <label for="address">Direccion</label>
               <input type="text" id="address" name="address" [(ngModel)]="currentSupplier.address" placeholder="Calle, número, ciudad, código postal">
             </div>
             <div class="form-actions full-width">
               <button type="button" class="cancel" (click)="closeForm()">Cancel</button>
-              <button type="submit" class="add">{{ editMode ? 'Save Changes' : 'Save' }}</button>
+              <button type="submit" class="add">{{ editMode ? 'Guardar Cambios' : 'Guardar' }}</button>
             </div>
           </div>
         </form>
@@ -55,6 +55,7 @@
             <th>Phone</th>
             <th>Email</th>
             <th>Contact Name</th>
+            <th>Status</th>
             <th></th>
           </tr>
         </thead>
@@ -67,11 +68,19 @@
             <td>{{ supplier.phone }}</td>
             <td>{{ supplier.email }}</td>
             <td>{{ supplier.contactName }}</td>
+            <td>
+              <span [ngClass]="supplier.status ? 'status-active' : 'status-desactive'">{{ supplier.status ? 'ACTIVE' : 'DESACTIVE' }}</span>
+            </td>
             <td class="options-cell">
               <span class="options-icon" (click)="toggleOptions(supplier)">...</span>
               <div class="options-menu" *ngIf="supplier.showOptions">
-                <button (click)="editSupplier(supplier)">Edit</button>
-                <button (click)="disableSupplier(supplier)">Disable</button>
+                <ng-container *ngIf="supplier.status === 1">
+                  <button (click)="openForm(supplier)">Edit</button>
+                  <button (click)="disableSupplier(supplier)">Disable</button>
+                </ng-container>
+                <ng-container *ngIf="supplier.status === 0">
+                  <button (click)="enableSupplier(supplier)">Enable</button>
+                </ng-container>
               </div>
             </td>
           </tr>

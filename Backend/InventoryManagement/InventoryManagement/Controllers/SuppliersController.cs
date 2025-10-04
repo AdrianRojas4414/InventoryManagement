@@ -102,4 +102,22 @@ public class SuppliersController : ControllerBase
         await _supplierRepository.UpdateAsync(supplier);
         return Ok("Proveedor dado de baja correctamente.");
     }
+
+    [HttpPut("{id}/activate")]
+    public async Task<IActionResult> ActivateSupplier(short id, [FromHeader] string userRole)
+    {
+        if (userRole != "Admin")
+            return Forbid("Solo los administradores pueden habilitar proveedores.");
+
+        var supplier = await _supplierRepository.GetByIdAsync(id);
+        if (supplier == null)
+            return NotFound("Proveedor no encontrado.");
+
+        supplier.Status = 1; // habilitado
+        supplier.ModificationDate = DateTime.UtcNow;
+
+        await _supplierRepository.UpdateAsync(supplier);
+        return Ok("Proveedor habilitado correctamente.");
+    }
+
 }

@@ -1,9 +1,9 @@
-body, html {
-  font-family: Calibri, sans-serif;
+* {
+  font-family: Calibri;
+  background-color: #fff;
   margin: 0;
   color: #333;
   font-size: 1.1rem;
-  background-color: #fff;
 }
 
 :root { 

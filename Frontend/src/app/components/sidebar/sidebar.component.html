@@ -1,38 +1,18 @@
-<aside class="sidebar">
-  <h1 class="app-title">Inventory Pro</h1>
-  <nav class="sidebar-nav">
-    <ul>
-      <li>
-        <a routerLink="/admin/products" class="nav-item">
-          <i class="fa-solid fa-box"></i>
-          <span>Productos</span>
+<aside [ngClass]="getSidebarClasses()" id="sidebar">
+    <div class="sidebar-header">
+        <div class="logo-container">
+            <span class="header-title">Inventory Pro</span>
+        </div>
+    </div>
+    
+    <nav class="nav-container">
+        <a 
+            *ngFor="let item of navItems"
+            [ngClass]="getNavItemClasses(item.route)"
+            (click)="navigateTo(item.route)"
+            style="cursor: pointer;">
+            <span class="material-icons nav-icon">{{ item.icon }}</span>
+            <span class="nav-text">{{ item.name }}</span>
         </a>
-      </li>
-      <li>
-        <a routerLink="/admin/suppliers" class="nav-item">
-          <i class="fa-solid fa-truck"></i>
-          <span>Proveedores</span>
-        </a>
-      </li>
-      <li>
-        <a routerLink="#" class="nav-item">
-          <i class="fa-solid fa-cart-shopping"></i>
-          <span>Compras</span>
-        </a>
-      </li>
-      <li>
-        <a routerLink="#" class="nav-item">
-          <i class="fa-solid fa-file-alt"></i>
-          <span>Reportes</span>
-        </a>
-      </li>
-      <li>
-        <a routerLink="/admin/user-management" class="nav-item">
-          <i class="fa-solid fa-users"></i>
-          <span>Usuarios</span>
-        </a>
-      </li>
-    </ul>
-  </nav>
+    </nav>
 </aside>
-
