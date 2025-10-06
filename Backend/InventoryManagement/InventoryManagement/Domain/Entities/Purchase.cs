@@ -14,6 +14,8 @@ public class Purchase : AuditableEntity
 
     [ForeignKey("Supplier")]
     public short SupplierId { get; set; }
+    [ForeignKey("User")]
+    public short UserId { get; set; }
     public required virtual Supplier Supplier { get; set; }
 
     // Propiedad de navegación: una compra tiene muchos detalles
