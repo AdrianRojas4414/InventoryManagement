@@ -5,9 +5,199 @@
             <h1>Compras</h1>
             <h2>Gestione las compras y vea sus detalles</h2>
             <div class="actions">
-                <button class="add">+ Agregar Compra</button>
+                <button class="add" (click)="openPurchaseProductForm()">+ Agregar Compra</button>
             </div>
         </header>
+
+        <!-- FORMULARIO DE REGISTRO DE COMPRA -->
+        <ng-container *ngIf="showPurchaseForm">
+            <div class="modal-backdrop" (click)="closePurchaseForm()">
+                <div class="form-card" (click)="$event.stopPropagation()">
+                    <h3>Registrar una compra</h3>
+                    <form [formGroup]="purchaseForm" (ngSubmit)="onSubmit()">
+                        
+                        <!-- Proveedor y Fecha -->
+                        <div class="form-grid">
+                            <!-- Proveedor con dropdown custom -->
+                            <div class="form-group">
+                                <label>Proveedor *</label>
+                                <div class="custom-select-wrapper">
+                                    <div class="custom-select" 
+                                         [class.open]="showSupplierDropdown"
+                                         (click)="toggleSupplierDropdown()">
+                                        <span class="select-value">{{ getSelectedSupplierName() }}</span>
+                                        <span class="select-arrow">▼</span>
+                                    </div>
+                                    <div class="dropdown-menu" *ngIf="showSupplierDropdown">
+                                        <input type="text" 
+                                               class="dropdown-search"
+                                               placeholder="Buscar proveedor..."
+                                               [value]="supplierSearchTerm"
+                                               (input)="supplierSearchTerm = $any($event.target).value"
+                                               (click)="$event.stopPropagation()">
+                                        <div class="dropdown-options">
+                                            <div class="dropdown-option" 
+                                                 *ngFor="let supplier of getFilteredSuppliers()"
+                                                 (click)="selectSupplier(supplier)">
+                                                {{ supplier.name }}
+                                            </div>
+                                            <div class="dropdown-option empty" 
+                                                 *ngIf="getFilteredSuppliers().length === 0">
+                                                No se encontraron proveedores
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Fecha -->
+                            <div class="form-group">
+                                <label>Fecha *</label>
+                                <input type="date" 
+                                       formControlName="date"
+                                       class="form-input">
+                            </div>
+                        </div>
+
+                        <!-- Sección de Productos -->
+                        <div class="products-section">
+                            <div class="products-header">
+                                <h4>Productos</h4>
+                                <button type="button" 
+                                        class="btn-add-product" 
+                                        (click)="addDetailRow()">
+                                    + Agregar Producto
+                                </button>
+                            </div>
+
+                            <!-- Tabla de detalles -->
+                            <div class="details-table-container" *ngIf="details.length > 0">
+                                <table class="form-details-table">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 40%;">Producto</th>
+                                            <th style="width: 20%;">Cantidad</th>
+                                            <th style="width: 20%;">Precio Unitario</th>
+                                            <th style="width: 15%;">Subtotal</th>
+                                            <th style="width: 5%;"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody formArrayName="details">
+                                        <tr *ngFor="let detail of details.controls; let i = index" [formGroupName]="i">
+                                            <!-- Producto -->
+                                            <td>
+                                                <div class="custom-select-wrapper">
+                                                    <div class="custom-select small" 
+                                                         [class.open]="activeProductDropdown === i"
+                                                         (click)="toggleProductDropdown(i)">
+                                                        <span class="select-value">{{ getSelectedProductName(i) }}</span>
+                                                        <span class="select-arrow">▼</span>
+                                                    </div>
+                                                    <div class="dropdown-menu" *ngIf="activeProductDropdown === i">
+                                                        <input type="text" 
+                                                               class="dropdown-search"
+                                                               placeholder="Buscar producto..."
+                                                               [value]="productSearchTerms[i]"
+                                                               (input)="productSearchTerms[i] = $any($event.target).value || ''"
+                                                               (click)="$event.stopPropagation()">
+                                                        <div class="dropdown-options">
+                                                            <div class="dropdown-option" 
+                                                                 *ngFor="let product of getFilteredProducts(i)"
+                                                                 (click)="selectProduct(product, i)">
+                                                                {{ product.name }}
+                                                                <span class="stock-badge">Stock: {{ product.totalStock }}</span>
+                                                            </div>
+                                                            <div class="dropdown-option empty" 
+                                                                 *ngIf="getFilteredProducts(i).length === 0">
+                                                                No hay productos disponibles
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                            <!-- Cantidad con controles +/- -->
+                                            <td>
+                                                <div class="quantity-control">
+                                                    <button type="button" 
+                                                            class="qty-btn" 
+                                                            (click)="decrementQuantity(i)">
+                                                        −
+                                                    </button>
+                                                    <input type="number" 
+                                                           formControlName="quantity"
+                                                           class="qty-input"
+                                                           min="1">
+                                                    <button type="button" 
+                                                            class="qty-btn" 
+                                                            (click)="incrementQuantity(i)">
+                                                        +
+                                                    </button>
+                                                </div>
+                                            </td>
+
+                                            <!-- Precio Unitario -->
+                                            <td>
+                                                <input type="number" 
+                                                       formControlName="unitPrice"
+                                                       class="price-input"
+                                                       placeholder="0.00"
+                                                       step="0.01"
+                                                       min="0.01">
+                                            </td>
+
+                                            <!-- Subtotal -->
+                                            <td class="subtotal-cell">
+                                                <strong>{{ getRowSubtotal(i).toFixed(2) }}</strong>
+                                            </td>
+
+                                            <!-- Eliminar -->
+                                            <td class="action-cell">
+                                                <button type="button" 
+                                                        class="btn-remove" 
+                                                        (click)="removeDetailRow(i)"
+                                                        title="Eliminar">
+                                                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                                        <path d="M2 4h12M5.333 4V2.667a1.333 1.333 0 0 1 1.334-1.334h2.666a1.333 1.333 0 0 1 1.334 1.334V4m2 0v9.333a1.333 1.333 0 0 1-1.334 1.334H4.667a1.333 1.333 0 0 1-1.334-1.334V4h9.334Z" 
+                                                              stroke="currentColor" 
+                                                              stroke-width="1.5" 
+                                                              stroke-linecap="round" 
+                                                              stroke-linejoin="round"/>
+                                                    </svg>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <!-- Total -->
+                                <div class="total-section">
+                                    <div class="total-label">Total:</div>
+                                    <div class="total-amount">{{ getTotalAmount().toFixed(2) }} BOB</div>
+                                </div>
+                            </div>
+
+                            <!-- Mensaje cuando no hay productos -->
+                            <div class="empty-state" *ngIf="details.length === 0">
+                                <p>No hay productos agregados. Haga clic en "+ Agregar Producto" para comenzar.</p>
+                            </div>
+                        </div>
+
+                        <!-- Botones de acción -->
+                        <div class="form-actions">
+                            <button type="button" class="cancel" (click)="closePurchaseForm()">
+                                Cancelar
+                            </button>
+                            <button type="submit" class="add">
+                                Registrar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </ng-container>
+
+        <!-- TABLA DE COMPRAS EXISTENTE -->
         <section class="table-container">
             <table class="product-table">
                 <thead>
@@ -21,7 +211,6 @@
                 </thead>
                 <tbody>
                     <ng-container *ngFor="let purchase of purchases">
-                        <!-- Fila principal -->
                         <tr class="main-row" (click)="toggleDetails(purchase)" [class.expanded]="purchase.expanded">
                             <td class="expand-cell">
                                 <span class="chevron" [class.rotated]="purchase.expanded">
@@ -36,7 +225,6 @@
                             <td><strong>{{ purchase.total }}</strong></td>
                         </tr>
                         
-                        <!-- Fila de detalles expandible -->
                         <tr class="details-row" [class.show]="purchase.expanded">
                             <td colspan="5" class="details-cell">
                                 <div class="details-wrapper">
