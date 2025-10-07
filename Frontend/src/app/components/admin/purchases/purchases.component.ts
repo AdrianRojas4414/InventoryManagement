@@ -75,6 +75,8 @@ export class PurchasesComponent implements OnInit {
   // Control de dropdowns abiertos
   showSupplierDropdown = false;
   supplierSearchTerm = '';
+  showProductDropdown = false;
+  productSearchTerm = '';
   activeProductDropdown: number | null = null;
   productSearchTerms: { [key: number]: string } = {};
 
@@ -111,7 +113,6 @@ export class PurchasesComponent implements OnInit {
 
  loadProducts(): void {
     this.productService.getProducts().subscribe(products => {
-      console.log('Productos desde servicio:', products);
       this.products = products;
       this.filteredProducts = products;
     }, error => {
@@ -169,6 +170,7 @@ export class PurchasesComponent implements OnInit {
     if (this.showSupplierDropdown) {
       this.supplierSearchTerm = '';
     }
+    console.log("Toggle Suplier ", this.supplierSearchTerm)
   }
 
   selectSupplier(supplier: Supplier): void {
@@ -192,14 +194,21 @@ export class PurchasesComponent implements OnInit {
   }
 
   // Manejo de dropdown de productos
-  toggleProductDropdown(index: number): void {
-    if (this.activeProductDropdown === index) {
-      this.activeProductDropdown = null;
-    } else {
-      this.activeProductDropdown = index;
-      this.productSearchTerms[index] = '';
+  toggleProductDropdown(
+    index: number
+  ): void {
+    this.showProductDropdown = !this.showProductDropdown;
+    this.activeProductDropdown = index
+    if (this.showProductDropdown) {
+      this.productSearchTerm = '';
     }
-    console.log("Toggle product", this.activeProductDropdown)
+    // if (this.activeProductDropdown === index) {
+    //   this.activeProductDropdown = null;
+    // } else {
+    //   this.activeProductDropdown = index;
+    //   this.productSearchTerms[index] = '';
+    // }
+    console.log("Toggle product", this.productSearchTerm)
   }
 
   selectProduct(product: Product, index: number): void {
@@ -241,7 +250,7 @@ export class PurchasesComponent implements OnInit {
         p.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
-    console.log(filtered)
+    //console.log(filtered)
     return filtered;
   }
 

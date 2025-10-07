@@ -69,10 +69,10 @@ export class ProductsComponent {
 
   saveProduct(): void {
     if (this.editProductMode && this.currentEditProduct) {
-      // Aquí iría la lógica de edición (PUT) si tu backend lo soporta
+      // Aquí iría la lógica de edición (PUT) si el backend lo soporta
     } else {
       const newProduct: CreateProductDto = {
-        id: 0, // Backend genera el id
+        id: this.currentProduct.id,
         name: this.currentProduct.name,
         description: this.currentProduct.description,
         categoryId: this.currentProduct.categoryId!,

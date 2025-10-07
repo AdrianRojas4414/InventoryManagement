@@ -88,17 +88,17 @@
                                             <td>
                                                 <div class="custom-select-wrapper">
                                                     <div class="custom-select small" 
-                                                         [class.open]="activeProductDropdown === i"
+                                                         [class.open]="showProductDropdown && activeProductDropdown === i"
                                                          (click)="toggleProductDropdown(i)">
                                                         <span class="select-value">{{ getSelectedProductName(i) }}</span>
                                                         <span class="select-arrow">▼</span>
                                                     </div>
-                                                    <div class="dropdown-menu" *ngIf="activeProductDropdown === i">
+                                                    <div class="dropdown-menu" *ngIf="showProductDropdown && activeProductDropdown === i">
                                                         <input type="text" 
                                                                class="dropdown-search"
                                                                placeholder="Buscar producto..."
-                                                               [value]="productSearchTerms[i]"
-                                                               (input)="productSearchTerms[i] = $any($event.target).value || ''"
+                                                               [value]="productSearchTerm"
+                                                               (input)="productSearchTerm = $any($event.target).value || ''"
                                                                (click)="$event.stopPropagation()">
                                                         <div class="dropdown-options">
                                                             <div class="dropdown-option" 
@@ -122,7 +122,7 @@
                                                     <button type="button" 
                                                             class="qty-btn" 
                                                             (click)="decrementQuantity(i)">
-                                                        −
+                                                            -
                                                     </button>
                                                     <input type="number" 
                                                            formControlName="quantity"
@@ -131,7 +131,7 @@
                                                     <button type="button" 
                                                             class="qty-btn" 
                                                             (click)="incrementQuantity(i)">
-                                                        +
+                                                            +
                                                     </button>
                                                 </div>
                                             </td>
@@ -169,28 +169,25 @@
                                         </tr>
                                     </tbody>
                                 </table>
-
-                                <!-- Total -->
-                                <div class="total-section">
-                                    <div class="total-label">Total:</div>
-                                    <div class="total-amount">{{ getTotalAmount().toFixed(2) }} BOB</div>
-                                </div>
                             </div>
-
                             <!-- Mensaje cuando no hay productos -->
                             <div class="empty-state" *ngIf="details.length === 0">
                                 <p>No hay productos agregados. Haga clic en "+ Agregar Producto" para comenzar.</p>
                             </div>
-                        </div>
-
-                        <!-- Botones de acción -->
-                        <div class="form-actions">
-                            <button type="button" class="cancel" (click)="closePurchaseForm()">
-                                Cancelar
-                            </button>
-                            <button type="submit" class="add">
-                                Registrar
-                            </button>
+                            <!-- Total -->
+                            <div class="total-section">
+                                <div class="total-label">Total:</div>
+                                <div class="total-amount">{{ getTotalAmount().toFixed(2) }} BOB</div>
+                            </div>
+                            <!-- Botones de acción -->
+                            <div class="form-actions">
+                                <button type="button" class="cancel" (click)="closePurchaseForm()">
+                                    Cancelar
+                                </button>
+                                <button type="submit" class="add">
+                                    Registrar
+                                </button>
+                            </div>
                         </div>
                     </form>
                 </div>
