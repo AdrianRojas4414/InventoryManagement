@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "InventoryManageme
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "InventoryManagement\Application\Application.csproj", "{9575A510-7F09-497A-87AF-9435A61E2604}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagement.Application.Tests", "InventoryManagement.Application.Tests\InventoryManagement.Application.Tests.csproj", "{E44EB6E6-1766-4435-9EB8-AD644926982C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,18 @@ Global
 		{9575A510-7F09-497A-87AF-9435A61E2604}.Release|x64.Build.0 = Release|Any CPU
 		{9575A510-7F09-497A-87AF-9435A61E2604}.Release|x86.ActiveCfg = Release|Any CPU
 		{9575A510-7F09-497A-87AF-9435A61E2604}.Release|x86.Build.0 = Release|Any CPU
+		{E44EB6E6-1766-4435-9EB8-AD644926982C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E44EB6E6-1766-4435-9EB8-AD644926982C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E44EB6E6-1766-4435-9EB8-AD644926982C}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E44EB6E6-1766-4435-9EB8-AD644926982C}.Debug|x64.Build.0 = Debug|Any CPU
+		{E44EB6E6-1766-4435-9EB8-AD644926982C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E44EB6E6-1766-4435-9EB8-AD644926982C}.Debug|x86.Build.0 = Debug|Any CPU
+		{E44EB6E6-1766-4435-9EB8-AD644926982C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E44EB6E6-1766-4435-9EB8-AD644926982C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E44EB6E6-1766-4435-9EB8-AD644926982C}.Release|x64.ActiveCfg = Release|Any CPU
+		{E44EB6E6-1766-4435-9EB8-AD644926982C}.Release|x64.Build.0 = Release|Any CPU
+		{E44EB6E6-1766-4435-9EB8-AD644926982C}.Release|x86.ActiveCfg = Release|Any CPU
+		{E44EB6E6-1766-4435-9EB8-AD644926982C}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
