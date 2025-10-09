@@ -71,7 +71,7 @@
                             </div>
 
                             <!-- Tabla de detalles -->
-                            <div class="details-table-container" *ngIf="details.length > 0">
+                            <div class="details-table-container" *ngIf="purchaseDetails.length > 0">
                                 <table class="form-details-table">
                                     <thead>
                                         <tr>
@@ -82,8 +82,8 @@
                                             <th style="width: 5%;"></th>
                                         </tr>
                                     </thead>
-                                    <tbody formArrayName="details">
-                                        <tr *ngFor="let detail of details.controls; let i = index" [formGroupName]="i">
+                                    <tbody formArrayName="purchaseDetails">
+                                        <tr *ngFor="let detail of purchaseDetails.controls; let i = index" [formGroupName]="i">
                                             <!-- Producto -->
                                             <td>
                                                 <div class="custom-select-wrapper">
@@ -171,7 +171,7 @@
                                 </table>
                             </div>
                             <!-- Mensaje cuando no hay productos -->
-                            <div class="empty-state" *ngIf="details.length === 0">
+                            <div class="empty-state" *ngIf="purchaseDetails.length === 0">
                                 <p>No hay productos agregados. Haga clic en "+ Agregar Producto" para comenzar.</p>
                             </div>
                             <!-- Total -->
@@ -184,8 +184,12 @@
                                 <button type="button" class="cancel" (click)="closePurchaseForm()">
                                     Cancelar
                                 </button>
-                                <button type="submit" class="add">
-                                    Registrar
+                                <button 
+                                    class="add"
+                                    type="submit" 
+                                    [disabled]="isSubmitting || purchaseForm.invalid"
+                                    (click)="onSubmit()">
+                                    {{ isSubmitting ? 'Guardando...' : 'Registrar Compra' }}
                                 </button>
                             </div>
                         </div>

@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SupplierService } from '../../../services/supplier.service';
 import { ProductService } from '../../../services/product.service';
+import { PurchaseService } from '../../../services/purchase.service';
 
 interface PurchaseDetail {
   producto: string;
@@ -42,6 +43,17 @@ interface Product {
   status?: number;
 }
 
+interface CreatePurchase {
+  supplierId: number;
+  purchaseDetails: CreatePurchaseDetail[];
+}
+
+interface CreatePurchaseDetail {
+  productId: number;
+  quantity: number;
+  unitPrice: number;
+}
+
 @Component({
   selector: 'app-purchases',
   imports: [ReactiveFormsModule, SidebarComponent, CommonModule],
@@ -50,18 +62,18 @@ interface Product {
 })
 export class PurchasesComponent implements OnInit {
   purchases: Purchase[] = [
-    {
-      id: 0,
-      fecha: '14/09/2025',
-      proveedor: 'MILCAR',
-      total: '300 BOB',
-      expanded: false,
-      detalles: [
-        { producto: 'Arroz 1kg', cantidad: 10, precioUnitario: 15 },
-        { producto: 'Azúcar 1kg', cantidad: 8, precioUnitario: 12 },
-        { producto: 'Aceite 1L', cantidad: 5, precioUnitario: 18 }
-      ]
-    }
+    // {
+    //   id: 0,
+    //   fecha: '14/09/2025',
+    //   proveedor: 'MILCAR',
+    //   total: '300 BOB',
+    //   expanded: false,
+    //   detalles: [
+    //     { producto: 'Arroz 1kg', cantidad: 10, precioUnitario: 15 },
+    //     { producto: 'Azúcar 1kg', cantidad: 8, precioUnitario: 12 },
+    //     { producto: 'Aceite 1L', cantidad: 5, precioUnitario: 18 }
+    //   ]
+    // }
   ];
 
   showPurchaseForm = false;
@@ -79,17 +91,20 @@ export class PurchasesComponent implements OnInit {
   productSearchTerm = '';
   activeProductDropdown: number | null = null;
   productSearchTerms: { [key: number]: string } = {};
+  isSubmitting: boolean = false;
 
   constructor(
     private fb: FormBuilder,
     private supplierService: SupplierService,
-    private productService: ProductService
+    private productService: ProductService,
+    private purchaseService: PurchaseService
   ) {}
 
   ngOnInit(): void {
     this.initForm();
     this.loadSuppliers();
     this.loadProducts();
+    this.loadPurchases();
   }
 
   initForm(): void {
@@ -98,12 +113,12 @@ export class PurchasesComponent implements OnInit {
     this.purchaseForm = this.fb.group({
       supplierId: ['', Validators.required],
       date: [today, Validators.required],
-      details: this.fb.array([])
+      purchaseDetails: this.fb.array([])
     });
   }
 
-  get details(): FormArray {
-    return this.purchaseForm.get('details') as FormArray;
+  get purchaseDetails(): FormArray {
+    return this.purchaseForm.get('purchaseDetails') as FormArray;
   }
 
   loadSuppliers(): void {
@@ -120,6 +135,19 @@ export class PurchasesComponent implements OnInit {
     });
   }
 
+  loadPurchases(): void {
+
+    this.purchaseService.getAllPurchases('Admin').subscribe({
+      next: (data) => {
+        this.purchases = data;
+        console.log('Compras cargadas:', data);
+      },
+      error: (err) => {
+        console.error('Error:', err);
+      }
+    });
+  }
+
   createDetailRow(productId?: number, productName?: string): FormGroup {
     return this.fb.group({
       productId: [productId || '', Validators.required],
@@ -130,35 +158,35 @@ export class PurchasesComponent implements OnInit {
   }
 
   addDetailRow(): void {
-    this.details.push(this.createDetailRow());
+    this.purchaseDetails.push(this.createDetailRow());
   }
 
   removeDetailRow(index: number): void {
-    this.details.removeAt(index);
+    this.purchaseDetails.removeAt(index);
   }
 
   incrementQuantity(index: number): void {
-    const control = this.details.at(index).get('quantity');
+    const control = this.purchaseDetails.at(index).get('quantity');
     if (control) {
       control.setValue(control.value + 1);
     }
   }
 
   decrementQuantity(index: number): void {
-    const control = this.details.at(index).get('quantity');
+    const control = this.purchaseDetails.at(index).get('quantity');
     if (control && control.value > 1) {
       control.setValue(control.value - 1);
     }
   }
 
   getRowSubtotal(index: number): number {
-    const detail = this.details.at(index).value;
+    const detail = this.purchaseDetails.at(index).value;
     return (detail.quantity || 0) * (detail.unitPrice || 0);
   }
 
   getTotalAmount(): number {
     let total = 0;
-    for (let i = 0; i < this.details.length; i++) {
+    for (let i = 0; i < this.purchaseDetails.length; i++) {
       total += this.getRowSubtotal(i);
     }
     return total;
@@ -212,7 +240,7 @@ export class PurchasesComponent implements OnInit {
 
   selectProduct(product: Product, index: number): void {
     // Verificar si el producto ya está seleccionado
-    const alreadySelected = this.details.controls.some((control, i) => 
+    const alreadySelected = this.purchaseDetails.controls.some((control, i) => 
       i !== index && control.get('productId')?.value === product.id
     );
 
@@ -221,7 +249,7 @@ export class PurchasesComponent implements OnInit {
       return;
     }
 
-    this.details.at(index).patchValue({
+    this.purchaseDetails.at(index).patchValue({
       productId: product.id,
       productName: product.name
     });
@@ -229,7 +257,7 @@ export class PurchasesComponent implements OnInit {
   }
 
   getSelectedProductName(index: number): string {
-    const productId = this.details.at(index).get('productId')?.value;
+    const productId = this.purchaseDetails.at(index).get('productId')?.value;
     const product = this.products.find(p => p.id === productId);
     return product ? product.name : 'Seleccione un producto';
   }
@@ -244,7 +272,7 @@ export class PurchasesComponent implements OnInit {
     // const searchTerm = this.productSearchTerms[index] || '';
     
     // // Filtrar productos que ya están seleccionados
-    // const selectedProductIds = this.details.controls
+    // const selectedProductIds = this.purchaseDetails.controls
     //   .map(control => control.get('productId')?.value)
     //   .filter(id => id);
 
@@ -272,38 +300,82 @@ export class PurchasesComponent implements OnInit {
   }
 
   onSubmit(): void {
-    // Validar que haya al menos un producto
-    if (this.details.length === 0) {
-      alert('Debe agregar al menos un producto');
-      return;
-    }
-
-    // Validar que todos los productos estén completos
-    if (this.purchaseForm.invalid) {
-      alert('Por favor complete todos los campos requeridos correctamente');
-      this.purchaseForm.markAllAsTouched();
-      return;
-    }
-
-    // Validar que no haya filas con producto sin seleccionar
-    const hasEmptyProduct = this.details.controls.some(control => 
-      !control.get('productId')?.value
-    );
-
-    if (hasEmptyProduct) {
-      alert('Debe seleccionar un producto en todas las filas o eliminar las filas vacías');
-      return;
-    }
-
-    console.log('Formulario válido:', this.purchaseForm.value);
-    console.log('Total:', this.getTotalAmount());
-    
-    // TODO: Aquí enviarías los datos a tu servicio
-    // this.purchaseService.createPurchase(this.purchaseForm.value).subscribe(...)
-    
-    // Cerrar el formulario después de guardar
-    this.closePurchaseForm();
+  // Validaciones...
+  if (this.purchaseDetails.length === 0) {
+    alert('Debe agregar al menos un producto');
+    return;
   }
+
+  if (this.purchaseForm.invalid) {
+    alert('Por favor complete todos los campos requeridos correctamente');
+    this.purchaseForm.markAllAsTouched();
+    return;
+  }
+
+  // const hasEmptyProduct = this.purchaseDetails.controls.some(control => 
+  //   !control.get('productId')?.value
+  // );
+
+  // if (hasEmptyProduct) {
+  //   alert('Debe seleccionar un producto en todas las filas');
+  //   return;
+  // }
+
+  // Activar estado de carga
+  this.isSubmitting = true;
+
+  // Preparar los datos
+  const purchaseData = this.purchaseForm.value;
+  console.log('Enviando compra:', purchaseData);
+
+  // Realizar la petición
+  this.purchaseService.createPurchase(purchaseData, 1).subscribe({
+    next: (response) => {
+      console.log('✅ Compra registrada:', response);
+      alert('¡Compra registrada exitosamente!');
+      
+      // Resetear formulario
+      this.purchaseForm.reset();
+      this.purchaseDetails.clear();
+      
+      // Cerrar modal/formulario
+      this.closePurchaseForm();
+      
+      // Opcional: Recargar lista de compras si estás en el mismo componente
+      // this.loadPurchases();
+    },
+    error: (error) => {
+      console.error('❌ Error:', error);
+      
+      // Manejo de errores específicos
+      let errorMessage = 'Error al registrar la compra';
+      
+      if (error.status === 400) {
+        errorMessage = error.error?.error || 'Datos inválidos';
+      } else if (error.status === 403) {
+        errorMessage = 'No tiene permisos para realizar esta acción';
+      } else if (error.status === 500) {
+        errorMessage = 'Error del servidor. Intente más tarde';
+      }
+      
+      alert(errorMessage);
+    },
+    complete: () => {
+      // Desactivar estado de carga
+      this.isSubmitting = false;
+      console.log('Petición completada');
+    }
+  });
+}
+
+// Método helper para limpiar el formulario
+resetForm(): void {
+  this.purchaseForm.reset({
+    supplierId: null,
+    purchaseDetails: []
+  });
+  this.purchaseDetails.clear();
+}
 
   // Para la tabla de compras existente
   toggleDetails(purchase: Purchase): void {
