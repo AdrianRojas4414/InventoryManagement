@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace InventoryManagement.Domain.Entities;
 
@@ -7,7 +8,7 @@ namespace InventoryManagement.Domain.Entities;
 public class Product : AuditableEntity
 {
     [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.None)]
+    [JsonRequired]
     [Column("id")]
     public short Id { get; set; }
 

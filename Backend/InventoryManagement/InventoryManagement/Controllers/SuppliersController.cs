@@ -11,6 +11,8 @@ namespace InventoryManagement.Controllers;
 public class SuppliersController : ControllerBase
 {
     private readonly ISupplierRepository _supplierRepository;
+    private const string SupplierNotFoundMessage = "Proveedor no encontrado.";
+
 
     public SuppliersController(ISupplierRepository supplierRepository)
     {
@@ -32,7 +34,7 @@ public class SuppliersController : ControllerBase
         var supplier = await _supplierRepository.GetByIdAsync(id);
         if (supplier == null || supplier.Status == 0)
         {
-            return NotFound("Proveedor no encontrado.");
+            return NotFound(SupplierNotFoundMessage);
         }
         return Ok(supplier);
     }
@@ -66,7 +68,7 @@ public class SuppliersController : ControllerBase
         var supplier = await _supplierRepository.GetByIdAsync(id);
         if (supplier == null || supplier.Status == 0)
         {
-            return NotFound("Proveedor no encontrado.");
+            return NotFound(SupplierNotFoundMessage);
         }
 
         supplier.Name = supplierDto.Name;
@@ -93,7 +95,7 @@ public class SuppliersController : ControllerBase
         var supplier = await _supplierRepository.GetByIdAsync(id);
         if (supplier == null)
         {
-            return NotFound("Proveedor no encontrado.");
+            return NotFound(SupplierNotFoundMessage);
         }
 
         supplier.Status = 0; 
@@ -111,7 +113,7 @@ public class SuppliersController : ControllerBase
 
         var supplier = await _supplierRepository.GetByIdAsync(id);
         if (supplier == null)
-            return NotFound("Proveedor no encontrado.");
+            return NotFound(SupplierNotFoundMessage);
 
         supplier.Status = 1; // habilitado
         supplier.ModificationDate = DateTime.UtcNow;

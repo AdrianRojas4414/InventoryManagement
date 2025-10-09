@@ -34,7 +34,7 @@ public class PurchaseDetailsController : ControllerBase
     {
         var details = await _purchaseDetailRepository.GetByPurchaseIdAsync(purchaseId);
         
-        if (details == null || !details.Any())
+        if (details == null || details.Count == 0)
         {
             return NotFound("No se encontraron detalles para esta compra.");
         }

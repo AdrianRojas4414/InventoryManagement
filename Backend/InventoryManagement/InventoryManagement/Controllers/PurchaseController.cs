@@ -108,13 +108,13 @@ public class PurchasesController : ControllerBase
     }
 
     // Método helper para mapear una lista de compras
-    private List<PurchaseResponseDto> MapPurchasesToResponse(List<Domain.Entities.Purchase> purchases)
+    private static List<PurchaseResponseDto> MapPurchasesToResponse(List<Domain.Entities.Purchase> purchases)
     {
         return purchases.Select(p => MapPurchaseToResponse(p)).ToList();
     }
 
     // Método helper para mapear una compra individual
-    private PurchaseResponseDto MapPurchaseToResponse(Domain.Entities.Purchase purchase)
+    private static PurchaseResponseDto MapPurchaseToResponse(Domain.Entities.Purchase purchase)
     {
         return new PurchaseResponseDto
         {

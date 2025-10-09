@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace InventoryManagement.Domain.Entities;
 
@@ -7,12 +8,18 @@ namespace InventoryManagement.Domain.Entities;
 public class Purchase : AuditableEntity
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    [JsonIgnore]
     [Column("id")]
-    public int Id { get; set; } 
+    public int Id { get; set; }
 
+    [Required]
+    [JsonRequired]
     [Column("total_purchase", TypeName = "decimal(10, 2)")]
     public decimal TotalPurchase { get; set; }
 
+    [Required]
+    [JsonRequired]
     [ForeignKey("Supplier")]
     [Column("id_supplier")]
     public short SupplierId { get; set; }

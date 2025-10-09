@@ -337,27 +337,6 @@
           }
         },
         {
-          "ruleId": "S4487",
-          "level": "warning",
-          "message": "Remove this unread private field '_logger' or refactor the code to use its value.",
-          "locations": [
-            {
-              "resultFile": {
-                "uri": "file:///C:/Users/Adrian/source/repos/InventoryManagement/Backend/InventoryManagement/InventoryManagement/Controllers/WeatherForecastController.cs",
-                "region": {
-                  "startLine": 14,
-                  "startColumn": 57,
-                  "endLine": 14,
-                  "endColumn": 64
-                }
-              }
-            }
-          ],
-          "properties": {
-            "warningLevel": 1
-          }
-        },
-        {
           "ruleId": "S6966",
           "level": "warning",
           "message": "Await RunAsync instead.",
@@ -366,9 +345,9 @@
               "resultFile": {
                 "uri": "file:///C:/Users/Adrian/source/repos/InventoryManagement/Backend/InventoryManagement/InventoryManagement/Program.cs",
                 "region": {
-                  "startLine": 67,
+                  "startLine": 72,
                   "startColumn": 1,
-                  "endLine": 67,
+                  "endLine": 72,
                   "endColumn": 10
                 }
               }
@@ -447,23 +426,6 @@
             "tags": [
               "C#",
               "MainSourceScope",
-              "SonarWay"
-            ]
-          }
-        },
-        "S4487": {
-          "id": "S4487",
-          "shortDescription": "Unread \"private\" fields should be removed",
-          "fullDescription": "Private fields which are written but never read are a case of \"dead store\". Changing the value of such a field is useless and most probably indicates an error in the code.",
-          "defaultLevel": "warning",
-          "helpUri": "https://rules.sonarsource.com/csharp/RSPEC-4487",
-          "properties": {
-            "category": "Critical Code Smell",
-            "isEnabledByDefault": true,
-            "tags": [
-              "C#",
-              "MainSourceScope",
-              "TestSourceScope",
               "SonarWay"
             ]
           }
