@@ -5,12 +5,14 @@ namespace InventoryManagement.Domain.Entities;
 [Table("Purchase_Detail")]
 public class PurchaseDetail
 {
+    [Column("id_purchase")]
     public int PurchaseId { get; set; }
+    [Column("id_product")]
     public short ProductId { get; set; }
-
+    [Column("quantity")]
     public short Quantity { get; set; }
 
-    [Column(TypeName = "decimal(10, 2)")]
+    [Column("unit_price", TypeName = "decimal(10, 2)")]
     public decimal UnitPrice { get; set; }
 
     // Propiedades de navegación

@@ -7,15 +7,15 @@ namespace InventoryManagement.Domain.Entities;
 public class Purchase : AuditableEntity
 {
     [Key]
+    [Column("id")]
     public int Id { get; set; } 
 
-    [Column(TypeName = "decimal(10, 2)")]
+    [Column("total_purchase", TypeName = "decimal(10, 2)")]
     public decimal TotalPurchase { get; set; }
 
     [ForeignKey("Supplier")]
+    [Column("id_supplier")]
     public short SupplierId { get; set; }
-    [ForeignKey("User")]
-    public short UserId { get; set; }
     public required virtual Supplier Supplier { get; set; }
 
     // Propiedad de navegación: una compra tiene muchos detalles
