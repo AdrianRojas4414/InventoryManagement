@@ -4,7 +4,6 @@ using InventoryManagement.Application.DTOs;
 using InventoryManagement.Controllers;
 using InventoryManagement.Domain.Entities;
 using InventoryManagement.Infrastructure.Persistence;
-using Xunit;
 
 namespace InventoryManagement.Application.Tests.Users;
 
