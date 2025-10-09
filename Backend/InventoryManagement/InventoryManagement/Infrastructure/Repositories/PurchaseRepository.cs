@@ -15,63 +15,78 @@ public class PurchaseRepository : IPurchaseRepository
         _context = context;
     }
 
-    // Registrar nueva compra junto con sus detalles
     public async Task AddAsync(CreatePurchaseDto dto, short userId)
     {
-        // Obtener el proveedor correspondiente
-        var supplier = await _context.Suppliers.FindAsync(dto.SupplierId);
-        if (supplier == null)
-            throw new InvalidOperationException("Proveedor no encontrado.");
+        await using var transaction = await _context.Database.BeginTransactionAsync();
 
-        // Crear la entidad Purchase
-        var purchase = new Purchase
+        try
         {
-            SupplierId = dto.SupplierId,
-            Supplier = supplier,
-            UserId = userId,
-            // Inicializar PurchaseDetails asignando la referencia a purchase después
-            PurchaseDetails = new List<PurchaseDetail>()
-        };
-
-        // Crear los detalles y asignar la referencia a purchase
-        foreach (var pd in dto.PurchaseDetails)
-        {
-            var product = await _context.Products.FindAsync(pd.ProductId);
-            if (product == null)
-                throw new InvalidOperationException("Producto no encontrado.");
-
-            var detail = new PurchaseDetail
+            var supplier = await _context.Suppliers.FindAsync(dto.SupplierId);
+            if (supplier == null)
             {
-                ProductId = pd.ProductId,
-                Quantity = pd.Quantity,
-                UnitPrice = pd.UnitPrice,
-                Purchase = purchase, // Asignar la referencia requerida
-                Product = product    // Asignar la referencia requerida
-            };
-            purchase.PurchaseDetails.Add(detail);
-        }
-
-        // Calcular el total automáticamente
-        purchase.TotalPurchase = purchase.PurchaseDetails.Sum(pd => pd.UnitPrice * pd.Quantity);
-
-        // Guardar la compra
-        await _context.Purchases.AddAsync(purchase);
-        await _context.SaveChangesAsync();
-
-        // Actualizar stock de cada producto
-        foreach (var detail in purchase.PurchaseDetails)
-        {
-            var product = await _context.Products.FindAsync(detail.ProductId);
-            if (product != null)
-            {
-                product.TotalStock += detail.Quantity;
+                throw new InvalidOperationException("Proveedor no encontrado.");
             }
-        }
 
-        await _context.SaveChangesAsync();
+            var productIds = dto.PurchaseDetails.Select(pd => pd.ProductId).ToList();
+            
+            var productsFromDb = await _context.Products
+                .Where(p => productIds.Contains(p.Id))
+                .ToDictionaryAsync(p => p.Id);
+
+            if (productsFromDb.Count != productIds.Count)
+            {
+                throw new InvalidOperationException("Uno o mÃ¡s productos no fueron encontrados.");
+            }
+
+            var purchase = new Purchase
+            {
+                SupplierId = dto.SupplierId,
+                Supplier = supplier,
+                CreatedByUserId = userId,
+                CreationDate = DateTime.UtcNow,
+                ModificationDate = DateTime.UtcNow,
+                Status = 1,
+                PurchaseDetails = new List<PurchaseDetail>()
+            };
+
+            decimal total = 0;
+
+            foreach (var detailDto in dto.PurchaseDetails)
+            {
+                var product = productsFromDb[detailDto.ProductId];
+
+                var detail = new PurchaseDetail
+                {
+                    ProductId = detailDto.ProductId,
+                    Quantity = detailDto.Quantity,
+                    UnitPrice = detailDto.UnitPrice,
+                    Purchase = purchase,
+                    Product = product
+                };
+                
+                purchase.PurchaseDetails.Add(detail);
+
+                product.TotalStock += detailDto.Quantity;
+                _context.Products.Update(product);
+
+                total += detailDto.Quantity * detailDto.UnitPrice;
+            }
+
+            purchase.TotalPurchase = total;
+
+            await _context.Purchases.AddAsync(purchase);
+            
+            await _context.SaveChangesAsync();
+
+            await transaction.CommitAsync();
+        }
+        catch (Exception)
+        {
+            await transaction.RollbackAsync();
+            throw;
+        }
     }
 
-    // Listar todas las compras (solo admin)
     public async Task<List<Purchase>> GetAllAsync()
     {
         return await _context.Purchases
@@ -81,18 +96,16 @@ public class PurchaseRepository : IPurchaseRepository
             .ToListAsync();
     }
 
-    // Listar compras de un usuario específico (empleado)
     public async Task<List<Purchase>> GetByUserIdAsync(short userId)
     {
         return await _context.Purchases
-            .Where(p => p.UserId == userId)
+            .Where(p => p.CreatedByUserId == userId)
             .Include(p => p.Supplier)
             .Include(p => p.PurchaseDetails)
                 .ThenInclude(pd => pd.Product)
             .ToListAsync();
     }
 
-    // Obtener una compra por Id
     public async Task<Purchase?> GetByIdAsync(int purchaseId)
     {
         return await _context.Purchases
@@ -102,22 +115,9 @@ public class PurchaseRepository : IPurchaseRepository
             .FirstOrDefaultAsync(p => p.Id == purchaseId);
     }
 
-    // Actualizar compra (solo admin)
     public async Task UpdateAsync(Purchase purchase)
     {
-        // Recalcular TotalPurchase
-        purchase.TotalPurchase = purchase.PurchaseDetails.Sum(pd => pd.UnitPrice * pd.Quantity);
-
-        // Actualizar stock
-        foreach (var detail in purchase.PurchaseDetails)
-        {
-            var product = await _context.Products.FindAsync(detail.ProductId);
-            if (product != null)
-            {
-                product.TotalStock += detail.Quantity;
-            }
-        }
-
+        purchase.ModificationDate = DateTime.UtcNow;
         _context.Purchases.Update(purchase);
         await _context.SaveChangesAsync();
     }
