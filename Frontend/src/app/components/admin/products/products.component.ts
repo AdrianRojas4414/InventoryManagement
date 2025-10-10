@@ -40,6 +40,7 @@ export class ProductsComponent {
     this.categoryService.getCategories().subscribe(data => {
       this.categories = data;
       this.loadProducts(); // aseguramos que categories esté cargado antes de mapear productos
+      console.log(this.categories)
     });
   }
 
@@ -71,13 +72,17 @@ export class ProductsComponent {
     if (this.editProductMode && this.currentEditProduct) {
       // Aquí iría la lógica de edición (PUT) si el backend lo soporta
     } else {
+      console.log("product->Categoria", this.currentProduct.categoryId)
+      console.log("Categoria objeto id", this.currentCategory.id)
+      console.log("Categoria objeto", this.currentCategory)
       const newProduct: CreateProductDto = {
         id: this.currentProduct.id,
         name: this.currentProduct.name,
         description: this.currentProduct.description,
-        categoryId: this.currentProduct.categoryId!,
+        categoryId: this.currentProduct.categoryId,
         totalStock: this.currentProduct.totalStock
       };
+      console.log(newProduct);
 
       this.productService.createProduct(newProduct, this.userId)
         .subscribe(() => {
