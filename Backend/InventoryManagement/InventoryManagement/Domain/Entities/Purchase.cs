@@ -9,7 +9,6 @@ public class Purchase : AuditableEntity
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    [JsonIgnore]
     [Column("id")]
     public int Id { get; set; }
 

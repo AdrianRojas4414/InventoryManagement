@@ -9,7 +9,6 @@ public class Category : AuditableEntity
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    [JsonIgnore]
     [Column("id")]
     public short Id { get; set; }
 

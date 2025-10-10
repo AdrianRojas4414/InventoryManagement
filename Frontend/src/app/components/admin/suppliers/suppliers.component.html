@@ -48,20 +48,18 @@
       <table class="product-table">
         <thead>
           <tr>
-            <th>Supplier ID</th>
-            <th>Name</th>
+            <th>Nombre</th>
             <th>NIT</th>
-            <th>Address</th>
-            <th>Phone</th>
+            <th>Dirección</th>
+            <th>Teléfono</th>
             <th>Email</th>
-            <th>Contact Name</th>
-            <th>Status</th>
+            <th>Nombre de contacto</th>
+            <th>Estado</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let supplier of suppliers">
-            <td>{{ supplier.id }}</td>
             <td>{{ supplier.name }}</td>
             <td>{{ supplier.nit }}</td>
             <td>{{ supplier.address }}</td>

@@ -9,7 +9,6 @@ public class Supplier : AuditableEntity
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    [JsonIgnore]
     public short Id { get; set; }
 
     [Required]
