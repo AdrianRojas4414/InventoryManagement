@@ -93,6 +93,12 @@ export class PurchasesComponent implements OnInit {
   productSearchTerms: { [key: number]: string } = {};
   isSubmitting: boolean = false;
 
+  //propiedades para el modal
+  showModal = false;
+  modalTitle = '';
+  modalMessage = '';
+  modalType: 'success' | 'error' | 'warning' | 'info' = 'info';
+
   constructor(
     private fb: FormBuilder,
     private supplierService: SupplierService,
@@ -245,7 +251,7 @@ export class PurchasesComponent implements OnInit {
     );
 
     if (alreadySelected) {
-      alert('Este producto ya está agregado en otra fila');
+      this.showAlert('Error', 'Este producto ya está agregado en otra fila', 'error');
       return;
     }
 
@@ -303,12 +309,12 @@ export class PurchasesComponent implements OnInit {
   onSubmit(): void {
   // Validaciones...
   if (this.purchaseDetails.length === 0) {
-    alert('Debe agregar al menos un producto');
+    this.showAlert('Error', 'Debe agregar al menos un producto', 'error');
     return;
   }
 
   if (this.purchaseForm.invalid) {
-    alert('Por favor complete todos los campos requeridos correctamente');
+    this.showAlert('Error', 'Por favor complete todos los campos requeridos correctamente', 'error');
     this.purchaseForm.markAllAsTouched();
     return;
   }
@@ -357,7 +363,7 @@ export class PurchasesComponent implements OnInit {
         errorMessage = 'Error del servidor. Intente más tarde';
       }
       
-      alert(errorMessage);
+      this.showAlert('Error', errorMessage, 'error');
     },
     complete: () => {
       // Desactivar estado de carga
@@ -384,4 +390,18 @@ resetForm(): void {
   getSubtotal(detalle: PurchaseDetail): number {
     return detalle.cantidad * detalle.precioUnitario;
   }
+
+  // Método para mostrar el modal
+showAlert(title: string, message: string, type: 'success' | 'error' | 'warning' | 'info' = 'info'): void {
+  this.modalTitle = title;
+  this.modalMessage = message;
+  this.modalType = type;
+  this.showModal = true;
 }
+
+// Método para cerrar el modal
+closeModal(): void {
+  this.showModal = false;
+}
+}
+
