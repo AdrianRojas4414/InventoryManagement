@@ -1,62 +1,106 @@
-<div>
+<div class="layout">
   <app-sidebar></app-sidebar>
+
   <main>
     <header class="header">
-      <h1>Gestión de Usuarios</h1>
-      <h2>Administra empleados, asigna roles y controla accesos</h2>
+      <div class="header-text">
+        <h1>Gestión de Usuarios</h1>
+        <h2>Administra empleados, asigna roles y controla accesos</h2>
+      </div>
       <div class="actions">
-        <button (click)="toggleForm()" class="add">
-          {{ showForm ? '- Cancelar' : '+ Agregar Usuario' }}
-        </button>
+        <button class="add" (click)="toggleForm()">+ Agregar Usuario</button>
       </div>
     </header>
 
-    <div *ngIf="showForm" class="card form-card">
-      <form (ngSubmit)="createUser()" #userForm="ngForm" class="form-grid">
-        <mat-form-field appearance="outline">
-          <mat-label>Usuario</mat-label>
-          <input matInput [(ngModel)]="newUser.username" name="username" required />
-        </mat-form-field>
+    <!-- MODAL: FORMULARIO DE USUARIO -->
+    <div class="modal-backdrop" *ngIf="showForm">
+      <div class="form-card">
+        <h3>Registrar nuevo usuario</h3>
+        <form (ngSubmit)="createUser()" #userForm="ngForm" novalidate>
+          <div class="form-grid">
+            <!-- Usuario -->
+            <div class="form-group" [class.invalid]="username.invalid && username.touched">
+              <label>Usuario *</label>
+              <input
+                type="text"
+                placeholder="Ej: jdoe"
+                name="username"
+                required
+                [(ngModel)]="newUser.username"
+                #username="ngModel"
+              />
+              <small *ngIf="username.invalid && username.touched">Campo obligatorio</small>
+            </div>
+            <!-- Nombre -->
+            <div class="form-group" [class.invalid]="firstName.invalid && firstName.touched">
+              <label>Nombre *</label>
+              <input
+                type="text"
+                placeholder="Ej: Juan"
+                name="firstName"
+                required
+                [(ngModel)]="newUser.firstName"
+                #firstName="ngModel"
+              />
+              <small *ngIf="firstName.invalid && firstName.touched">Campo obligatorio</small>
+            </div>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Contraseña</mat-label>
-          <input matInput [(ngModel)]="newUser.password" name="password" required type="password" />
-        </mat-form-field>
+            <!-- Apellido -->
+            <div class="form-group" [class.invalid]="lastName.invalid && lastName.touched">
+              <label>Apellido *</label>
+              <input
+                type="text"
+                placeholder="Ej: Pérez"
+                name="lastName"
+                required
+                [(ngModel)]="newUser.lastName"
+                #lastName="ngModel"
+              />
+              <small *ngIf="lastName.invalid && lastName.touched">Campo obligatorio</small>
+            </div>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Nombre</mat-label>
-          <input matInput [(ngModel)]="newUser.firstName" name="firstName" required />
-        </mat-form-field>
+            <!-- Segundo Apellido -->
+            <div class="form-group">
+              <label>Segundo Apellido</label>
+              <input
+                type="text"
+                placeholder="Ej: Rodríguez"
+                name="secondLastName"
+                [(ngModel)]="newUser.secondLastName"
+              />
+            </div>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Apellido</mat-label>
-          <input matInput [(ngModel)]="newUser.lastName" name="lastName" required />
-        </mat-form-field>
+            <!-- Rol -->
+            <div class="form-group" [class.invalid]="role.invalid && role.touched">
+              <label>Rol *</label>
+              <select
+                name="role"
+                required
+                [(ngModel)]="newUser.role"
+                #role="ngModel"
+              >
+                <option value="">Seleccione un rol</option>
+                <option value="User">Usuario</option>
+                <option value="Employee">Empleado</option>
+                <option value="Admin">Administrador</option>
+              </select>
+              <small *ngIf="role.invalid && role.touched">Campo obligatorio</small>
+            </div>
+          </div>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Segundo Apellido</mat-label>
-          <input matInput [(ngModel)]="newUser.secondLastName" name="secondLastName" />
-        </mat-form-field>
+          <div class="form-actions">
+            <button type="button" class="cancel" (click)="toggleForm()">Cancelar</button>
+            <button type="submit" class="save" [disabled]="!userForm.valid">
+              Guardar Usuario
+            </button>
+          </div>
+        </form>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Rol</mat-label>
-          <mat-select [(ngModel)]="newUser.role" name="role" required>
-            <mat-option value="Admin">Administrador</mat-option>
-            <mat-option value="Employee">Empleado</mat-option>
-            <mat-option value="User">Usuario</mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <div class="form-actions">
-          <button mat-raised-button color="accent" type="submit" [disabled]="!userForm.form.valid">
-            Guardar
-          </button>
-        </div>
-      </form>
+      </div>
     </div>
 
-    <!-- Tabla -->
-    <div class="card">
+    <!-- TABLA DE USUARIOS -->
+    <section class="table-container card">
       <table class="custom-table">
         <thead>
           <tr>
@@ -64,7 +108,7 @@
             <th>Nombre</th>
             <th>Apellido</th>
             <th>Rol</th>
-            <th class="actions">Acciones</th>
+            <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -73,28 +117,25 @@
             <td>{{ u.firstName }}</td>
             <td>{{ u.lastName }}</td>
             <td>
-              <span class="badge" [ngClass]="{
-                'badge-admin': u.role === 'Admin',
-                'badge-employee': u.role === 'Employee',
-                'badge-user': u.role === 'User'
-              }">
+              <span
+                class="badge"
+                [ngClass]="{
+                  'badge-admin': u.role === 'Admin',
+                  'badge-employee': u.role === 'Employee',
+                  'badge-user': u.role === 'User'
+                }"
+              >
                 {{ u.role === 'Admin' ? 'Administrador' : (u.role === 'Employee' ? 'Empleado' : 'Usuario') }}
               </span>
             </td>
             <td class="actions">
-              <button mat-stroked-button color="warn" (click)="deleteUser(u.id)">
-                Eliminar
-              </button>
-              <button mat-stroked-button color="primary" (click)="updateRole(u,'Admin')">
-                Hacer Administrador
-              </button>
-              <button mat-stroked-button color="accent" (click)="updateRole(u,'User')">
-                Hacer Usuario
-              </button>
+              <button class="cancel" (click)="deleteUser(u.id)">Eliminar</button>
+              <button class="add" (click)="updateRole(u, 'Admin')">Hacer Administrador</button>
+              <button class="add" (click)="updateRole(u, 'User')">Hacer Usuario</button>
             </td>
           </tr>
         </tbody>
       </table>
-    </div>
+    </section>
   </main>
 </div>
