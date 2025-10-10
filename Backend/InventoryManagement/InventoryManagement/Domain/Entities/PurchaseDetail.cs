@@ -16,6 +16,6 @@ public class PurchaseDetail
     public decimal UnitPrice { get; set; }
 
     // Propiedades de navegación
-    public required virtual Purchase Purchase { get; set; }
-    public required virtual Product Product { get; set; }
+    public required virtual Purchase Purchase { get; set; } = null!;
+    public required virtual Product Product { get; set; } = null!;
 }
