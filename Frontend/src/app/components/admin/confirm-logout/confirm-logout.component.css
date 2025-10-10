@@ -1,0 +1,57 @@
+.confirm-dialog {
+  padding: 20px;
+}
+
+.confirm-dialog h2 {
+  color: #d32f2f;
+  margin-bottom: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.confirm-dialog p {
+  font-size: 16px;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.confirm-dialog button {
+  margin-left: 10px;
+  border-radius: 6px;
+  font-weight: 500;
+  text-transform: none;
+}
+button.mat-mdc-raised-button.mat-warn {
+  background-color: #d32f2f !important;
+  color: #fff !important;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+button.mat-mdc-raised-button.mat-warn:hover {
+  background-color: #b71c1c !important;
+}
+
+button.mat-mdc-button {
+  background-color: #f5f5f5 !important;
+  color: #333 !important;
+  font-weight: 500;
+}
+
+button.mat-mdc-button:hover {
+  background-color: #e0e0e0 !important;
+}
+
+::ng-deep .mat-mdc-dialog-container .mat-mdc-raised-button.mat-warn {
+  background-color: #d32f2f !important;
+  color: #fff !important;
+  font-weight: 600 !important;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+::ng-deep .mat-mdc-dialog-container .mat-mdc-raised-button.mat-warn:hover {
+  background-color: #b71c1c !important;
+  color: #fff !important;
+}
+

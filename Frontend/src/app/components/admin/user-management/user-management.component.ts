@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatSelectModule } from '@angular/material/select';
-import { UsersService, User, CreateUserDto } from '../../../services/users.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { API_URL } from '../../../config';
 import { SidebarComponent } from '../../sidebar/sidebar.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+
 @Component({
   selector: 'app-user-management',
   standalone: true,
@@ -15,9 +16,8 @@ import { SidebarComponent } from '../../sidebar/sidebar.component';
     CommonModule,
     FormsModule,
     MatButtonModule,
-    MatInputModule,
     MatFormFieldModule,
-    MatIconModule,
+    MatInputModule,
     MatSelectModule,
     SidebarComponent
   ],
@@ -25,10 +25,10 @@ import { SidebarComponent } from '../../sidebar/sidebar.component';
   styleUrls: ['./user-management.component.css']
 })
 export class UserManagementComponent implements OnInit {
-  users: User[] = [];
+  users: any[] = [];
   showForm = false;
 
-  newUser: CreateUserDto = {
+  newUser = {
     username: '',
     password: '',
     firstName: '',
@@ -37,33 +37,88 @@ export class UserManagementComponent implements OnInit {
     role: 'User'
   };
 
-  constructor(private usersService: UsersService) {}
+  private baseUrl = `${API_URL}/users`;
+
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
     this.loadUsers();
   }
 
-  loadUsers() {
-    this.usersService.list().subscribe(data => (this.users = data));
-  }
-
-  toggleForm() {
-    this.showForm = !this.showForm;
-  }
-
-  createUser() {
-    this.usersService.create(this.newUser).subscribe(() => {
-      this.loadUsers();
-      this.newUser = { username: '', password: '', firstName: '', lastName: '', secondLastName: '', role: 'User' };
-      this.showForm = false;
+  /** Cargar usuarios */
+  loadUsers(): void {
+    this.http.get<any[]>(this.baseUrl).subscribe({
+      next: (data) => (this.users = data),
+      error: (err) => console.error('Error cargando usuarios:', err)
     });
   }
 
-  deleteUser(id: number) {
-    this.usersService.remove(id).subscribe(() => this.loadUsers());
+  /** Crear usuario */
+  createUser(): void {
+    const headers = new HttpHeaders({
+      userRole: localStorage.getItem('role') || ''
+    });
+
+    this.http.post(this.baseUrl, this.newUser, { headers }).subscribe({
+      next: () => {
+        this.loadUsers();
+        this.toggleForm();
+        this.resetForm();
+      },
+      error: (err) => {
+        console.error('Error al crear usuario:', err);
+        alert('Solo un administrador puede crear usuarios.');
+      }
+    });
   }
 
-  updateRole(user: User, role: string) {
-    this.usersService.updateRole(user.id, role).subscribe(() => this.loadUsers());
+  /** Eliminar usuario (dar de baja) */
+  deleteUser(id: number): void {
+    if (confirm('¿Seguro que deseas eliminar este usuario?')) {
+      const headers = new HttpHeaders({
+        userRole: localStorage.getItem('role') || ''
+      });
+
+      this.http.delete(`${this.baseUrl}/${id}`, { headers }).subscribe({
+        next: () => this.loadUsers(),
+        error: (err) => {
+          console.error('Error al eliminar usuario:', err);
+          alert('Solo un administrador puede eliminar usuarios.');
+        }
+      });
+    }
+  }
+
+  /** Cambiar rol del usuario */
+  updateRole(user: any, role: string): void {
+    const headers = new HttpHeaders({
+      userRole: localStorage.getItem('role') || ''
+    });
+
+    // backend espera un string plano, no un objeto
+    this.http.put(`${this.baseUrl}/${user.id}/role`, `"${role}"`, { headers }).subscribe({
+      next: () => this.loadUsers(),
+      error: (err) => {
+        console.error('Error al cambiar rol:', err);
+        alert('Solo un administrador puede cambiar roles.');
+      }
+    });
+  }
+
+  /** Mostrar/ocultar formulario */
+  toggleForm(): void {
+    this.showForm = !this.showForm;
+  }
+
+  /** Resetear formulario */
+  resetForm(): void {
+    this.newUser = {
+      username: '',
+      password: '',
+      firstName: '',
+      lastName: '',
+      secondLastName: '',
+      role: 'User'
+    };
   }
 }
