@@ -254,6 +254,7 @@ export class PurchasesComponent implements OnInit {
       productName: product.name
     });
     this.activeProductDropdown = null;
+    this.showProductDropdown = false;
   }
 
   getSelectedProductName(index: number): string {
@@ -332,7 +333,7 @@ export class PurchasesComponent implements OnInit {
   this.purchaseService.createPurchase(purchaseData, 1).subscribe({
     next: (response) => {
       console.log('✅ Compra registrada:', response);
-      alert('¡Compra registrada exitosamente!');
+      
       
       // Resetear formulario
       this.purchaseForm.reset();
@@ -340,9 +341,7 @@ export class PurchasesComponent implements OnInit {
       
       // Cerrar modal/formulario
       this.closePurchaseForm();
-      
-      // Opcional: Recargar lista de compras si estás en el mismo componente
-      // this.loadPurchases();
+      this.loadPurchases();
     },
     error: (error) => {
       console.error('❌ Error:', error);
