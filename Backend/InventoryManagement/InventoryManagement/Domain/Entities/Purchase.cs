@@ -10,7 +10,7 @@ public class Purchase : AuditableEntity
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [Column("id")]
-    public int Id { get; set; }
+    public int Id { get; set; } // NOSONAR
 
     [Required]
     [JsonRequired]

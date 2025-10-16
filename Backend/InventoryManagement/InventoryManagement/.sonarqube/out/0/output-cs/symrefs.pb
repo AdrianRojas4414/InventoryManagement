@@ -15,24 +15,47 @@ kC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\In
 ""1 8$$ 
 **  ,, 
 -- // P
-66 99 ;; << @@ BB DD FF HH Ú
-xC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\User.cs
+66 99 ;; << @@ BB DD FF HH ¹
+ŽC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Infrastructure\Repositories\UserRepository.cs
 
- 
+ Z
+
+
+, 4  !      %% !** !
+1 8 
 
- 
+! 3
+; CI Q
+6 7; <
 
- 
+ &
+, 0* .
 
- 
+ )
+/ 3" &
 
- 
+##& 6
 
-!! 
+((! -
+((4 6**2 4û
+’C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Infrastructure\Repositories\SupplierRepository.cs
 
-%% !
+ P
+
+
+( 0     $$ %% 
+1 8 
 
-** Ö
+! -
+4 62 4
+
+& 1
+
+ 
+( 0* 2
+
+"" !
+""+ 3$$" *Ö
 ’C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Infrastructure\Repositories\PurchaseRepository.cs
 
 		 ‚
@@ -74,7 +97,30 @@ xC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\In
 ss! "ss& '
 
 vv !
-vv+ 3xx yy" *˜
+vv+ 3xx yy" *ï
+˜C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Infrastructure\Repositories\PurchaseDetailRepository.cs
+
+ %P
+
+
+( 0   $$ %% ** ++ 
+7 > 
+
+, 7
+  
+  
+
+, @
+E O* 4
+  
+  
+  
+
+"" 
+"". <$$0 >
+
+(( !
+((1 ?**( 6˜
 ‘C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Infrastructure\Repositories\ProductRepository.cs
 
  2
@@ -86,7 +132,19 @@ xC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\In
 % 0
 
  
-' .) 0À
+' .) 0™
+’C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Infrastructure\Repositories\CategoryRepository.cs
+
+ 2
+
+
+( 0    
+1 8 
+
+& 1
+
+ 
+( 0+ 3À
 ‘C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Infrastructure\Persistence\InventoryDbContext.cs
  / A
 C JS Z
@@ -111,19 +169,37 @@ xC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\In
 9 E   
    "/ 1
    "/ 1(
-   ". 0= ?™
-’C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Infrastructure\Repositories\CategoryRepository.cs
+   ". 0= ?Ú
+xC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\User.cs
 
- 2
-
-
-( 0    
-1 8 
+ 
 
-& 1
+ 
 
- 
-( 0+ 3Š
+ 
+
+ 
+
+ 
+
+!! 
+
+%% !
+
+** Î
+ƒC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\SupplierProduct.cs
+
+ 
+
+ 
+
+		 
+
+ 
+
+% -
+
+$ +Š
 ƒC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Controllers\SuppliersController.cs
 
   n
@@ -156,134 +232,105 @@ xC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\In
 mm% 5
 mm< >rr> @
 mmT \oo 2
-rr ss vv ww yy. 6¹
-ŽC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Infrastructure\Repositories\UserRepository.cs
-
- Z
-
-
-, 4  !      %% !** !
-1 8 
-
-! 3
-; CI Q
-6 7; <
-
- &
-, 0* .
-
- )
-/ 3" &
-
-##& 6
-
-((! -
-((4 6**2 4û
-’C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Infrastructure\Repositories\SupplierRepository.cs
-
- P
-
-
-( 0     $$ %% 
-1 8 
-
-! -
-4 62 4
-
-& 1
-
- 
-( 0* 2
-
-"" !
-""+ 3$$" *ï
-˜C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Infrastructure\Repositories\PurchaseDetailRepository.cs
-
- %P
-
-
-( 0   $$ %% ** ++ 
-7 > 
-
-, 7
-  
-  
-
-, @
-E O* 4
-  
-  
-  
-
-"" 
-"". <$$0 >
-
-(( !
-((1 ?**( 6Î
-ƒC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\SupplierProduct.cs
-
- 
-
- 
-
-		 
-
- 
-
-% -
-
-$ +ó
-ˆC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Controllers\PurchaseDetailController.cs
-
-		 &<
-/ H ! 5## 5:: +PP +
-? W$ <
-
-% :
-O W 
-  
-
-!!% ;
-!!@ J##K U(
-## %% %% &** 
-
-//% 6
-00" 0::5 C;;G U
-11 $33 
-
-EE% 9
-FF" 0PP8 FQQJ X
-GG $II Ý
-†C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Application\DTOs\UpdateSupplierDto.cs
-
- 
-
- 
-
- 
-
- 
-
- 
-
-		 
-
-
-
- Æ
+rr ss vv ww yy. 6Æ
 |C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\Purchase.cs
 
  
 
- 
+ 
 
-  
+  
 
- 
+ 
+
+% -
+
+8 Gö
+‡C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\ProductPriceHistory.cs
+
+  
+
+ 
+
+		 
+
+
+
+ 
+
+  
+
+  
+
+$ +
+
+% -
+
+% -é
+{C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\Product.cs
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ $
+
+ $
+
+!!0 @
+
+$$/ >º
+|C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\Category.cs
+
+ 
+
+ 
+
+ 
+
+ 
+
+( 0ê
+|C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\Supplier.cs
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+   
+
+$$ 
+
+''0 @Ù
+‚C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\PurchaseDetail.cs
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
 
 % -
 
-8 Gú
+$ +ú
 C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Controllers\UsersController.cs
 
  Œ
@@ -314,26 +361,7 @@ xC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\In
 mm nn pp qq ss "vv 
 
 {{% 0
-}} ~~ é
-{C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\Product.cs
-
- 
-
- 
-
- 
-
- 
-
- 
-
- $
-
- $
-
-!!0 @
-
-$$/ >Î
+}} ~~ Î
 ƒC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\AuditableEntity.cs
 
  %
@@ -346,121 +374,28 @@ xC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\In
 
  
 
- &º
-|C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\Category.cs
+ &ó
+ˆC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Controllers\PurchaseDetailController.cs
 
- 
+		 &<
+/ H ! 5## 5:: +PP +
+? W$ <
 
- 
+% :
+O W 
+  
 
- 
+!!% ;
+!!@ J##K U(
+## %% %% &** 
 
- 
+//% 6
+00" 0::5 C;;G U
+11 $33 
 
-( 0ê
-|C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\Supplier.cs
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
-!! 
-
-%% 
-
-((0 @•
-ŽC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Application\Interfaces\IPurchaseRepository.cs
-
- $
-
-	 
-
-$ '
-
-/ 5
-
- $
-
-		 )
-
-		0 6
-
-
-
-  
-
-
-
-% /
-
-	 
-
- &Ù
-‚C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\PurchaseDetail.cs
-
- 
-
- 
-
- 
-
- 
-
- 
-
-% -
-
-$ +ö
-‡C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Domain\Entities\ProductPriceHistory.cs
-
-  
-
- 
-
-		 
-
-
-
- 
-
-  
-
-  
-
-$ +
-
-% -
-
-% -÷
-”C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Application\Interfaces\IPurchaseDetailRepository.cs
-
- *
-
- *
-
- 3
-
-8 B
-
-
-
-	 
-
-
-
-! /
-
-	 
-
-$ 2—
+EE% 9
+FF" 0PP8 FQQJ X
+GG $II —
 ‚C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Controllers\PurchaseController.cs
 
 
@@ -502,38 +437,20 @@ xC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\In
 ~~8 :
 €€ 
  
-‚‚! #£
-}C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Application\DTOs\LoginDto.cs
+‚‚! #ó
+‚C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Controllers\ProductsController.cs
 
- 
+ (
+( :  /--  
+1 B .
 
- #
+% 3
+  
 
- #™
-ˆC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Application\DTOs\PurchaseResponseDto.cs
-
-  
-
- 
-
- 
-
- 
-
-		 
-
-
-
- 
-
-+ 3
- & )
-
- 
-
- 
-
- !ë
+% 2<
+O Y"" ## $$ $%% #&& #
+n t** $
+   --* 4.. ë
 ‚C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Controllers\CategoryController.cs
 
 
@@ -549,20 +466,7 @@ xC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\In
 
 ''% 5
 )) ** )
-** ,, "ó
-‚C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Controllers\ProductsController.cs
-
- (
-( :  /--  
-1 B .
-
-% 3
-  
-
-% 2<
-O Y"" ## $$ $%% #&& #
-n t** $
-   --* 4.. ô
+** ,, "ô
 ~C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Controllers\AuthController.cs
 
 
@@ -616,7 +520,34 @@ xC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\In
 
 
 
- &Ù
+ &•
+ŽC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Application\Interfaces\IPurchaseRepository.cs
+
+ $
+
+	 
+
+$ '
+
+/ 5
+
+ $
+
+		 )
+
+		0 6
+
+
+
+  
+
+
+
+% /
+
+	 
+
+ &Ù
 ‚C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Application\DTOs\CreateUserDto.cs
 
  
@@ -633,16 +564,7 @@ xC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\In
 
 
 
- ¸
-…C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Application\DTOs\LoginResponseDto.cs
-
- 
-
- 
-
- 
-
- À
+ À
 C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Application\Interfaces\IProductRepository.cs
 
  #
@@ -661,6 +583,84 @@ xC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\In
 	 
 
  #Ý
+†C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Application\DTOs\UpdateSupplierDto.cs
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+		 
+
+
+
+ ™
+ˆC:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Application\DTOs\PurchaseResponseDto.cs
+
+  
+
+ 
+
+ 
+
+ 
+
+		 
+
+
+
+ 
+
++ 3
+ & )
+
+ 
+
+ 
+
+ !¸
+…C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Application\DTOs\LoginResponseDto.cs
+
+ 
+
+ 
+
+ 
+
+ £
+}C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Application\DTOs\LoginDto.cs
+
+ 
+
+ #
+
+ #÷
+”C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Application\Interfaces\IPurchaseDetailRepository.cs
+
+ *
+
+ *
+
+ 3
+
+8 B
+
+
+
+	 
+
+
+
+! /
+
+	 
+
+$ 2Ý
 †C:\Users\Adrian\source\repos\InventoryManagement\Backend\InventoryManagement\InventoryManagement\Application\DTOs\CreateSupplierDto.cs
 
  
