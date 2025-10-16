@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SidebarComponent } from '../../sidebar/sidebar.component';
+import { SidebarComponent } from '../sidebar/sidebar.component';
 import { CommonModule } from '@angular/common';
 import { SupplierService, Supplier } from '../../../services/supplier.service';
 

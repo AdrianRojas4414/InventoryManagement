@@ -10,6 +10,7 @@ export interface Product {
   categoryId: number;
   totalStock: number;
   status?: number;
+  showOption?: number;
 }
 
 export interface CreateProductDto {

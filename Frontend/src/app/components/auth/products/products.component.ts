@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { SidebarComponent } from '../../sidebar/sidebar.component';
+import { SidebarComponent } from '../sidebar/sidebar.component';
 import { CommonModule } from '@angular/common';
 import { CategoryService, Category } from '../../../services/category.service';
 import { ProductService, Product, CreateProductDto } from '../../../services/product.service';
-import { ConfirmModalComponent } from '../../confirm-modal/confirm-modal.component';
+import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-products',

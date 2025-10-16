@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SidebarComponent } from '../../sidebar/sidebar.component';
+import { SidebarComponent } from '../sidebar/sidebar.component';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SupplierService } from '../../../services/supplier.service';
