@@ -4,11 +4,12 @@ import { SidebarComponent } from '../../sidebar/sidebar.component';
 import { CommonModule } from '@angular/common';
 import { CategoryService, Category } from '../../../services/category.service';
 import { ProductService, Product, CreateProductDto } from '../../../services/product.service';
+import { ConfirmModalComponent } from '../../confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [FormsModule, SidebarComponent, CommonModule],
+  imports: [FormsModule, SidebarComponent, CommonModule, ConfirmModalComponent],
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css']
 })
@@ -21,6 +22,12 @@ export class ProductsComponent {
 
   showCategoryForm = false;
   editCategoryMode = false;
+
+  showOptionsCategory = false;
+  disableCategoryMode = false;
+
+  showOptionProduct = false;
+  disableProductMode = false;
 
   currentProduct: Product & { categoryId?: number } = {} as Product;
   currentEditProduct: Product | null = null;
@@ -120,4 +127,69 @@ export class ProductsComponent {
     this.showCategoryForm = false;
     this.editCategoryMode = false;
   }
+
+  toggleOptionsCategory(category: Category): void {
+    this.showOptionsCategory = !this.showOptionsCategory;
+  }
+
+  disableCategory(category: Category): void {
+    this.resetModals();
+    this.disableCategoryMode = true;
+    this.currentCategory = category;
+  }
+
+  enableCategory(category: Category): void {
+    this.resetModals();
+    this.currentCategory.status = 1;
+    this.currentCategory = category;
+  }
+
+  editCategory(category: Category): void {
+    this.resetModals();
+    this.showCategoryForm = true;
+    this.editCategoryMode = true;
+    this.currentCategory = { ...category };
+    this.currentEditCategory = category;
+  }
+
+  confirmDisableCategory(): void {
+    if (this.currentCategory) {
+      this.currentCategory.status = 0;
+    }
+    this.closeDisableConfirmCategory();
+  }
+
+  closeDisableConfirmCategory(): void {
+    this.disableCategoryMode = false;
+  }
+
+  toggleOptionsProduct(product: Product): void {
+    this.showOptionProduct = !this.showOptionProduct;
+  }
+
+  disableProduct(product: Product): void {
+    this.resetModals();
+    this.disableProductMode = true;
+    this.currentProduct = product;
+  }
+
+  confirmDisableProduct(): void {
+    if (this.currentProduct) {
+      this.currentProduct.status = 1;
+    }
+    this.closeDisableConfirmProduct();
+  }
+
+  closeDisableConfirmProduct(): void {
+    this.disableProductMode = false;
+  }
+
+  editProduct(product: Product): void {
+    this.resetModals();
+    this.showProductForm = true;
+    this.editProductMode = true;
+    this.currentProduct = { ...product };
+    this.currentEditProduct = product;
+  }
 }
+
