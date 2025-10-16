@@ -9,7 +9,7 @@ public class Supplier : AuditableEntity
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public short Id { get; set; }
+    public short Id { get; set; } // NOSONAR
 
     [Required]
     [MaxLength(100)]

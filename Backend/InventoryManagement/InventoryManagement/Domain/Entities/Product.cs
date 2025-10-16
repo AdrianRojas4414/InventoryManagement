@@ -8,6 +8,7 @@ namespace InventoryManagement.Domain.Entities;
 public class Product : AuditableEntity
 {
     [Key]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     [JsonRequired]
     [Column("id")]
     public short Id { get; set; }
