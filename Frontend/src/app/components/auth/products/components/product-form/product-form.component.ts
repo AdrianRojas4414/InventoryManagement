@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
-import { CategoryService, Category } from '../../../../../services/category.service';
-import { ProductService, Product, CreateProductDto} from '../../../../../services/product.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { CreateProductDto, Product, ProductService } from '../../../../../services/product.service';
+import { Category, CategoryService } from '../../../../../services/category.service';
 
 @Component({
   selector: 'app-product-form',
@@ -35,10 +35,6 @@ export class ProductFormComponent implements OnInit {
     if (!this.product.categoryId && this.categories.length > 0) {
       this.product.categoryId = this.categories[0].id!;
     }
-
-    // Limpiar espacios en blanco al inicio y final
-    this.product.name = this.product.name?.trim() || '';
-    this.product.description = this.product.description?.trim() || '';
   }
 
   save(): void {
@@ -77,7 +73,7 @@ export class ProductFormComponent implements OnInit {
           this.close.emit();
         }, 1000);
       },
-      error: (error) => {
+      error: (error: any) => {
         console.error('Error al guardar producto:', error);
         this.errorMessage = 'Error al guardar el producto';
       }

@@ -1,0 +1,145 @@
+<div class="modal-backdrop">
+  <div class="form-card">
+    <h3>{{ editMode ? 'Editar Proveedor' : 'Agregar Proveedor' }}</h3>
+
+    <form #supplierForm="ngForm" (ngSubmit)="save()">
+        <!-- NOMBRE -->
+        <div class="form-group">
+          <label for="name">Nombre</label>
+          <input 
+            [(ngModel)]="supplier.name"
+            name="name"
+            #name="ngModel"
+            required
+            minlength="4"
+            maxlength="31"
+            pattern="^(?!\\d+$)[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\\s,.-]+$"
+            placeholder="Ej: Distribuidora ABC"
+          >
+          <div class="error" *ngIf="name.invalid && (name.dirty || name.touched)">
+            <p *ngIf="name.errors?.['required']">El nombre es obligatorio.</p>
+            <p *ngIf="name.errors?.['minlength']">Debe tener al menos 4 caracteres.</p>
+            <p *ngIf="name.errors?.['maxlength']">Debe tener menos de 31 caracteres.</p>
+            <p *ngIf="name.errors?.['pattern']">No puede ser solo números ni contener caracteres inválidos.</p>
+          </div>
+        </div>
+
+        <!-- NIT -->
+        <div class="form-group">
+          <label for="nit">Identificación Fiscal (NIT)</label>
+          <input 
+            [(ngModel)]="supplier.nit"
+            name="nit"
+            #nit="ngModel"
+            required
+            pattern="^[0-9]{7,12}-?[0-9A-Z]?$"
+            placeholder="Ej: 12345678-9"
+          >
+          <div class="error" *ngIf="nit.invalid && (nit.dirty || nit.touched)">
+            <p *ngIf="nit.errors?.['required']">El NIT es obligatorio.</p>
+            <p *ngIf="nit.errors?.['pattern']">Formato inválido. Ejemplo: 12345678-9</p>
+          </div>
+        </div>
+
+        <!-- TELÉFONO -->
+        <div class="form-group">
+          <label for="phone">Teléfono</label>
+          <div class="phone-group">
+            <select [(ngModel)]="countryCode" name="countryCode" required>
+              <option value="+591">🇧🇴 +591 (Bolivia)</option>
+              <option value="+54">🇦🇷 +54 (Argentina)</option>
+              <option value="+56">🇨🇱 +56 (Chile)</option>
+              <option value="+57">🇨🇴 +57 (Colombia)</option>
+              <option value="+51">🇵🇪 +51 (Perú)</option>
+              <option value="+52">🇲🇽 +52 (México)</option>
+            </select>
+            <input 
+              type="text"
+              [(ngModel)]="phoneNumber"
+              name="phoneNumber"
+              #phoneNumber="ngModel"
+              required
+              pattern="^[0-9]{6,10}$"
+              placeholder="70000001"
+            >
+          </div>
+          <div class="error" *ngIf="phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)">
+            <p *ngIf="phoneNumber.errors?.['required']">El teléfono es obligatorio.</p>
+            <p *ngIf="phoneNumber.errors?.['pattern']">Debe tener entre 6 y 10 dígitos.</p>
+          </div>
+        </div>
+
+        <!-- CORREO -->
+        <div class="form-group">
+          <label for="email">Correo Electrónico</label>
+          <input 
+            type="email"
+            [(ngModel)]="supplier.email"
+            name="email"
+            #email="ngModel"
+            required
+            minlength="5"
+            maxlength="30"
+            pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
+            placeholder="Ej: contacto@empresa.com"
+          >
+          <div class="error" *ngIf="email.invalid && (email.dirty || email.touched)">
+            <p *ngIf="email.errors?.['required']">El correo es obligatorio.</p>
+            <p *ngIf="email.errors?.['pattern']">Debe tener un formato válido (ej. usuario&#64;dominio.com).</p>
+            <p *ngIf="email.errors?.['minlength']">Debe tener al menos 5 caracteres.</p>
+            <p *ngIf="email.errors?.['maxlength']">Debe tener menos de 30 caracteres.</p>
+          </div>
+        </div>
+
+        <!-- CONTACTO -->
+        <div class="form-group">
+          <label for="contactName">Nombre de Contacto</label>
+          <input 
+            [(ngModel)]="supplier.contactName"
+            name="contactName"
+            #contactName="ngModel"
+            required
+            minlength="2"
+            maxlength="50"
+            pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\\s]+$"
+            placeholder="Ej: Juan Pérez"
+          >
+          <div class="error" *ngIf="contactName.invalid && (contactName.dirty || contactName.touched)">
+            <p *ngIf="contactName.errors?.['required']">El nombre de contacto es obligatorio.</p>
+            <p *ngIf="contactName.errors?.['pattern']">Solo se permiten letras y espacios.</p>
+            <p *ngIf="contactName.errors?.['minlength']">Debe tener al menos 2 caracteres.</p>
+            <p *ngIf="contactName.errors?.['maxlength']">Debe tener menos de 50 caracteres.</p>
+          </div>
+        </div>
+
+        <!-- DIRECCIÓN -->
+        <div class="form-group">
+          <label for="address">Dirección</label>
+          <input 
+            [(ngModel)]="supplier.address"
+            name="address"
+            #address="ngModel"
+            required
+            minlength="4"
+            maxlength="100"
+            placeholder="Ej: Av. Blanco Galindo #123"
+          >
+          <div class="error" *ngIf="address.invalid && (address.dirty || address.touched)">
+            <p *ngIf="address.errors?.['required']">La dirección es obligatoria.</p>
+            <p *ngIf="address.errors?.['minlength']">Debe tener al menos 4 caracteres.</p>
+            <p *ngIf="address.errors?.['maxlength']">Debe tener menos de 100 caracteres.</p>
+          </div>
+        </div>
+
+      <div class="form-actions">
+        <button class="cancel" type="button" (click)="cancel()">Cancelar</button>
+        <button class="add" type="submit" [disabled]="supplierForm.invalid">
+          {{ editMode ? 'Guardar Cambios' : 'Guardar' }}
+        </button>
+      </div>
+
+      <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+      <div class="success-message" *ngIf="successMessage">{{ successMessage }}</div>
+    </form>
+  </div>
+</div>

@@ -5,11 +5,12 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
+
+import { AuthService } from '../../../services/auth.service';
 import { ProductFormComponent } from './components/product-form/product-form.component';
 import { CategoryFormComponent } from './components/category-form/category-form.component';
 import { ProductTableComponent } from './components/product-table/product-table.component';
 import { CategoryTableComponent } from './components/category-table/category-table.component';
-import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-products',

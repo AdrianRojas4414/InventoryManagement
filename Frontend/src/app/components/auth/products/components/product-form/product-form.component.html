@@ -76,7 +76,7 @@
       <div class="form-actions">
         <button class="cancel" type="button" (click)="cancel()">Cancelar</button>
         <button class="add" type="submit" [disabled]="productForm.invalid">
-          {{ editMode ? 'Guardar' : 'Agregar' }}
+          {{ editMode ? 'Guardar Cambios' : 'Agregar' }}
         </button>
       </div>
       <div class="error-message" *ngIf="errorMessage">

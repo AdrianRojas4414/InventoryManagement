@@ -12,9 +12,16 @@ export interface Supplier {
   email?: string;
   contactName?: string;
   status?: number;
-
   showOptions?: boolean;
-  disabled?: boolean;
+}
+
+export interface CreateSupplierDto {
+  name: string;
+  nit: string;
+  address?: string;
+  phone?: string;
+  email?: string;
+  contactName?: string;
 }
 
 @Injectable({
@@ -30,12 +37,12 @@ export class SupplierService {
     return this.http.get<Supplier[]>(this.apiUrl);
   }
 
-  createSupplier(supplier: Partial<Supplier>, userId: number): Observable<Supplier> {
+  createSupplier(supplier: CreateSupplierDto, userId: number): Observable<Supplier> {
     const headers = new HttpHeaders().set('userId', userId.toString());
     return this.http.post<Supplier>(this.apiUrl, supplier, { headers });
   }
 
-  updateSupplier(id: number, supplier: Partial<Supplier>): Observable<Supplier> {
+  updateSupplier(id: number, supplier: CreateSupplierDto): Observable<Supplier> {
     return this.http.put<Supplier>(`${this.apiUrl}/${id}`, supplier);
   }
 

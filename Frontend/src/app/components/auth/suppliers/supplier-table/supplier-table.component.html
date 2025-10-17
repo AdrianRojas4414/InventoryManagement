@@ -1,0 +1,41 @@
+<section class="table-container">
+  <table class="product-table">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>NIT</th>
+        <th>Dirección</th>
+        <th>Teléfono</th>
+        <th>Email</th>
+        <th>Nombre de contacto</th>
+        <th>Estado</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+     <tr *ngFor="let supplier of suppliers">
+       <td>{{ supplier.name }}</td>
+       <td>{{ supplier.nit }}</td>
+       <td>{{ supplier.address }}</td>
+       <td>{{ supplier.phone }}</td>
+       <td>{{ supplier.email }}</td>
+       <td>{{ supplier.contactName }}</td>
+       <td>
+         <span [ngClass]="supplier.status ? 'status-active' : 'status-desactive'">
+           {{ supplier.status ? 'ACTIVE' : 'DESACTIVE' }}
+         </span>
+       </td>
+       <td class="options-cell" *ngIf="isAdmin">
+         <span class="options-icon" (click)="toggleOptions(supplier)">...</span>
+         <div class="options-menu" *ngIf="supplier.showOptions && supplier.status">
+            <button (click)="edit.emit(supplier)">Editar</button>
+            <button (click)="disable.emit(supplier)">Deshabilitar</button>
+         </div>
+         <div class="options-menu" *ngIf="supplier.showOptions && !supplier.status">
+            <button (click)="enable.emit(supplier)">Habilitar</button>
+         </div>
+       </td>
+      </tr>
+    </tbody>
+  </table>
+</section>

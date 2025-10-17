@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CategoryService, Category } from '../../../../../services/category.service';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../../../services/auth.service';
+import { Category } from '../../../../../services/category.service';
 
 @Component({
   selector: 'app-category-table',
