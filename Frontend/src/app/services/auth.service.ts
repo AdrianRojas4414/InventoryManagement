@@ -39,6 +39,6 @@ export class AuthService {
 
   isAdmin(): boolean {
     return localStorage.getItem('role') === 'Admin';
-  }
+  } 
 }
 

@@ -1,43 +1,48 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { SidebarComponent } from '../sidebar/sidebar.component';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { CategoryService, Category } from '../../../services/category.service';
 import { ProductService, Product, CreateProductDto } from '../../../services/product.service';
+import { SidebarComponent } from '../sidebar/sidebar.component';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { ConfirmModalComponent } from '../confirm-modal/confirm-modal.component';
+import { ProductFormComponent } from './components/product-form/product-form.component';
+import { CategoryFormComponent } from './components/category-form/category-form.component';
+import { ProductTableComponent } from './components/product-table/product-table.component';
+import { CategoryTableComponent } from './components/category-table/category-table.component';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [FormsModule, SidebarComponent, CommonModule, ConfirmModalComponent],
+  imports: [
+    FormsModule,
+    SidebarComponent,
+    CommonModule,
+    ConfirmModalComponent,
+    ProductFormComponent,
+    CategoryFormComponent,
+    ProductTableComponent,
+    CategoryTableComponent
+  ],
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css']
 })
-export class ProductsComponent {
+export class ProductsComponent implements OnInit {
   categories: Category[] = [];
   products: (Product & { categoryName?: string })[] = [];
 
-  showProductForm = false;
-  editProductMode = false;
-
-  showCategoryForm = false;
-  editCategoryMode = false;
-
-  showOptionsCategory = false;
-  disableCategoryMode = false;
-
-  showOptionProduct = false;
-  disableProductMode = false;
-
   currentProduct: Product & { categoryId?: number } = {} as Product;
-  currentEditProduct: Product | null = null;
-
   currentCategory: Category = { name: '', description: '' };
-  currentEditCategory: Category | null = null;
+
+  // Estados de los formularios y confirmaciones
+  showProductForm = false;
+  showCategoryForm = false;
+  disableMode = { type: '', id: 0, active: false };
 
   userId = Number(localStorage.getItem('userId'));
+  userRole : string = '';
 
-  constructor(private categoryService: CategoryService, private productService: ProductService) {}
+  constructor(private categoryService: CategoryService, private productService: ProductService, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.loadCategories();
@@ -46,14 +51,12 @@ export class ProductsComponent {
   loadCategories(): void {
     this.categoryService.getCategories().subscribe(data => {
       this.categories = data;
-      this.loadProducts(); // aseguramos que categories esté cargado antes de mapear productos
-      console.log(this.categories)
+      this.loadProducts(); // Mapear categorías en productos
     });
   }
 
   loadProducts(): void {
     this.productService.getProducts().subscribe(data => {
-      // Agregamos categoryName para usar en el template
       this.products = data.map(p => ({
         ...p,
         categoryName: this.categories.find(c => c.id === p.categoryId)?.name || 'Unknown'
@@ -61,135 +64,61 @@ export class ProductsComponent {
     });
   }
 
-  openProductForm(): void {
-    this.resetModals();
+  // Abrir formularios
+  openProductForm(product?: Product): void {
     this.showProductForm = true;
-    this.editProductMode = false;
-    this.currentProduct = {} as Product;
+    this.currentProduct = product ? { ...product } : {} as Product;
   }
 
-  openCategoryForm(): void {
-    this.resetModals();
+  openCategoryForm(category?: Category): void {
     this.showCategoryForm = true;
-    this.editCategoryMode = false;
-    this.currentCategory = { name: '', description: '' };
+    this.currentCategory = category ? { ...category } : { name: '', description: '' };
   }
 
-  saveProduct(): void {
-    if (this.editProductMode && this.currentEditProduct) {
-      // Aquí iría la lógica de edición (PUT) si el backend lo soporta
-    } else {
-      console.log("product->Categoria", this.currentProduct.categoryId)
-      console.log("Categoria objeto id", this.currentCategory.id)
-      console.log("Categoria objeto", this.currentCategory)
-      const newProduct: CreateProductDto = {
-        id: this.currentProduct.id,
-        name: this.currentProduct.name,
-        description: this.currentProduct.description,
-        categoryId: this.currentProduct.categoryId,
-        totalStock: this.currentProduct.totalStock
-      };
-      console.log(newProduct);
+  closeForms(): void {
+    this.showProductForm = false;
+    this.showCategoryForm = false;
+  }
 
-      this.productService.createProduct(newProduct, this.userId)
-        .subscribe(() => {
+  saveProduct(product: Product & { categoryId?: number }) {
+    const newProduct: CreateProductDto = {
+      name: product.name,
+      description: product.description,
+      categoryId: product.categoryId,
+      totalStock: product.totalStock
+    };
+
+    this.productService.createProduct(newProduct, this.userId).subscribe(() => {
+      this.loadProducts();
+      this.closeForms();
+    });
+  }
+
+  saveCategory(category: Category) {
+    this.categoryService.addCategory(category, this.userId).subscribe(() => {
+      this.loadCategories();
+      this.closeForms();
+    });
+  }
+
+  openConfirm(type: 'product' | 'category', item: Product | Category) {
+    this.disableMode = {
+      type,
+      id: item.id!,
+      active: true
+    };
+  }
+
+  confirmDisable() {
+    if (this.disableMode.type === 'product') {
+      this.productService.desactivate(this.disableMode.id, this.userRole).subscribe({
+        next: () => {
+          console.log('Producto desactivado');
           this.loadProducts();
-          this.closeForm();
-        });
+          this.disableMode.active = false;
+        },
+        error: (err) => console.error('Error al desactivar producto:', err)
+      });
     }
-  }
-
-  saveCategory(): void {
-    if (this.editCategoryMode && this.currentEditCategory) {
-      // Lógica de edición si la agregas al backend
-    } else {
-      this.categoryService.addCategory(this.currentCategory, this.userId)
-        .subscribe(() => {
-          this.loadCategories();
-          this.closeFormCategory();
-        });
-    }
-  }
-
-  resetModals(): void {
-    this.showProductForm = false;
-    this.editProductMode = false;
-    this.showCategoryForm = false;
-    this.editCategoryMode = false;
-  }
-
-  closeForm(): void {
-    this.showProductForm = false;
-    this.editProductMode = false;
-  }
-
-  closeFormCategory(): void {
-    this.showCategoryForm = false;
-    this.editCategoryMode = false;
-  }
-
-  toggleOptionsCategory(category: Category): void {
-    this.showOptionsCategory = !this.showOptionsCategory;
-  }
-
-  disableCategory(category: Category): void {
-    this.resetModals();
-    this.disableCategoryMode = true;
-    this.currentCategory = category;
-  }
-
-  enableCategory(category: Category): void {
-    this.resetModals();
-    this.currentCategory.status = 1;
-    this.currentCategory = category;
-  }
-
-  editCategory(category: Category): void {
-    this.resetModals();
-    this.showCategoryForm = true;
-    this.editCategoryMode = true;
-    this.currentCategory = { ...category };
-    this.currentEditCategory = category;
-  }
-
-  confirmDisableCategory(): void {
-    if (this.currentCategory) {
-      this.currentCategory.status = 0;
-    }
-    this.closeDisableConfirmCategory();
-  }
-
-  closeDisableConfirmCategory(): void {
-    this.disableCategoryMode = false;
-  }
-
-  toggleOptionsProduct(product: Product): void {
-    this.showOptionProduct = !this.showOptionProduct;
-  }
-
-  disableProduct(product: Product): void {
-    this.resetModals();
-    this.disableProductMode = true;
-    this.currentProduct = product;
-  }
-
-  confirmDisableProduct(): void {
-    if (this.currentProduct) {
-      this.currentProduct.status = 1;
-    }
-    this.closeDisableConfirmProduct();
-  }
-
-  closeDisableConfirmProduct(): void {
-    this.disableProductMode = false;
-  }
-
-  editProduct(product: Product): void {
-    this.resetModals();
-    this.showProductForm = true;
-    this.editProductMode = true;
-    this.currentProduct = { ...product };
-    this.currentEditProduct = product;
   }
 }
-

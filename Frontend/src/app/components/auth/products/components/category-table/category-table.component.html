@@ -1,0 +1,37 @@
+<section class="table-container">
+  <table class="product-table">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Estado</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let category of pagedCategories">
+        <td>{{ category.name }}</td>
+        <td id="description">{{ category.description }}</td>
+        <td>
+          <span [ngClass]="category.status ? 'status-active' : 'status-desactive'">
+            {{ category.status ? 'ACTIVO' : 'DESACTIVO' }}
+          </span>
+        </td>
+        <td class="options-cell" *ngIf="isAdmin">
+          <span class="options-icon" (click)="toggleOptions(category)">...</span>
+          <div class="options-menu" *ngIf="category['showOptions']">
+            <ng-container *ngIf="category.status === 1">
+              <button (click)="edit.emit(category)">Editar</button>
+            </ng-container>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+<!-- Paginación -->
+<div class="pagination">
+  <button (click)="prevPage()" [disabled]="currentPage === 0">&laquo; Anterior</button>
+  <span>Página {{ currentPage + 1 }} de {{ Math.ceil(categories.length / pageSize) }}</span>
+  <button (click)="nextPage()" [disabled]="(currentPage + 1) * pageSize >= categories.length">Siguiente &raquo;</button>
+</div>

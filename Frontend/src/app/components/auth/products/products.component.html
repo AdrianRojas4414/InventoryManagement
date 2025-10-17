@@ -1,167 +1,55 @@
 <div>
   <app-sidebar></app-sidebar>
   <main>
-    <header class="header">
+    <header>
       <h1>Productos</h1>
       <h2>Administre su inventario de productos y realice un seguimiento de los niveles de existencias</h2>
       <div class="actions">
         <button class="add" (click)="openProductForm()">+ Agregar Producto</button>
-        <button class="add" (click)="openCategoryForm()">+ Agregar Categoria</button>
+        <button class="add" (click)="openCategoryForm()">+ Agregar Categoría</button>
       </div>
     </header>
 
-    <!-- Formulario Categoría -->
-    <ng-container *ngIf="showCategoryForm">
-      <div class="modal-backdrop">
-        <div class="form-card">
-          <h3>{{ editCategoryMode ? 'Editar Categoria' : 'Agregar Nueva Categoria' }}</h3>
-          <form (ngSubmit)="saveCategory()">
-            <div class="form-group">
-              <label for="category-name">Nombre de la Categoria</label>
-              <input id="category-name" [(ngModel)]="currentCategory.name" name="name" required placeholder="Ej: Jugueteria">
-            </div>
-            <div class="form-group">
-              <label for="category-description">Descripcion</label>
-              <input id="category-description" [(ngModel)]="currentCategory.description" name="description" required placeholder="Ej: Productos de diversion">
-            </div>
-            <div class="form-actions">
-              <button type="button" class="cancel" (click)="closeFormCategory()">Cancelar</button>
-              <button type="submit" class="add">{{ editCategoryMode ? 'Guardar Cambios' : 'Agregar' }}</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </ng-container>
+    <!-- Formularios modulares -->
+    <app-product-form
+      *ngIf="showProductForm"
+      [product]="currentProduct"
+      [categories]="categories"
+      (close)="closeForms()"
+      (saved)="loadProducts()">
+    </app-product-form>
 
-    <!-- Formulario Producto -->
-    <ng-container *ngIf="showProductForm">
-      <div class="modal-backdrop">
-        <div class="form-card">
-          <h3>{{ editProductMode ? 'Editar Producto' : 'Agregar Nuevo Producto' }}</h3>
-          <form (ngSubmit)="saveProduct()">
-            <div class="form-grid">
-              <div class="form-group">
-                <label for="product-id">ID del Producto</label>
-                <input id="product-id" [(ngModel)]="currentProduct.id" name="id" required>
-              </div>
-              <div class="form-group">
-                <label for="product-name">Nombre del Producto</label>
-                <input id="product-name" [(ngModel)]="currentProduct.name" name="name" required>
-              </div>
-              <div class="form-group">
-                <label for="product-description">Descripcion</label>
-                <input id="product-description" [(ngModel)]="currentProduct.description" name="description" required>
-              </div>
-              <div class="form-group">
-                <label for="product-category">Categoria</label>
-                <select id="product-category" [(ngModel)]="currentProduct.categoryId" name="categoryId" required>
-                  <option *ngFor="let cat of categories" [ngValue]="cat.id">{{ cat.name }}</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label for="product-stock">Stock</label>
-                <input id="product-stock" type="number" [(ngModel)]="currentProduct.totalStock" name="totalStock" required>
-              </div>
-            </div>
-            <div class="form-actions">
-              <button type="button" class="cancel" (click)="closeForm()">Cancel</button>
-              <button type="submit" class="add">{{ editProductMode ? 'Guardar Cambios' : 'Agregar Producto' }}</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </ng-container>
+    <app-category-form
+      *ngIf="showCategoryForm"
+      [category]="currentCategory"
+      (close)="closeForms()"
+      (saved)="loadCategories()">
+    </app-category-form>
 
-    <!-- Tabla Productos -->
-    <section class="table-container">
-      <table class="product-table">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Categoria</th>
-            <th>Descripcion</th>
-            <th>Stock</th>
-            <th>Status</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let product of products">
-            <td>{{ product.name }}</td>
-            <td><span class="category-tag">{{ product.categoryName }}</span></td>
-            <td class="description">{{ product.description }}</td>
-            <td [ngClass]="{
-                'stock-low': product.totalStock > 0 && product.totalStock <= 10,
-                'stock-out': product.totalStock === 0
-            }">{{ product.totalStock }}</td>
-            <td>
-              <span [ngClass]="product.status ? 'status-desactive' : 'status-active'">
-                {{ product.status ? 'DESACTIVO' : 'ACTIVO' }}
-              </span>
-            </td>
-            <td class="options-cell">
-              <span class="options-icon" (click)="toggleOptionsProduct(product)">...</span>
-              <div class="options-menu" *ngIf="showOptionProduct">
-                <button (click)="editProduct(product)">Edit</button>
-                <button (click)="disableProduct(product)">Disable</button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
+    <!-- Tablas -->
+    <app-product-table
+      [products]="products"
+      (edit)="openProductForm($event)"
+      (disable)="openConfirm('product', $event)">
+    </app-product-table>
 
-    <!-- Tabla Categorías -->
-    <section class="table-container">
-      <table class="product-table">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Descripcion</th>
-            <th>Estado</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let category of categories">
-            <td>{{ category.name }}</td>
-            <td class="description">{{ category.description }}</td>
-            <td>
-              <span [ngClass]="category.status ? 'status-active' : 'status-desactive'">
-                {{ category.status ? 'ACTIVO' : 'DESACTIVO' }}
-              </span>
-            </td>
-            <td class="options-cell">
-              <span class="options-icon" (click)="toggleOptionsCategory(category)">...</span>
-              <div class="options-menu" *ngIf="showOptionsCategory">
-                <ng-container *ngIf="category.status === 1">
-                  <button (click)="editCategory(category)">Edit</button>
-                  <button (click)="disableCategory(category)">Disable</button>
-                </ng-container>
-                <ng-container *ngIf="category.status === 0">
-                  <button (click)="enableCategory(category)">Enable</button>
-                </ng-container>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
+    <hr style="margin: 20px 0;">
 
+    <app-category-table
+      [categories]="categories"
+      (edit)="openCategoryForm($event)"
+      (disable)="openConfirm('category', $event)">
+    </app-category-table>
+
+    <!-- Confirmación -->
     <app-confirm-modal
-      *ngIf="disableCategoryMode"
-      title="Cofirmar Deshabilitar Categoria"
-      [message]="'¿Estas seguro de que quieres inhabilitar la categoria ' + currentCategory.name + '?'"
-      (onCancel)="closeDisableConfirmCategory()"
-      (onConfirm)="confirmDisableCategory()">
-    </app-confirm-modal>
-
-    <app-confirm-modal
-      *ngIf="disableProductMode"
-      title="Confirmar Deshabilitar Producto"
-      [message]="'¿Estas seguro de que quiere inhabilitar el producto ' + currentProduct.name + '?'"
-      (onCancel)="closeDisableConfirmProduct()"
-      (onConfirm)="confirmDisableProduct()">
+      *ngIf="disableMode.active"
+      title="Confirmar desactivación"
+      [message]="disableMode.type === 'product'
+        ? '¿Desactivar el producto ' + currentProduct.name + '?'
+        : '¿Desactivar la categoría ' + currentCategory.name + '?'"
+      (onCancel)="disableMode.active = false"
+      (onConfirm)="confirmDisable()">
     </app-confirm-modal>
   </main>
 </div>

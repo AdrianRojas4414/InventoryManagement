@@ -8,7 +8,7 @@ export interface Category {
   name: string;
   description: string;
   status?: number;
-  showOptions?: number
+  showOptions?: boolean;
 }
 
 @Injectable({
@@ -30,15 +30,5 @@ export class CategoryService {
 
   update(id: number, category: Category): Observable<Category> {
     return this.http.put<Category>(`${this.apiUrl}/${id}`, category);
-  }
-
-  delete(id: number, userRole: string): Observable<any> {
-    const headers = new HttpHeaders().set('userRole', userRole);
-    return this.http.delete(`${this.apiUrl}/${id}`, { headers });
-  }
-
-  activate(id: number, userRole: string): Observable<any> {
-    const headers = new HttpHeaders().set('userRole', userRole);
-    return this.http.put(`${this.apiUrl}/${id}/activate`, null, { headers });
   }
 }
