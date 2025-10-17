@@ -1,5 +1,5 @@
 <div class="login-container">
-  <h2>Iniciar Sesión</h2>
+  <h1>Iniciar Sesión</h1>
 
   <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
     <mat-form-field appearance="outline" class="full-width">
@@ -15,7 +15,7 @@
       </button>
     </mat-form-field>
 
-    <button mat-raised-button type="submit" class="full-width">
+    <button type="submit" class="add">
         Ingresar
     </button>
     @if (error) {

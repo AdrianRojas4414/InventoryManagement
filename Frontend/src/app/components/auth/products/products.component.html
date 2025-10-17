@@ -1,0 +1,55 @@
+<div>
+  <app-sidebar></app-sidebar>
+  <main>
+    <header>
+      <h1>Productos</h1>
+      <h2>Administre su inventario de productos y realice un seguimiento de los niveles de existencias</h2>
+      <div class="actions">
+        <button class="add" (click)="openProductForm()">+ Agregar Producto</button>
+        <button class="add" (click)="openCategoryForm()">+ Agregar Categoría</button>
+      </div>
+    </header>
+
+    <!-- Formularios modulares -->
+    <app-product-form
+      *ngIf="showProductForm"
+      [product]="currentProduct"
+      [categories]="categories"
+      (close)="closeForms()"
+      (saved)="loadProducts()">
+    </app-product-form>
+
+    <app-category-form
+      *ngIf="showCategoryForm"
+      [category]="currentCategory"
+      (close)="closeForms()"
+      (saved)="loadCategories()">
+    </app-category-form>
+
+    <!-- Tablas -->
+    <app-product-table
+      [products]="products"
+      (edit)="openProductForm($event)"
+      (disable)="openConfirm('product', $event)">
+    </app-product-table>
+
+    <hr style="margin: 20px 0;">
+
+    <app-category-table
+      [categories]="categories"
+      (edit)="openCategoryForm($event)"
+      (disable)="openConfirm('category', $event)">
+    </app-category-table>
+
+    <!-- Confirmación -->
+    <app-confirm-modal
+      *ngIf="disableMode.active"
+      title="Confirmar desactivación"
+      [message]="disableMode.type === 'product'
+        ? '¿Desactivar el producto ' + currentProduct.name + '?'
+        : '¿Desactivar la categoría ' + currentCategory.name + '?'"
+      (onCancel)="disableMode.active = false"
+      (onConfirm)="confirmDisable()">
+    </app-confirm-modal>
+  </main>
+</div>

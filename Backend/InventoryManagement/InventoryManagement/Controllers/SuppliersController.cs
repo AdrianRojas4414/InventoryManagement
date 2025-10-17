@@ -89,7 +89,7 @@ public class SuppliersController : ControllerBase
     {
         if (userRole != "Admin")
         {
-            return Forbid("Acción no permitida. Solo los administradores pueden dar de baja a los proveedores.");
+            return BadRequest("Acción no permitida. Solo los administradores pueden dar de baja a los proveedores.");
         }
 
         var supplier = await _supplierRepository.GetByIdAsync(id);
@@ -109,7 +109,7 @@ public class SuppliersController : ControllerBase
     public async Task<IActionResult> ActivateSupplier(short id, [FromHeader] string userRole)
     {
         if (userRole != "Admin")
-            return Forbid("Solo los administradores pueden habilitar proveedores.");
+            return BadRequest("Solo los administradores pueden habilitar proveedores.");
 
         var supplier = await _supplierRepository.GetByIdAsync(id);
         if (supplier == null)

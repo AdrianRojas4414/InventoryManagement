@@ -1,0 +1,46 @@
+<section class="table-container">
+  <table class="product-table">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Categoria</th>
+        <th>Descripcion</th>
+        <th>Stock</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{ product.name }}</td>
+        <td><span class="category-tag">{{ product.categoryName }}</span></td>
+        <td>{{ product.description }}</td>
+        <td [ngClass]="{
+            'stock-low': product.totalStock > 0 && product.totalStock <= 10,
+            'stock-out': product.totalStock === 0
+        }">{{ product.totalStock }}</td>
+        <td>
+          <span [ngClass]="product.status ? 'status-active' : 'status-desactive'">
+            {{ product.status ? 'ACTIVO' : 'DESACTIVO' }}
+          </span>
+        </td>
+        <td class="options-cell" *ngIf="isAdmin || product.status">
+          <span class="options-icon" (click)="toggleOptions(product)">...</span>
+          <div class="options-menu" *ngIf="product['showOptions'] && product.status">
+            <button (click)="edit.emit(product)">Editar</button>
+            <button  *ngIf="isAdmin" (click)="disable.emit(product)">Deshabilitar</button>
+          </div>
+          <div class="options-menu" *ngIf="product['showOptions'] && !product.status">
+            <button (click)="enableProduct(product)">Habilitar</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="pagination">
+  <button (click)="prevPage()" [disabled]="currentPage === 0">&laquo; Anterior</button>
+  <span>Página {{ currentPage + 1 }} de {{ Math.ceil(products.length / pageSize) }}</span>
+  <button (click)="nextPage()" [disabled]="(currentPage + 1) * pageSize >= products.length">Siguiente &raquo;</button>
+</div>

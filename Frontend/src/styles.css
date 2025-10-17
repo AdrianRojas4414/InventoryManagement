@@ -1,14 +1,8 @@
 * {
   font-family: Calibri;
-  /* background-color: #fff; */
   margin: 0;
   color: #333;
   font-size: 1.1rem;
-}
-
-:root { 
-    --text-button: #fff;
-    --text-color: #333;
 }
 
 h1{

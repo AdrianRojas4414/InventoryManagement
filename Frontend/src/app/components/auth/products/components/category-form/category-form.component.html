@@ -1,0 +1,69 @@
+<div class="modal-backdrop">
+  <div class="form-card">
+    <h3>{{ editMode ? 'Editar Categoría' : 'Agregar Nueva Categoría' }}</h3>
+
+    <form #form="ngForm" (ngSubmit)="save(form)" novalidate>
+      <div class="form-group">
+        <label>Nombre</label>
+        <input 
+          [(ngModel)]="category.name" 
+          name="name" 
+          required 
+          minlength="3"
+          maxlength="50"
+          pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$"
+          placeholder="Ej: Juguetería"
+          #name="ngModel"
+        />
+        <!-- Mensajes de error -->
+        <div class="error" *ngIf="name.invalid && (name.dirty || name.touched)">
+          <p *ngIf="name.errors?.['required']">El nombre es obligatorio.</p>
+          <p *ngIf="name.errors?.['minlength']">Debe tener al menos 3 caracteres.</p>
+          <p *ngIf="name.errors?.['maxlength']">No puede tener más de 50 caracteres.</p>
+          <p *ngIf="name.errors?.['pattern']">Solo se permiten letras.</p>
+          <p *ngIf="category.name.trim().length <= 3">El nombre no puede estar vacío o solo tener espacios.</p>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Descripción</label>
+        <input 
+          [(ngModel)]="category.description" 
+          name="description" 
+          required 
+          minlength="5"
+          pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s,.-]+$" 
+          placeholder="Ej: Productos de diversión"
+          #description="ngModel"
+        />
+        <!-- Mensajes de error -->
+        <div class="error" *ngIf="description.invalid && (description.dirty || description.touched)">
+          <p *ngIf="description.errors?.['required']">La descripción es obligatoria.</p>
+          <p *ngIf="description.errors?.['minlength']">Debe tener al menos 5 caracteres.</p>
+          <p *ngIf="description.errors?.['pattern']">No se permiten caracteres extraños</p>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button class="cancel" type="button" (click)="cancel()">Cancelar</button>
+        <button 
+          class="add" 
+          type="submit" 
+          [disabled]="form.invalid"
+        >
+          {{ editMode ? 'Guardar' : 'Agregar' }}
+        </button>
+      </div>
+
+      <!-- Mensaje de error general -->
+      <div class="error-message" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+
+      <!-- Mensaje de éxito -->
+      <div class="success-message" *ngIf="successMessage">
+        {{ successMessage }}
+      </div>
+    </form>
+  </div>
+</div>

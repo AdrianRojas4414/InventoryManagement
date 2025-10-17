@@ -108,7 +108,7 @@ public class ProductsController : ControllerBase
     {
         if (userRole != "Admin")
         {
-            return Forbid("Acción no permitida. Solo los administradores pueden eliminar productos.");
+            return BadRequest("Acción no permitida. Solo los administradores pueden eliminar productos.");
         }
 
         var product = await _productRepository.GetByIdAsync(id);
@@ -127,7 +127,7 @@ public class ProductsController : ControllerBase
     {
         if (userRole != "Admin")
         {
-            return Forbid("Solo los administradores pueden activar productos.");
+            return BadRequest("Solo los administradores pueden activar productos.");
         }
 
         var product = await _productRepository.GetByIdAsync(id);

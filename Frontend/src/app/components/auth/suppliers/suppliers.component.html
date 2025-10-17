@@ -1,0 +1,31 @@
+<div>
+  <app-sidebar></app-sidebar>
+  <main>
+    <h1>Proveedores</h1>
+    <h2>Gestiona a tus proveedores y su información de contacto</h2>
+
+    <button class="add" (click)="openForm()">+ Agregar Proveedor</button>
+
+    <app-supplier-form
+      *ngIf="showForm"
+      [supplier]="currentSupplier"
+      (saved)="loadSuppliers()"
+      (close)="closeForm()">
+    </app-supplier-form>
+
+    <app-supplier-table
+      [suppliers]="suppliers"
+      (edit)="openForm($event)"
+      (disable)="openConfirm($event)">
+    </app-supplier-table>
+
+    <!-- Modal de confirmación -->
+    <app-confirm-modal
+      *ngIf="disableMode.active"
+      title="Confirmar desactivación"
+      [message]="'¿Seguro que deseas desactivar al proveedor ' + disableMode.name + '?'"
+      (onCancel)="disableMode.active = false"
+      (onConfirm)="confirmDisable()">
+    </app-confirm-modal>
+  </main>
+</div>

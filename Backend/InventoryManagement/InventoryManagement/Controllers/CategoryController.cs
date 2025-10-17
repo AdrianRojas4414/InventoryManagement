@@ -86,7 +86,7 @@ public class CategoriesController : ControllerBase
     {
         if (userRole != "Admin")
         {
-            return Forbid("Acción no permitida. Solo los administradores pueden eliminar categorías.");
+            return BadRequest("Acción no permitida. Solo los administradores pueden eliminar categorías.");
         }
 
         var category = await _categoryRepository.GetByIdAsync(id);
@@ -105,7 +105,7 @@ public class CategoriesController : ControllerBase
     {
         if (userRole != "Admin")
         {
-            return Forbid("Solo los administradores pueden activar categorías.");
+            return BadRequest("Solo los administradores pueden activar categorías.");
         }
 
         var category = await _categoryRepository.GetByIdAsync(id);

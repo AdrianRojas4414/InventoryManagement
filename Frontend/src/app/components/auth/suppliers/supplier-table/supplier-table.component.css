@@ -1,0 +1,126 @@
+.table-container {
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    margin: 24px 0px;
+    max-height: auto;
+    width: 100%;
+    overflow-x:auto;
+}
+
+.product-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.product-table thead th {
+    text-align: left;
+    padding: 15px 12px;
+    font-weight: 600;
+    color: var(--light-text-color);
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background-color: #efefef;
+}
+
+.product-table tbody tr {
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.15s;
+}
+
+.product-table tbody td {
+    padding: 15px 12px;
+    vertical-align: middle;
+    font-size: 1rem;
+}
+
+.description{
+    white-space: normal;
+    word-break: break-word;
+}
+
+.status-active {
+  background-color: #28a745; 
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: inline-block;
+  text-align: center;
+}
+
+.status-desactive {
+  background-color: #dc3545;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  display: inline-block;
+  text-align: center;
+}
+
+
+.options-icon {
+    font-weight: 800;
+    font-size: 1.2rem;
+    cursor: pointer;
+    line-height: 1;
+    color: #6c757d;
+}
+
+.options-menu{
+    max-width: 100px;
+    display: flex;
+    flex-direction: column;
+}
+
+.options-menu button {
+    padding: 10px 15px;
+    text-align: left;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.1s;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.options-menu button:hover {
+    background-color: #f0f4f8;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+}
+
+.pagination span {
+  margin: 0 15px;
+  color: #333;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.pagination button {
+  border: 1px solid #ccc;
+  background-color: #f7f7f7;
+  color: #333;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  font-size: 14px;
+}
+
+.pagination button[disabled] {
+  color: #a0a0a0;
+  background-color: #f0f0f0;
+  border-color: #e0e0e0;
+  cursor: not-allowed;
+}

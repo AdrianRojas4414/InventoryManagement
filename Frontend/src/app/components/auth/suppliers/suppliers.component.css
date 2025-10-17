@@ -1,0 +1,22 @@
+div{
+    display: flex; 
+    width: 100%;
+}
+
+app-sidebar {
+    width: 240px;
+    flex-shrink: 0; 
+}
+
+main{
+   flex-grow: 1; 
+   padding: 2% 5%;
+   overflow-y:hidden;
+}
+
+@media (max-width: 768px) {
+    app-sidebar {
+        width: 80px;
+        flex-shrink: 0; 
+    }
+}

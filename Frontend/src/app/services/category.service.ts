@@ -8,6 +8,7 @@ export interface Category {
   name: string;
   description: string;
   status?: number;
+  showOptions?: boolean;
 }
 
 @Injectable({
@@ -25,5 +26,9 @@ export class CategoryService {
   addCategory(category: Category, userId: number): Observable<Category> {
     const headers = new HttpHeaders().set('userId', userId.toString());
     return this.http.post<Category>(this.apiUrl, category, { headers });
+  }
+
+  update(id: number, category: Category): Observable<Category> {
+    return this.http.put<Category>(`${this.apiUrl}/${id}`, category);
   }
 }

@@ -1,6 +1,6 @@
 .login-container {
   max-width: 400px;
-  margin: 5% auto;
+  margin: 10% auto;
   padding: 2rem;
   border-radius: 12px;
   background: #ffffff;
@@ -8,11 +8,9 @@
   text-align: center;
 }
 
-h2 {
-  font-family: 'Roboto', sans-serif;
-  font-weight: 500;
+h1 {
   margin-bottom: 1.5rem;
-  color: #3f51b5; /* azul material */
+  color: #3f51b5;
 }
 
 .full-width {
@@ -20,9 +18,8 @@ h2 {
   margin-bottom: 1.2rem;
 }
 
-button.full-width {
-  padding: 0.8rem;
-  font-size: 1rem;
+button {
+  width: 100%;
 }
 
 .error {

@@ -1,0 +1,90 @@
+<div class="modal-backdrop">
+  <div class="form-card">
+    <h3>{{ editMode ? 'Editar Producto' : 'Agregar Producto' }}</h3>
+    <form #productForm="ngForm" (ngSubmit)="save()">
+
+      <!-- Nombre -->
+      <div class="form-group">
+        <label>Nombre</label>
+        <input 
+          [(ngModel)]="product.name" 
+          name="name" 
+          #name="ngModel"
+          required
+          minlength="3"
+          maxlength="100"
+          pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s,.-]+$"
+          placeholder="Ej: Pelota"
+        >
+        <div class="error" *ngIf="name.invalid && (name.dirty || name.touched)">
+          <p *ngIf="name.errors?.['required']">El nombre es obligatorio.</p>
+          <p *ngIf="name.errors?.['minlength']">Debe tener al menos 3 caracteres.</p>
+          <p *ngIf="name.errors?.['maxlength']">Debe tener menos de 100 caracteres.</p>
+          <p *ngIf="name.errors?.['pattern']">No se permiten caracteres extraños.</p>
+        </div>
+      </div>
+
+      <!-- Descripción -->
+      <div class="form-group">
+        <label>Descripción</label>
+        <input 
+          [(ngModel)]="product.description" 
+          name="description" 
+          #description="ngModel"
+          required
+          minlength="5"
+          pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s,.-]+$"
+          placeholder="Ej: Producto de diversión"
+        >
+        <div class="error" *ngIf="description.invalid && (description.dirty || description.touched)">
+          <p *ngIf="description.errors?.['required']">La descripción es obligatoria.</p>
+          <p *ngIf="description.errors?.['minlength']">Debe tener al menos 5 caracteres.</p>
+          <p *ngIf="description.errors?.['pattern']">No se permiten caracteres extraños.</p>
+        </div>
+      </div>
+
+      <!-- Categoría -->
+      <div class="form-group">
+        <label>Categoría</label>
+        <select 
+          [(ngModel)]="product.categoryId" 
+          name="categoryId" 
+          #categorySelect="ngModel"
+          required
+        >
+          <option *ngFor="let cat of categories" [ngValue]="cat.id">{{ cat.name }}</option>
+        </select>
+      </div>
+
+      <!-- Stock -->
+      <div class="form-group">
+        <label>Stock</label>
+        <input 
+          type="number" 
+          [(ngModel)]="product.totalStock" 
+          name="totalStock" 
+          #stock="ngModel"
+          required 
+          min="0"
+        >
+        <div class="error" *ngIf="stock.invalid && (stock.dirty || stock.touched)">
+          <p *ngIf="stock.errors?.['required']">El stock es obligatorio.</p>
+          <p *ngIf="stock.errors?.['min']">El stock no puede ser negativo.</p>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button class="cancel" type="button" (click)="cancel()">Cancelar</button>
+        <button class="add" type="submit" [disabled]="productForm.invalid">
+          {{ editMode ? 'Guardar Cambios' : 'Agregar' }}
+        </button>
+      </div>
+      <div class="error-message" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+      <div class="success-message" *ngIf="successMessage">
+        {{ successMessage }}
+      </div>
+    </form>
+  </div>
+</div>
