@@ -16,3 +16,10 @@
         </a>
     </nav>
 </aside>
+
+<app-confirm-modal
+  *ngIf="showLogoutModal"
+  [message]="'¿Seguro que deseas cerrar tu sesión?'"
+  (onConfirm)="confirmLogout()"
+  (onCancel)="cancelLogout()">
+</app-confirm-modal>
