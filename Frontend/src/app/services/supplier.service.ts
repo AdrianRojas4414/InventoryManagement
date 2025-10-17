@@ -52,7 +52,7 @@ export class SupplierService {
   }
 
   activateSupplier(id: number, userRole: string): Observable<string> {
-  const headers = new HttpHeaders().set('userRole', userRole);
+    const headers = new HttpHeaders().set('userRole', userRole);
     return this.http.put(`${this.apiUrl}/${id}/activate`, {}, { headers, responseType: 'text' });
   }
 }

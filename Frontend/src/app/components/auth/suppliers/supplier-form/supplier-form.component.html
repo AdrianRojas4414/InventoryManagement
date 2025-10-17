@@ -13,7 +13,7 @@
             required
             minlength="4"
             maxlength="31"
-            pattern="^(?!\\d+$)[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\\s,.-]+$"
+            pattern="^(?!\d+$)[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s,.-]+$"
             placeholder="Ej: Distribuidora ABC"
           >
           <div class="error" *ngIf="name.invalid && (name.dirty || name.touched)">
@@ -46,26 +46,28 @@
           <label for="phone">Teléfono</label>
           <div class="phone-group">
             <select [(ngModel)]="countryCode" name="countryCode" required>
-              <option value="+591">🇧🇴 +591 (Bolivia)</option>
-              <option value="+54">🇦🇷 +54 (Argentina)</option>
-              <option value="+56">🇨🇱 +56 (Chile)</option>
-              <option value="+57">🇨🇴 +57 (Colombia)</option>
-              <option value="+51">🇵🇪 +51 (Perú)</option>
-              <option value="+52">🇲🇽 +52 (México)</option>
+              <option value="+591">+591 (Bolivia)</option>
+              <option value="+54">+54 (Argentina)</option>
+              <option value="+56">+56 (Chile)</option>
+              <option value="+57">+57 (Colombia)</option>
+              <option value="+51">+51 (Perú)</option>
+              <option value="+52">+52 (México)</option>
             </select>
+
             <input 
               type="text"
               [(ngModel)]="phoneNumber"
               name="phoneNumber"
-              #phoneNumber="ngModel"
+              #phoneNumberRef="ngModel"
               required
               pattern="^[0-9]{6,10}$"
               placeholder="70000001"
             >
           </div>
-          <div class="error" *ngIf="phoneNumber.invalid && (phoneNumber.dirty || phoneNumber.touched)">
-            <p *ngIf="phoneNumber.errors?.['required']">El teléfono es obligatorio.</p>
-            <p *ngIf="phoneNumber.errors?.['pattern']">Debe tener entre 6 y 10 dígitos.</p>
+
+          <div class="error" *ngIf="phoneNumberRef.invalid && (phoneNumberRef.dirty || phoneNumberRef.touched)">
+            <p *ngIf="phoneNumberRef.errors?.['required']">El teléfono es obligatorio.</p>
+            <p *ngIf="phoneNumberRef.errors?.['pattern']">Debe tener entre 6 y 10 dígitos.</p>
           </div>
         </div>
 
@@ -80,7 +82,7 @@
             required
             minlength="5"
             maxlength="30"
-            pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
+            pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
             placeholder="Ej: contacto@empresa.com"
           >
           <div class="error" *ngIf="email.invalid && (email.dirty || email.touched)">

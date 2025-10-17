@@ -39,6 +39,8 @@ export class SupplierFormComponent implements OnInit {
       } else {
         this.phoneNumber = this.supplier.phone;
       }
+    } else {
+      this.phoneNumber = '';
     }
   }
 
@@ -52,11 +54,6 @@ export class SupplierFormComponent implements OnInit {
     // Validaciones básicas
     if (!this.supplier.name || /^\d+$/.test(this.supplier.name)) {
       this.errorMessage = 'El nombre no puede ser solo números.';
-      return;
-    }
-
-    if (!this.phoneNumber || !/^[0-9]{6,10}$/.test(this.phoneNumber)) {
-      this.errorMessage = 'El número de teléfono debe tener entre 6 y 10 dígitos.';
       return;
     }
 

@@ -16,8 +16,16 @@
     <app-supplier-table
       [suppliers]="suppliers"
       (edit)="openForm($event)"
-      (disable)="disableSupplier($event)"
-      (enable)="enableSupplier($event)">
+      (disable)="openConfirm($event)">
     </app-supplier-table>
+
+    <!-- Modal de confirmación -->
+    <app-confirm-modal
+      *ngIf="disableMode.active"
+      title="Confirmar desactivación"
+      [message]="'¿Seguro que deseas desactivar al proveedor ' + disableMode.name + '?'"
+      (onCancel)="disableMode.active = false"
+      (onConfirm)="confirmDisable()">
+    </app-confirm-modal>
   </main>
 </div>

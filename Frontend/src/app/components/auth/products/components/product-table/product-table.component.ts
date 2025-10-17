@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, NgModule, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AuthService } from '../../../../../services/auth.service';
 import { Product, ProductService } from '../../../../../services/product.service';
+import { AuthService } from '../../../../../services/auth.service';
 
 @Component({
   selector: 'app-product-table',
