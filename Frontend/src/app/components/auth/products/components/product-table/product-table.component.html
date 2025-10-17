@@ -24,11 +24,11 @@
             {{ product.status ? 'ACTIVO' : 'DESACTIVO' }}
           </span>
         </td>
-        <td class="options-cell" *ngIf="isAdmin">
+        <td class="options-cell" *ngIf="isAdmin || product.status">
           <span class="options-icon" (click)="toggleOptions(product)">...</span>
           <div class="options-menu" *ngIf="product['showOptions'] && product.status">
             <button (click)="edit.emit(product)">Editar</button>
-            <button (click)="disable.emit(product)">Deshabilitar</button>
+            <button  *ngIf="isAdmin" (click)="disable.emit(product)">Deshabilitar</button>
           </div>
           <div class="options-menu" *ngIf="product['showOptions'] && !product.status">
             <button (click)="enableProduct(product)">Habilitar</button>

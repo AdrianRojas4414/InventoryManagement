@@ -17,7 +17,7 @@
             {{ category.status ? 'ACTIVO' : 'DESACTIVO' }}
           </span>
         </td>
-        <td class="options-cell" *ngIf="isAdmin">
+        <td class="options-cell" *ngIf="isAdmin || category.status">
           <span class="options-icon" (click)="toggleOptions(category)">...</span>
           <div class="options-menu" *ngIf="category['showOptions']">
             <ng-container *ngIf="category.status === 1">

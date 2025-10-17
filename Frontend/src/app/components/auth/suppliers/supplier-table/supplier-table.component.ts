@@ -26,6 +26,7 @@ export class SupplierTableComponent {
 
   ngOnInit() {
     this.updatePagedSuppliers();
+    this.isAdmin = this.authService.isAdmin();
   }
 
   ngOnChanges() {
