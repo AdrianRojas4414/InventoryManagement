@@ -1,22 +1,85 @@
-div{
-    display: flex; 
-    width: 100%;
+/* --- CONTENEDOR PRINCIPAL --- */
+.layout {
+  display: flex;
+  width: 100%;
+  background-color: #f3f4f6;
+  min-height: 100vh;
 }
 
 app-sidebar {
-    width: 240px;
-    flex-shrink: 0; 
+  width: 250px;
+  flex-shrink: 0;
 }
 
-main{
-   flex-grow: 1; 
-   padding: 2% 5%;
-   overflow-y:hidden;
+/* --- CONTENIDO PRINCIPAL --- */
+main {
+  flex-grow: 1;
+  padding: 3% 5%;
+  overflow-y: auto;
+  background: #f9fafb;
 }
 
+header {
+  margin-bottom: 1.5rem;
+}
+
+header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+header h2 {
+  font-size: 1rem;
+  color: #6b7280;
+  font-weight: 400;
+  margin-top: 0.4rem;
+  max-width: 800px;
+}
+
+/* --- ACCIONES --- */
+.actions {
+  margin-top: 1.8rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.add {
+  background-color: #2563eb;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  padding: 10px 22px;
+  font-weight: 500;
+  font-size: 1rem;
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.add:hover {
+  background-color: #1e40af;
+  box-shadow: 0 6px 14px rgba(37, 99, 235, 0.3);
+  transform: translateY(-2px);
+}
+
+/* --- RESPONSIVE --- */
 @media (max-width: 768px) {
-    app-sidebar {
-        width: 80px;
-        flex-shrink: 0; 
-    }
+  app-sidebar {
+    width: 80px;
+  }
+
+  main {
+    padding: 2rem;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .add {
+    width: 100%;
+  }
 }

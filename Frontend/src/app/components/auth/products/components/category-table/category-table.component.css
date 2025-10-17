@@ -1,131 +1,178 @@
+/* --- CONTENEDORES DE TABLA --- */
 .table-container {
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-    margin: 24px 0px;
-    max-height: auto;
-    overflow-x: hidden;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+  margin: 30px 0;
+  overflow-x: auto;
+  transition: all 0.3s ease;
+  padding: 0;
 }
 
+/* --- TABLAS GENERALES --- */
 .product-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.9rem;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
+/* --- ENCABEZADO --- */
 .product-table thead th {
-    text-align: left;
-    padding: 15px 12px;
-    font-weight: 600;
-    color: var(--light-text-color);
-    border-bottom: 1px solid var(--border-color);
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    background-color: #efefef;
+  text-align: left;
+  padding: 14px 18px;
+  font-weight: 600;
+  color: #ffffff;
+  background-color: #1e3a8a; /* Azul oscuro */
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  font-size: 0.85rem;
+  border-bottom: 2px solid #e5e7eb;
 }
 
 .product-table tbody tr {
-    border-bottom: 1px solid var(--border-color);
-    transition: background-color 0.15s;
+  border-bottom: 1px solid #e5e7eb;
+  transition: background-color 0.2s ease;
+}
+
+.product-table tbody tr:hover {
+  background-color: #f9fafb;
 }
 
 .product-table tbody td {
-    padding: 15px 12px;
-    vertical-align: middle;
-    font-size: 1rem;
+  padding: 14px 18px;
+  vertical-align: middle;
+  font-size: 1rem;
+  color: #374151;
 }
 
-.description{
-    white-space: normal;
-    word-break: break-word;
+/* --- DESCRIPCIÓN Y TEXTOS LARGOS --- */
+.description,
+#description {
+  white-space: normal;
+  word-break: break-word;
+  max-width: 350px;
+  line-height: 1.5;
 }
 
+/* --- ESTADOS (BADGES) --- */
 .status-active {
-  background-color: #28a745; 
-  color: #fff;
-  padding: 4px 8px;
-  border-radius: 4px;
+  background-color: #10b981; /* Verde menta */
+  color: #ffffff;
+  padding: 6px 12px;
+  border-radius: 20px;
   font-size: 0.85rem;
-  font-weight: 500;
+  font-weight: 600;
   display: inline-block;
   text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .status-desactive {
-  background-color: #dc3545;
-  color: #fff;
-  padding: 4px 8px;
-  border-radius: 4px;
+  background-color: #ef4444; /* Rojo elegante */
+  color: #ffffff;
+  padding: 6px 12px;
+  border-radius: 20px;
   font-size: 0.85rem;
-  font-weight: 500;
+  font-weight: 600;
   display: inline-block;
   text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-
+/* --- OPCIONES --- */
 .options-icon {
-    font-weight: 800;
-    font-size: 1.2rem;
-    cursor: pointer;
-    line-height: 1;
-    color: #6c757d;
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+  color: #6b7280;
+  transition: color 0.2s ease;
 }
 
-.options-menu{
-    max-width: 100px;
-    display: flex;
-    flex-direction: column;
+.options-icon:hover {
+  color: #2563eb;
+}
+
+/* --- MENÚ DE OPCIONES --- */
+.options-menu {
+  max-width: 100px;
+  display: flex;
+  flex-direction: column;
 }
 
 .options-menu button {
-    padding: 10px 15px;
-    text-align: left;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: background-color 0.1s;
-    border: 1px solid #e9ecef;
-    border-radius: 6px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 10px 15px;
+  text-align: left;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border: 1px solid #e9ecef;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
 }
 
 .options-menu button:hover {
-    background-color: #f0f4f8;
+  background-color: #f3f4f6;
+  transform: translateY(-1px);
 }
 
-#description{
-    white-space: normal;      /* Permite que el texto se quiebre en varias líneas */
-    word-break: break-word;   /* Rompe palabras largas si es necesario */
-    max-width: auto;    
-}
-
+/* --- PAGINACIÓN --- */
 .pagination {
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #ffffff;
+  padding: 12px;
+  border-top: 1px solid #e5e7eb;
+  border-radius: 0 0 12px 12px;
 }
 
 .pagination span {
   margin: 0 15px;
-  color: #333;
+  color: #4b5563;
   font-weight: 500;
   font-size: 14px;
 }
 
 .pagination button {
-  border: 1px solid #ccc;
-  background-color: #f7f7f7;
-  color: #333;
-  padding: 8px 15px;
-  border-radius: 4px;
+  border: none;
+  background-color: #2563eb;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease;
   font-size: 14px;
 }
 
+.pagination button:hover {
+  background-color: #1e40af;
+  transform: translateY(-2px);
+}
+
 .pagination button[disabled] {
-  color: #a0a0a0;
-  background-color: #f0f0f0;
-  border-color: #e0e0e0;
+  color: #9ca3af;
+  background-color: #f3f4f6;
   cursor: not-allowed;
+}
+
+/* --- TÍTULOS DE SECCIONES --- */
+header h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #1e40af; /* Azul más brillante que resalta */
+  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.08);
+  letter-spacing: 0.3px;
+}
+
+header h2 {
+  font-size: 1rem;
+  color: #6b7280;
+  font-weight: 400;
+  margin-top: 0.4rem;
+  max-width: 800px;
 }
