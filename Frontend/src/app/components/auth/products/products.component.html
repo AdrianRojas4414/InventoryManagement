@@ -1,4 +1,4 @@
-<div>
+<div class="layout">
   <app-sidebar></app-sidebar>
   <main>
     <header>
@@ -15,16 +15,19 @@
       *ngIf="showProductForm"
       [product]="currentProduct"
       [categories]="categories"
-      (close)="closeForms()"
-      (saved)="loadProducts()">
+      (close)="closeForms('product')"
+      (saved)="saveProduct($event)"
+      (openCategory)="openCategoryForm()">
     </app-product-form>
+
 
     <app-category-form
       *ngIf="showCategoryForm"
       [category]="currentCategory"
-      (close)="closeForms()"
-      (saved)="loadCategories()">
-    </app-category-form>
+      (close)="closeForms('category')"
+      (saved)="saveCategory($event)"
+    ></app-category-form>
+
 
     <!-- Tablas -->
     <app-product-table
