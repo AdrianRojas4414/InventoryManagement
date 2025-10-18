@@ -34,7 +34,7 @@ export class SidebarComponent {
   navigateTo(route: string) {
     if (route === '#') return;
     if (route === 'logout') {
-      this.showLogoutModal = true; // Muestra el modal
+      this.showLogoutModal = true; 
       return;
     }
     this.router.navigate([route]);
@@ -46,9 +46,9 @@ export class SidebarComponent {
 
   confirmLogout() {
     this.showLogoutModal = false;
-    localStorage.clear(); // Limpia datos del usuario
+    localStorage.clear(); 
     sessionStorage.clear();
-    this.router.navigate(['/login']); // Redirige al login
+    this.router.navigate(['/login']); 
   }
 
   getSidebarClasses(): string {
