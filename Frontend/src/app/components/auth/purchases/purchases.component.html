@@ -257,6 +257,11 @@
                 </tbody>
             </table>
         </section>
+        <div class="pagination">
+            <button (click)="prevPage()" [disabled]="paginationParameters.currentPage === 0">&laquo; Anterior</button>
+                <span>Página {{ paginationParameters.currentPage + 1 }} de {{ paginationParameters.totalPages  }}</span>
+            <button (click)="nextPage()" [disabled]="paginationParameters.currentPage >= paginationParameters.totalPages - 1">Siguiente &raquo;</button>
+        </div>
         <!-- MODAL DE ALERTAS -->
 <div class="custom-modal-backdrop" *ngIf="showModal" (click)="closeModal()">
     <div class="custom-modal" (click)="$event.stopPropagation()" [class]="'modal-' + modalType">
