@@ -103,7 +103,7 @@
             required
             minlength="2"
             maxlength="50"
-            pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\\s]+$"
+            pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$"
             placeholder="Ej: Juan Pérez"
           >
           <div class="error" *ngIf="contactName.invalid && (contactName.dirty || contactName.touched)">
