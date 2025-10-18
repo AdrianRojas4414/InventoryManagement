@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CategoryService, Category } from '../../../services/category.service';
+import { CategoryService, Category, PaginatedResponse } from '../../../services/category.service';
 import { ProductService, Product, CreateProductDto } from '../../../services/product.service';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { FormsModule } from '@angular/forms';
@@ -30,7 +30,15 @@ import { ProductTableComponent } from './components/product-table/product-table.
 })
 export class ProductsComponent implements OnInit {
   categories: Category[] = [];
+  categoriesPaged: Category[] = [];
   products: (Product & { categoryName?: string })[] = [];
+
+  categoryPagination = {
+    currentPage: 0,
+    pageSize: 5,
+    totalItems: 0,
+    totalPages: 0
+  };
 
   currentProduct: Product & { categoryId?: number } = {} as Product;
   currentCategory: Category = { name: '', description: '' };
@@ -50,17 +58,41 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadCategories();
+    this.loadAllCategories();
+    this.loadProducts();
     if (this.authService.isAdmin()) {
       this.userRole = 'Admin';
     }
   }
 
-  // 🔹 Cargar categorías
-  loadCategories(): void {
-    this.categoryService.getCategories().subscribe({
+  // 🔹 Cargar todas las categorías
+  loadAllCategories(): void {
+    this.categoryService.getAllCategories().subscribe({
       next: (data) => (this.categories = data),
       error: (err) => console.error('Error cargando categorías:', err)
     });
+  }
+
+  // 🔹 Cargar las categorías paginadas
+  loadCategories(page: number = 0): void {
+    this.categoryService.getCategories(page, this.categoryPagination.pageSize).subscribe({
+      next: (response: PaginatedResponse<Category>) => {
+        this.categoriesPaged = response.data;
+        console.log(this.categoriesPaged);
+        this.categoryPagination = {
+          currentPage: response.page,
+          pageSize: response.pageSize,
+          totalItems: response.total,
+          totalPages: response.totalPages
+        };
+      },
+      error: (err) => console.error('Error cargando categorías:', err)
+    });
+  }
+
+  // 🔹 Navegación de páginas
+  onPageChange(page: number): void {
+    this.loadCategories(page);
   }
 
   // 🔹 Cargar productos

@@ -37,6 +37,39 @@ public class CategoriesController : ControllerBase
     }
 
     [HttpGet]
+    public async Task<IActionResult> GetCategories([FromQuery] int? page, [FromQuery] int? pageSize)
+    {
+        // Si se proporcionan parámetros de paginación, usar paginación
+        if (page.HasValue && pageSize.HasValue)
+        {
+            var allCategories = await _categoryRepository.GetAllAsync();
+            var total = allCategories.Count();
+            var totalPages = (int)Math.Ceiling(total / (double)pageSize.Value);
+
+            var paginatedData = allCategories
+                .Skip(page.Value * pageSize.Value)
+                .Take(pageSize.Value)
+                .ToList();
+
+            var response = new
+            {
+                data = paginatedData,
+                total = total,
+                page = page.Value,
+                pageSize = pageSize.Value,
+                totalPages = totalPages
+            };
+
+            return Ok(response);
+        }
+
+        // Si no hay parámetros de paginación, devolver todas las categorías
+        var categories = await _categoryRepository.GetAllAsync();
+        return Ok(categories);
+    }
+
+    // ✅ GET: api/categories/all -> Sin paginación (explícito)
+    [HttpGet("all")]
     public async Task<IActionResult> GetAllCategories()
     {
         var categories = await _categoryRepository.GetAllAsync();

@@ -14,25 +14,19 @@ export class CategoryTableComponent {
   Math = Math;
   constructor(private authService: AuthService) {} 
   @Input() categories: Category[] = [];
+  @Input() categoriesPaged: Category[] = [];
+  @Input() currentPage: number = 0;
+  @Input() totalPages: number = 0;
+  @Input() totalItems: number = 0;
   @Output() edit = new EventEmitter<Category>();
   @Output() disable = new EventEmitter<Category>();
   @Output() enable = new EventEmitter<Category>();
+  @Output() pageChange = new EventEmitter<number>();
 
   isAdmin = false;
-
-  pageSize = 5;    
-  currentPage = 0;   
-  pagedCategories: Category[] = [];
   
   ngOnInit() {
     this.isAdmin = this.authService.isAdmin();
-    this.updatePagedCategories();
-  }
-
-  ngOnChanges() {
-    // cada vez que categories cambien, recalcula
-    this.currentPage = 0;
-    this.updatePagedCategories();
   }
 
   toggleOptions(category: Category) {
@@ -40,22 +34,20 @@ export class CategoryTableComponent {
   }
 
   nextPage() {
-    if ((this.currentPage + 1) * this.pageSize < this.categories.length) {
-      this.currentPage++;
-      this.updatePagedCategories();
+    if (this.currentPage < this.totalPages - 1) {
+      this.pageChange.emit(this.currentPage + 1);
     }
   }
 
   prevPage() {
     if (this.currentPage > 0) {
-      this.currentPage--;
-      this.updatePagedCategories();
+      this.pageChange.emit(this.currentPage - 1);
     }
   }
 
-  updatePagedCategories() {
-    const start = this.currentPage * this.pageSize;
-    const end = start + this.pageSize;
-    this.pagedCategories = this.categories.slice(start, end);
+  goToPage(page: number) {
+    if (page >= 0 && page < this.totalPages) {
+      this.pageChange.emit(page);
+    }
   }
 }
