@@ -21,7 +21,6 @@ export class SidebarComponent {
     { name: 'Proveedores', icon: 'people', route: '/suppliers' },
     { name: 'Compras', icon: 'shopping_cart', route: '/purchases' },
     { name: 'Reportes', icon: 'article', route: '/reports' },
-    { name: 'Usuario', icon: 'person', route: '/user-management' },
     { name: 'Salir', icon: 'logout', route: 'logout'}
   ];
   

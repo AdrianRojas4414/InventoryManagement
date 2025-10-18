@@ -48,8 +48,7 @@
 }
 
 /* --- DESCRIPCIÓN Y TEXTOS LARGOS --- */
-.description,
-#description {
+.description {
   white-space: normal;
   word-break: break-word;
   max-width: 350px;
@@ -158,21 +157,4 @@
   color: #9ca3af;
   background-color: #f3f4f6;
   cursor: not-allowed;
-}
-
-/* --- TÍTULOS DE SECCIONES --- */
-header h1 {
-  font-size: 2.2rem;
-  font-weight: 700;
-  color: #1e40af; /* Azul más brillante que resalta */
-  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.08);
-  letter-spacing: 0.3px;
-}
-
-header h2 {
-  font-size: 1rem;
-  color: #6b7280;
-  font-weight: 400;
-  margin-top: 0.4rem;
-  max-width: 800px;
 }
