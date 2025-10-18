@@ -35,40 +35,49 @@ export class ProductsComponent implements OnInit {
   currentProduct: Product & { categoryId?: number } = {} as Product;
   currentCategory: Category = { name: '', description: '' };
 
-  // Estados de los formularios y confirmaciones
   showProductForm = false;
   showCategoryForm = false;
   disableMode = { type: '', id: 0, active: false };
 
   userId = Number(localStorage.getItem('userId'));
-  userRole : string = '';
+  userRole: string = '';
 
-  constructor(private categoryService: CategoryService, private productService: ProductService, private authService: AuthService) {}
+  constructor(
+    private categoryService: CategoryService,
+    private productService: ProductService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.loadCategories();
-    if(this.authService.isAdmin()){
-      this.userRole = "Admin"
+    if (this.authService.isAdmin()) {
+      this.userRole = 'Admin';
     }
   }
 
+  // 🔹 Cargar categorías
   loadCategories(): void {
-    this.categoryService.getCategories().subscribe(data => {
-      this.categories = data;
-      this.loadProducts(); // Mapear categorías en productos
+    this.categoryService.getCategories().subscribe({
+      next: (data) => (this.categories = data),
+      error: (err) => console.error('Error cargando categorías:', err)
     });
   }
 
+  // 🔹 Cargar productos
   loadProducts(): void {
-    this.productService.getProducts().subscribe(data => {
-      this.products = data.map(p => ({
-        ...p,
-        categoryName: this.categories.find(c => c.id === p.categoryId)?.name || 'Unknown'
-      }));
+    this.productService.getProducts().subscribe({
+      next: (data) => {
+        this.products = data.map(p => ({
+          ...p,
+          categoryName:
+            this.categories.find(c => c.id === p.categoryId)?.name || 'Sin categoría'
+        }));
+      },
+      error: (err) => console.error('Error cargando productos:', err)
     });
   }
 
-  // Abrir formularios
+  // 🔹 Abrir formularios
   openProductForm(product?: Product): void {
     this.showProductForm = true;
     this.currentProduct = product ? { ...product } : {} as Product;
@@ -76,48 +85,71 @@ export class ProductsComponent implements OnInit {
 
   openCategoryForm(category?: Category): void {
     this.showCategoryForm = true;
-    this.currentCategory = category ? { ...category } : { name: '', description: '' };
+    this.currentCategory = category
+      ? { ...category }
+      : { name: '', description: '' };
   }
 
-  closeForms(): void {
-    this.showProductForm = false;
-    this.showCategoryForm = false;
+  // 🔹 Cerrar solo uno a la vez
+  closeForms(formType?: 'product' | 'category'): void {
+    if (formType === 'product') this.showProductForm = false;
+    else if (formType === 'category') this.showCategoryForm = false;
+    else {
+      this.showProductForm = false;
+      this.showCategoryForm = false;
+    }
   }
 
-  saveProduct(product: Product & { categoryId?: number }) {
-    const newProduct: CreateProductDto = {
-      name: product.name,
-      description: product.description,
-      categoryId: product.categoryId,
-      totalStock: product.totalStock
-    };
+  saveCategory(category: Category): void {
+  this.categoryService.addCategory(category, this.userId).subscribe({
+    next: (createdCategory: Category) => {
+      // 🔹 Aseguramos que el ID siempre sea un número válido
+      const categoryId = Number(createdCategory.id);
 
-    this.productService.createProduct(newProduct, this.userId).subscribe(() => {
-      this.loadProducts();
-      this.closeForms();
-    });
-  }
+      // 1️⃣ Agrega la nueva categoría a la lista local
+      this.categories.push(createdCategory);
 
-  saveCategory(category: Category) {
-    this.categoryService.addCategory(category, this.userId).subscribe(() => {
+      // 2️⃣ Si el formulario de producto está abierto, la asigna automáticamente
+      if (this.showProductForm && categoryId > 0) {
+        this.currentProduct.categoryId = categoryId;
+      }
+
+      // 3️⃣ Cierra solo el formulario de categoría
+      this.showCategoryForm = false;
+
+      // 4️⃣ Refresca categorías desde backend
       this.loadCategories();
-      this.closeForms();
-    });
+    },
+    error: (err) => console.error('Error al guardar categoría:', err)
+  });
   }
 
+
+
+  // 🔹 Guardar producto
+  saveProduct(newProduct: CreateProductDto): void {
+  this.productService.createProduct(newProduct, this.userId).subscribe({
+    next: () => {
+      this.loadProducts();
+      this.closeForms('product');
+    },
+    error: (err) => {
+      console.error('Error al guardar producto:', err);
+    }
+  });
+}
+
+
+
+  // 🔹 Confirmación
   openConfirm(type: 'product' | 'category', item: Product | Category) {
-    this.disableMode = {
-      type,
-      id: item.id!,
-      active: true
-    };
+    this.disableMode = { type, id: item.id!, active: true };
   }
 
   confirmDisable() {
     if (this.disableMode.type === 'product') {
       this.productService.desactivate(this.disableMode.id, this.userRole).subscribe({
         next: () => {
-          console.log('Producto desactivado');
           this.loadProducts();
           this.disableMode.active = false;
         },
