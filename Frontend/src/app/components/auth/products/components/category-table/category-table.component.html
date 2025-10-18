@@ -9,7 +9,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let category of pagedCategories">
+      <tr *ngFor="let category of categoriesPaged">
         <td>{{ category.name }}</td>
         <td id="description">{{ category.description }}</td>
         <td>
@@ -32,6 +32,9 @@
 <!-- Paginación -->
 <div class="pagination">
   <button (click)="prevPage()" [disabled]="currentPage === 0">&laquo; Anterior</button>
-  <span>Página {{ currentPage + 1 }} de {{ Math.ceil(categories.length / pageSize) }}</span>
-  <button (click)="nextPage()" [disabled]="(currentPage + 1) * pageSize >= categories.length">Siguiente &raquo;</button>
+  <span class="page-info">
+    Página {{ currentPage + 1 }} de {{ totalPages }} 
+    ({{ totalItems }} categorías totales)
+  </span>
+  <button (click)="nextPage()" [disabled]="currentPage >= totalPages - 1">Siguiente &raquo;</button>
 </div>

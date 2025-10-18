@@ -40,6 +40,11 @@
 
     <app-category-table
       [categories]="categories"
+      [categoriesPaged]="categoriesPaged"
+      [currentPage]="categoryPagination.currentPage"
+      [totalPages]="categoryPagination.totalPages"
+      [totalItems]="categoryPagination.totalItems"
+      (pageChange)="onPageChange($event)"
       (edit)="openCategoryForm($event)"
       (disable)="openConfirm('category', $event)">
     </app-category-table>
