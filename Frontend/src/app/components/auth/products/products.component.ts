@@ -58,7 +58,10 @@ export class ProductsComponent implements OnInit {
 
   loadCategories(): void {
     this.categoryService.getCategories().subscribe({
-      next: (data) => (this.categories = data),
+      next: (data) => {
+        this.categories = data;
+        this.loadProducts();
+      },
       error: (err) => console.error('Error cargando categorías:', err)
     });
   }
@@ -68,8 +71,7 @@ export class ProductsComponent implements OnInit {
       next: (data) => {
         this.products = data.map(p => ({
           ...p,
-          categoryName:
-            this.categories.find(c => c.id === p.categoryId)?.name || 'Sin categoría'
+          categoryName: this.categories.find(c => c.id === p.categoryId)?.name || 'Sin categoría'
         }));
       },
       error: (err) => console.error('Error cargando productos:', err)
