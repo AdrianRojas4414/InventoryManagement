@@ -43,22 +43,42 @@ public class SuppliersController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateSupplier([FromBody] CreateSupplierDto supplierDto, [FromHeader] short userId)
     {
-        var newSupplier = new Supplier
+        try
         {
-            Name = supplierDto.Name,
-            Nit = supplierDto.Nit,
-            Address = supplierDto.Address,
-            Phone = supplierDto.Phone,
-            Email = supplierDto.Email,
-            ContactName = supplierDto.ContactName,
-            Status = 1,
-            CreationDate = DateTime.UtcNow,
-            ModificationDate = DateTime.UtcNow,
-            CreatedByUserId = userId 
-        };
+            var newSupplier = new Supplier
+            {
+                Name = supplierDto.Name,
+                Nit = supplierDto.Nit,
+                Address = supplierDto.Address,
+                Phone = supplierDto.Phone,
+                Email = supplierDto.Email,
+                ContactName = supplierDto.ContactName,
+                Status = 1,
+                CreationDate = DateTime.UtcNow,
+                ModificationDate = DateTime.UtcNow,
+                CreatedByUserId = userId
+            };
 
-        await _supplierRepository.AddAsync(newSupplier);
-        return CreatedAtAction(nameof(GetSupplierById), new { id = newSupplier.Id }, newSupplier);
+
+            await _supplierRepository.AddAsync(newSupplier);
+            return CreatedAtAction(nameof(GetSupplierById), new { id = newSupplier.Id }, newSupplier);
+        }
+        catch (DbUpdateException ex)
+        {
+            if (ex.InnerException?.Message.Contains("Duplicate entry") == true)
+            {
+                if (ex.InnerException.Message.Contains("nit"))
+                    return BadRequest("Ya existe un proveedor con ese NIT.");
+                if (ex.InnerException.Message.Contains("email"))
+                    return BadRequest("Ya existe un proveedor con ese correo electrónico.");
+            }
+
+            return BadRequest("Error al guardar el proveedor.");
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, "Error interno del servidor.");
+        }
     }
 
     // PUT: api/suppliers/{id} -> Criterio: Editar información de proveedores
