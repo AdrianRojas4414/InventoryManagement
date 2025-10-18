@@ -1,6 +1,8 @@
+<!-- Fondo borroso del modal de producto -->
 <div class="modal-backdrop">
   <div class="form-card">
     <h3>{{ editMode ? 'Editar Producto' : 'Agregar Producto' }}</h3>
+
     <form #productForm="ngForm" (ngSubmit)="save()">
 
       <!-- Nombre -->
@@ -13,9 +15,9 @@
           required
           minlength="3"
           maxlength="100"
-          pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s,.-]+$"
+          pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9 ,.\-]+$"
           placeholder="Ej: Pelota"
-        >
+        />
         <div class="error" *ngIf="name.invalid && (name.dirty || name.touched)">
           <p *ngIf="name.errors?.['required']">El nombre es obligatorio.</p>
           <p *ngIf="name.errors?.['minlength']">Debe tener al menos 3 caracteres.</p>
@@ -33,9 +35,9 @@
           #description="ngModel"
           required
           minlength="5"
-          pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s,.-]+$"
+          pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9 ,.\-]+$"
           placeholder="Ej: Producto de diversión"
-        >
+        />
         <div class="error" *ngIf="description.invalid && (description.dirty || description.touched)">
           <p *ngIf="description.errors?.['required']">La descripción es obligatoria.</p>
           <p *ngIf="description.errors?.['minlength']">Debe tener al menos 5 caracteres.</p>
@@ -46,14 +48,28 @@
       <!-- Categoría -->
       <div class="form-group">
         <label>Categoría</label>
-        <select 
-          [(ngModel)]="product.categoryId" 
-          name="categoryId" 
-          #categorySelect="ngModel"
-          required
-        >
-          <option *ngFor="let cat of categories" [ngValue]="cat.id">{{ cat.name }}</option>
-        </select>
+        <div class="category-row">
+          <select 
+            [(ngModel)]="product.categoryId" 
+            name="categoryId" 
+            #categorySelect="ngModel"
+            required
+          >
+            <option [ngValue]="null" disabled selected>Selecciona una categoría</option>
+            <option *ngFor="let cat of categories" [ngValue]="cat.id">{{ cat.name }}</option>
+          </select>
+
+
+          <!-- Botón para abrir el modal de categoría -->
+          <button 
+            type="button" 
+            class="add-category" 
+            (click)="openCategoryForm()"
+            title="Crear una nueva categoría sin salir del formulario"
+          >
+            + Nueva
+          </button>
+        </div>
       </div>
 
       <!-- Stock -->
@@ -66,25 +82,25 @@
           #stock="ngModel"
           required 
           min="0"
-        >
+          placeholder="Ej: 10"
+        />
         <div class="error" *ngIf="stock.invalid && (stock.dirty || stock.touched)">
           <p *ngIf="stock.errors?.['required']">El stock es obligatorio.</p>
           <p *ngIf="stock.errors?.['min']">El stock no puede ser negativo.</p>
         </div>
       </div>
 
+      <!-- Botones -->
       <div class="form-actions">
         <button class="cancel" type="button" (click)="cancel()">Cancelar</button>
         <button class="add" type="submit" [disabled]="productForm.invalid">
           {{ editMode ? 'Guardar Cambios' : 'Agregar' }}
         </button>
       </div>
-      <div class="error-message" *ngIf="errorMessage">
-        {{ errorMessage }}
-      </div>
-      <div class="success-message" *ngIf="successMessage">
-        {{ successMessage }}
-      </div>
+
+      <!-- Mensajes -->
+      <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
+      <div class="success-message" *ngIf="successMessage">{{ successMessage }}</div>
     </form>
   </div>
 </div>

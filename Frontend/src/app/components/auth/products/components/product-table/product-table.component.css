@@ -1,124 +1,119 @@
 .table-container {
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-    margin: 24px 0px;
-    max-height: auto;
-    overflow-x: hidden;
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+  margin: 30px 0;
+  overflow-x: auto;
+  transition: all 0.3s ease;
 }
 
 .product-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.9rem;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 .product-table thead th {
-    text-align: left;
-    padding: 15px 12px;
-    font-weight: 600;
-    color: var(--light-text-color);
-    border-bottom: 1px solid var(--border-color);
-    font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    background-color: #efefef;
+  background: #1e3a8a;
+  color: #ffffff;
+  text-align: left;
+  padding: 14px 18px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
 }
 
 .product-table tbody tr {
-    border-bottom: 1px solid var(--border-color);
-    transition: background-color 0.15s;
+  border-bottom: 1px solid #e5e7eb;
+  transition: background-color 0.2s ease;
+}
+
+.product-table tbody tr:hover {
+  background-color: #f9fafb;
 }
 
 .product-table tbody td {
-    padding: 15px 12px;
-    vertical-align: middle;
-    font-size: 1rem;
+  padding: 14px 18px;
+  color: #374151;
+  vertical-align: middle;
 }
 
-.description{
-    white-space: normal;
-    word-break: break-word;
+.description {
+  white-space: normal;
+  word-break: break-word;
 }
 
+/* --- ESTADOS --- */
 .status-active {
-  background-color: #28a745; 
-  color: #fff;
-  padding: 4px 8px;
-  border-radius: 4px;
+  background-color: #10b981;
+  color: #ffffff;
+  padding: 6px 12px;
+  border-radius: 20px;
   font-size: 0.85rem;
-  font-weight: 500;
+  font-weight: 600;
   display: inline-block;
   text-align: center;
 }
 
 .status-desactive {
-  background-color: #dc3545;
-  color: #fff;
-  padding: 4px 8px;
-  border-radius: 4px;
+  background-color: #ef4444;
+  color: #ffffff;
+  padding: 6px 12px;
+  border-radius: 20px;
   font-size: 0.85rem;
-  font-weight: 500;
+  font-weight: 600;
   display: inline-block;
   text-align: center;
 }
 
+/* --- OPCIONES --- */
 .options-icon {
-    font-weight: 800;
-    font-size: 1.2rem;
-    cursor: pointer;
-    line-height: 1;
-    color: #6c757d;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #6b7280;
+  transition: color 0.2s ease;
 }
 
-.options-menu{
-    max-width: 100px;
-    display: flex;
-    flex-direction: column;
+.options-icon:hover {
+  color: #2563eb;
 }
 
-.options-menu button {
-    padding: 10px 15px;
-    text-align: left;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: background-color 0.1s;
-    border: 1px solid #e9ecef;
-    border-radius: 6px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.options-menu button:hover {
-    background-color: #f0f4f8;
-}
-
+/* --- PAGINACIÓN --- */
 .pagination {
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #ffffff;
+  padding: 12px;
+  border-top: 1px solid #e5e7eb;
 }
 
 .pagination span {
   margin: 0 15px;
-  color: #333;
+  color: #4b5563;
   font-weight: 500;
   font-size: 14px;
 }
 
 .pagination button {
-  border: 1px solid #ccc;
-  background-color: #f7f7f7;
-  color: #333;
-  padding: 8px 15px;
-  border-radius: 4px;
+  border: none;
+  background-color: #2563eb;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease;
   font-size: 14px;
 }
 
+.pagination button:hover {
+  background-color: #1e40af;
+}
+
 .pagination button[disabled] {
-  color: #a0a0a0;
-  background-color: #f0f0f0;
-  border-color: #e0e0e0;
+  color: #9ca3af;
+  background-color: #f3f4f6;
   cursor: not-allowed;
 }

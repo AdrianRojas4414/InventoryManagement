@@ -13,7 +13,7 @@ import { Category, CategoryService } from '../../../../../services/category.serv
 export class CategoryFormComponent implements OnInit {
   @Input() category: Category = { name: '', description: '' };
   @Output() close = new EventEmitter<void>();
-  @Output() saved = new EventEmitter<void>();
+  @Output() saved = new EventEmitter<Category>(); 
 
   editMode = false;
   userId = Number(localStorage.getItem('userId'));
@@ -39,15 +39,15 @@ export class CategoryFormComponent implements OnInit {
       : this.categoryService.addCategory(this.category, this.userId);
 
     request.subscribe({
-      next: () => {
+      next: (newCategory) => {
         this.successMessage = this.editMode
           ? 'Categoría actualizada exitosamente.'
           : 'Categoría creada exitosamente.';
 
         setTimeout(() => {
-          this.saved.emit();
-          this.close.emit();
-        }, 1000);
+          this.saved.emit(newCategory); 
+          this.close.emit();            
+        }, 800);
       },
       error: (error) => {
         console.error('Error en la operación:', error);
