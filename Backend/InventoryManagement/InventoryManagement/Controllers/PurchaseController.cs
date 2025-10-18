@@ -39,16 +39,38 @@ public class PurchasesController : ControllerBase
 
     // GET: api/purchases -> Listar todas las compras (solo Admin)
     [HttpGet]
-    public async Task<IActionResult> GetAllPurchases([FromHeader] string userRole)
+    public async Task<IActionResult> GetAllPurchases([FromHeader] string userRole, [FromQuery] int? page, [FromQuery] int? pageSize)
     {
         if (userRole != "Admin")
+            {
+                return Forbid("Acción no permitida. Solo los administradores pueden ver todas las compras.");
+            }
+        if (page.HasValue && pageSize.HasValue)
         {
-            return Forbid("Acción no permitida. Solo los administradores pueden ver todas las compras.");
-        }
 
-        var purchases = await _purchaseRepository.GetAllAsync();
-        var response = MapPurchasesToResponse(purchases);
-        return Ok(response);
+            var responsePurchases = await _purchaseRepository.GetAllAsync();
+            var purchases = MapPurchasesToResponse(responsePurchases);
+            var total = purchases.Count();
+            var totalPages = (int)Math.Ceiling(total / (double)pageSize.Value);
+
+            var paginatedData = purchases
+                .Skip(page.Value * pageSize.Value)
+                .Take(pageSize.Value)
+                .ToList();
+
+            var response = new
+            {
+                data = paginatedData,
+                total = total,
+                page = page.Value,
+                pageSize = pageSize.Value,
+                totalPages = totalPages
+            };
+
+            return Ok(response);
+        }
+        var allPurchases = await _purchaseRepository.GetAllAsync();
+        return Ok(allPurchases);
     }
 
     // GET: api/purchases/user -> Listar compras del usuario autenticado

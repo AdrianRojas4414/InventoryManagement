@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { API_URL } from '../config';
 
@@ -29,6 +29,14 @@ export interface CreatePurchase {
   purchaseDetails: CreatePurchaseDetail[];
 }
 
+export interface PaginatedResponse<T> {
+  data: T[];
+  total: number;
+  page: number;
+  pageSize: number;
+  totalPages: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -41,24 +49,34 @@ export class PurchaseService {
    * Obtener todas las compras (Solo Admin)
    * @param userRole Rol del usuario (debe ser "Admin")
    */
-  getAllPurchases(userRole: string = 'Admin'): Observable<Purchase[]> {
+  getAllPurchases(userRole:string='Admin', page: number = 0, pageSize: number = 5): Observable<PaginatedResponse<Purchase>> {
     const headers = new HttpHeaders({
       'userRole': userRole
     });
-
-    return this.http.get<Purchase[]>(this.apiUrl, { headers });
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('pageSize', pageSize.toString());
+    
+    return this.http.get<PaginatedResponse<Purchase>>(`${this.apiUrl}`, { headers, params});
   }
+  // getAllPurchases(userRole: string = 'Admin'): Observable<Purchase[]> {
+  //   const headers = new HttpHeaders({
+  //     'userRole': userRole
+  //   });
+
+  //   return this.http.get<Purchase[]>(this.apiUrl, { headers });
+  // }
 
   /**
    * Obtener compras del usuario autenticado
    * @param userId ID del usuario
    */
   getUserPurchases(userId: number): Observable<Purchase[]> {
-    const headers = new HttpHeaders({
-      'userId': userId.toString()
-    });
+     const headers = new HttpHeaders({
+       'userId': userId.toString()
+     });
 
-    return this.http.get<Purchase[]>(`${this.apiUrl}/user`, { headers });
+     return this.http.get<Purchase[]>(`${this.apiUrl}/user`, { headers });
   }
 
   /**

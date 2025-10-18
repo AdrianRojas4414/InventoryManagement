@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SupplierService } from '../../../services/supplier.service';
 import { ProductService } from '../../../services/product.service';
-import { PurchaseService } from '../../../services/purchase.service';
+import { PaginatedResponse, PurchaseService } from '../../../services/purchase.service';
 
 interface PurchaseDetail {
   producto: string;
@@ -99,6 +99,15 @@ export class PurchasesComponent implements OnInit {
   modalMessage = '';
   modalType: 'success' | 'error' | 'warning' | 'info' = 'info';
 
+  //Paginación
+  paginationParameters = {
+    currentPage: 0,
+    pageSize: 5,
+    totalItems: 0,
+    totalPages: 0
+  };
+  pageChange = new EventEmitter<number>();
+
   constructor(
     private fb: FormBuilder,
     private supplierService: SupplierService,
@@ -141,17 +150,46 @@ export class PurchasesComponent implements OnInit {
     });
   }
 
-  loadPurchases(): void {
+  loadPurchases(page: number = 0): void {
 
-    this.purchaseService.getAllPurchases('Admin').subscribe({
-      next: (data) => {
-        this.purchases = data;
-        console.log('Compras cargadas:', data);
+    this.purchaseService.getAllPurchases('Admin', page, this.paginationParameters.pageSize).subscribe({
+      next: (response: PaginatedResponse<Purchase>) => {
+        this.purchases = response.data;
+        console.log('Compras cargadas:', this.purchases);
+        this.paginationParameters = {
+          currentPage: response.page,
+          pageSize: response.pageSize,
+          totalItems: response.total,
+          totalPages: response.totalPages
+        };
+        console.log(this.paginationParameters.currentPage)
       },
       error: (err) => {
         console.error('Error:', err);
       }
     });
+  }
+
+  onPageChange(page: number): void {
+    if (page >= 0 && page < this.paginationParameters.totalPages) {
+      this.loadPurchases(page);
+    }
+  }
+
+  nextPage(): void {
+    if (this.paginationParameters.currentPage < this.paginationParameters.totalPages - 1) {
+      this.onPageChange(this.paginationParameters.currentPage + 1);
+    }
+  }
+
+  prevPage(): void {
+    if (this.paginationParameters.currentPage > 0) {
+      this.onPageChange(this.paginationParameters.currentPage - 1);
+    }
+  }
+
+  goToPage(page: number): void {
+    this.onPageChange(page);
   }
 
   createDetailRow(productId?: number, productName?: string): FormGroup {
@@ -164,7 +202,19 @@ export class PurchasesComponent implements OnInit {
   }
 
   addDetailRow(): void {
-    this.purchaseDetails.push(this.createDetailRow());
+    const selectedProductIds = this.purchaseDetails.controls
+    .map(control => control.get('productId')?.value)
+    .filter(id => id);
+  
+    const availableProduct = this.products.find(p => !selectedProductIds.includes(p.id));
+    
+    if (availableProduct) {
+      this.purchaseDetails.push(this.createDetailRow(availableProduct.id, availableProduct.name));
+    } else if (this.products.length === 0) {
+      this.showAlert('Advertencia', 'No hay productos disponibles en el sistema', 'warning');
+    } else {
+      this.showAlert('Advertencia', 'Todos los productos ya han sido agregados', 'warning');
+    }
   }
 
   removeDetailRow(index: number): void {
@@ -298,6 +348,10 @@ export class PurchasesComponent implements OnInit {
   openPurchaseProductForm(): void {
     this.showPurchaseForm = true;
     this.initForm();
+    const activeSupplier = this.suppliers.find(s => s.status === 1);
+    if (activeSupplier) {
+      this.purchaseForm.patchValue({ supplierId: activeSupplier.id });
+    }
   }
 
   closePurchaseForm(): void {
@@ -347,7 +401,7 @@ export class PurchasesComponent implements OnInit {
       
       // Cerrar modal/formulario
       this.closePurchaseForm();
-      this.loadPurchases();
+      this.loadPurchases(this.paginationParameters.currentPage);
     },
     error: (error) => {
       console.error('❌ Error:', error);
