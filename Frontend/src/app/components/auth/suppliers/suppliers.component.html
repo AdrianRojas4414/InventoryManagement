@@ -1,11 +1,12 @@
 <div>
   <app-sidebar></app-sidebar>
   <main>
-    <h1>Proveedores</h1>
-    <h2>Gestiona a tus proveedores y su información de contacto</h2>
+    <header>
+      <h1>Proveedores</h1>
+      <h2>Gestiona a tus proveedores y su información de contacto</h2>
 
-    <button class="add" (click)="openForm()">+ Agregar Proveedor</button>
-
+      <button class="add" (click)="openForm()">+ Agregar Proveedor</button>
+    </header>
     <app-supplier-form
       *ngIf="showForm"
       [supplier]="currentSupplier"

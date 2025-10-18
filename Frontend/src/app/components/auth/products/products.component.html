@@ -16,7 +16,7 @@
       [product]="currentProduct"
       [categories]="categories"
       (close)="closeForms('product')"
-      (saved)="saveProduct($event)"
+      (saved)="loadProducts()"
       (openCategory)="openCategoryForm()">
     </app-product-form>
 

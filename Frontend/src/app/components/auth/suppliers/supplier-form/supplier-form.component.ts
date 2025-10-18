@@ -86,7 +86,15 @@ export class SupplierFormComponent implements OnInit {
       },
       error: (error: any) => {
         console.error('Error al guardar proveedor:', error);
-        this.errorMessage = 'Error al guardar el proveedor. Verifica los datos e intenta nuevamente.';
+
+        // Si el backend envía un mensaje específico
+        if (error.status === 400 && error.error) {
+          this.errorMessage = error.error; // Mensaje del backend
+        } else if (error.status === 500) {
+          this.errorMessage = 'Error interno del servidor.';
+        } else {
+          this.errorMessage = 'Error al guardar el proveedor. Verifica los datos.';
+        }
       }
     });
   }
