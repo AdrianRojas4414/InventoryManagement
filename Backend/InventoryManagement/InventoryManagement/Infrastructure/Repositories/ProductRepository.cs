@@ -28,6 +28,11 @@ public class ProductRepository : IProductRepository
 
     public async Task AddAsync(Product product)
     {
+        var lastProduct = await _context.Products
+            .OrderByDescending(p => p.Id)
+            .FirstOrDefaultAsync();
+        product.Id = (short)((lastProduct?.Id ?? 0) + 1);
+
         await _context.Products.AddAsync(product);
         await _context.SaveChangesAsync();
     }
