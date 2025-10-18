@@ -113,24 +113,6 @@ export class ProductsComponent implements OnInit {
   });
   }
 
-
-
-  // 🔹 Guardar producto
-  saveProduct(newProduct: CreateProductDto): void {
-  this.productService.createProduct(newProduct, this.userId).subscribe({
-    next: () => {
-      this.loadProducts();
-      this.closeForms('product');
-    },
-    error: (err) => {
-      console.error('Error al guardar producto:', err);
-    }
-  });
-}
-
-
-
-  // 🔹 Confirmación
   openConfirm(type: 'product' | 'category', item: Product | Category) {
     this.disableMode = { type, id: item.id!, active: true };
   }

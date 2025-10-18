@@ -85,22 +85,42 @@ public class SuppliersController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateSupplier(short id, [FromBody] UpdateSupplierDto supplierDto)
     {
-        var supplier = await _supplierRepository.GetByIdAsync(id);
-        if (supplier == null || supplier.Status == 0)
+        try
         {
-            return NotFound(SupplierNotFoundMessage);
+            var supplier = await _supplierRepository.GetByIdAsync(id);
+            if (supplier == null || supplier.Status == 0)
+            {
+                return NotFound(SupplierNotFoundMessage);
+            }
+
+            supplier.Name = supplierDto.Name;
+            supplier.Nit = supplierDto.Nit;
+            supplier.Address = supplierDto.Address;
+            supplier.Phone = supplierDto.Phone;
+            supplier.Email = supplierDto.Email;
+            supplier.ContactName = supplierDto.ContactName;
+            supplier.ModificationDate = DateTime.UtcNow;
+
+            await _supplierRepository.UpdateAsync(supplier);
+            return Ok(supplier);
         }
+        catch (DbUpdateException ex)
+        {
+            // Capturamos errores por duplicado (NIT o Email)
+            if (ex.InnerException?.Message.Contains("Duplicate entry") == true)
+            {
+                if (ex.InnerException.Message.Contains("nit"))
+                    return BadRequest("Ya existe otro proveedor con ese NIT.");
+                if (ex.InnerException.Message.Contains("email"))
+                    return BadRequest("Ya existe otro proveedor con ese correo electrónico.");
+            }
 
-        supplier.Name = supplierDto.Name;
-        supplier.Nit = supplierDto.Nit;
-        supplier.Address = supplierDto.Address;
-        supplier.Phone = supplierDto.Phone;
-        supplier.Email = supplierDto.Email;
-        supplier.ContactName = supplierDto.ContactName;
-        supplier.ModificationDate = DateTime.UtcNow;
-
-        await _supplierRepository.UpdateAsync(supplier);
-        return Ok(supplier);
+            return BadRequest("Error al actualizar el proveedor.");
+        }
+        catch (Exception)
+        {
+            return StatusCode(500, "Error interno del servidor.");
+        }
     }
 
     // DELETE: api/suppliers/{id} -> Criterio: Dar de baja a los proveedores (solo Admin)

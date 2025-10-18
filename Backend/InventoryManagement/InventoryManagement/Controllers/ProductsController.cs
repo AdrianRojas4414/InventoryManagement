@@ -44,62 +44,95 @@ public class ProductsController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateProduct([FromBody] CreateProductDto productDto, [FromHeader] short userId)
     {
-
-        // Validar que la categoría exista
-        var category_val = await _categoryRepository.GetByIdAsync(productDto.CategoryId);
-        if (category_val == null)
+        try
         {
-            return BadRequest("La categoría seleccionada no existe.");
+            // Validar que la categoría exista
+            var category_val = await _categoryRepository.GetByIdAsync(productDto.CategoryId);
+            if (category_val == null)
+            {
+                return BadRequest("La categoría seleccionada no existe.");
+            }
+            if (category_val.Status == 0)
+            {
+                return BadRequest("La categoría seleccionada está inactiva.");
+            }
+
+            var newProduct = new Product
+            {
+                Name = productDto.Name,
+                Description = productDto.Description,
+                CategoryId = productDto.CategoryId,
+                TotalStock = productDto.TotalStock,
+                Status = 1,
+                CreationDate = DateTime.UtcNow,
+                ModificationDate = DateTime.UtcNow,
+                CreatedByUserId = userId,
+            };
+
+            await _productRepository.AddAsync(newProduct);
+            return Ok(newProduct);
         }
-        if (category_val.Status == 0)
+        catch (DbUpdateException ex)
         {
-            return BadRequest("La categoría seleccionada está inactiva.");
+            if (ex.InnerException?.Message.Contains("Duplicate entry") == true)
+            {
+                if (ex.InnerException.Message.Contains("name"))
+                    return BadRequest("Ya existe un producto con ese nombre.");
+            }
+
+            return BadRequest("Error al guardar el producto.");
         }
-
-        var newProduct = new Product
+        catch (Exception)
         {
-            Name = productDto.Name,
-            Description = productDto.Description,
-            CategoryId = productDto.CategoryId,
-            TotalStock = productDto.TotalStock,
-            Status = 1,
-            CreationDate = DateTime.UtcNow,
-            ModificationDate = DateTime.UtcNow,
-            CreatedByUserId = userId,
-        };
-
-        await _productRepository.AddAsync(newProduct);
-        return Ok(newProduct);
+            return StatusCode(500, "Error interno del servidor.");
+        }
     }
     
     // PUT: api/products/{id}
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateProduct(short id, [FromBody] CreateProductDto productDto)
     {
-        var product = await _productRepository.GetByIdAsync(id);
-        if (product == null || product.Status == 0)
+        try
         {
-            return NotFound(ProductNotFoundMessage);
-        }
+            var product = await _productRepository.GetByIdAsync(id);
+            if (product == null || product.Status == 0)
+            {
+                return NotFound(ProductNotFoundMessage);
+            }
 
-        // Validar que la categoría exista
-        var category_val = await _categoryRepository.GetByIdAsync(productDto.CategoryId);
-        if (category_val == null)
+            // Validar que la categoría exista
+            var category_val = await _categoryRepository.GetByIdAsync(productDto.CategoryId);
+            if (category_val == null)
+            {
+                return BadRequest("La categoría seleccionada no existe.");
+            }
+            if (category_val.Status == 0)
+            {
+                return BadRequest("La categoría seleccionada está inactiva.");
+            }
+
+            product.Name = productDto.Name;
+            product.Description = productDto.Description;
+            product.CategoryId = productDto.CategoryId;
+            product.TotalStock = productDto.TotalStock;
+
+            await _productRepository.UpdateAsync(product);
+            return Ok(product);
+        }
+        catch (DbUpdateException ex)
         {
-            return BadRequest("La categoría seleccionada no existe.");
+            if (ex.InnerException?.Message.Contains("Duplicate entry") == true &&
+                ex.InnerException.Message.Contains("name"))
+            {
+                return BadRequest("Ya existe un producto con ese nombre.");
+            }
+
+            return BadRequest("Error al actualizar el producto.");
         }
-        if (category_val.Status == 0)
+        catch (Exception)
         {
-            return BadRequest("La categoría seleccionada está inactiva.");
+            return StatusCode(500, "Error interno del servidor.");
         }
-
-        product.Name = productDto.Name;
-        product.Description = productDto.Description;
-        product.CategoryId = productDto.CategoryId;
-        product.TotalStock = productDto.TotalStock;
-
-        await _productRepository.UpdateAsync(product);
-        return Ok(product);
     }
 
     // DELETE: api/products/{id} (Borrado lógico - solo Admin)

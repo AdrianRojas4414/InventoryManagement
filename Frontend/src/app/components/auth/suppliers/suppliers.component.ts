@@ -53,27 +53,6 @@ export class SuppliersComponent implements OnInit {
     this.showForm = false;
   }
 
-  saveSupplier(supplier: Supplier): void {
-    if (this.editMode) {
-      this.supplierService.updateSupplier(supplier.id, supplier).subscribe({
-        next: () => {
-          console.log('Proveedor actualizado');
-          this.loadSuppliers();
-          this.closeForm();
-        },
-        error: err => console.error('Error al actualizar proveedor:', err)
-      });
-    } else {
-      this.supplierService.createSupplier(supplier, this.userId).subscribe({
-        next: () => {
-          console.log('Proveedor creado');
-          this.loadSuppliers();
-          this.closeForm();
-        },
-        error: err => console.error('Error al crear proveedor:', err)
-      });
-    }
-  }
 
   openConfirm(supplier: Supplier): void {
     this.currentSupplier = supplier;
