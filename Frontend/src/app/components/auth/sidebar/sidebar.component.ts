@@ -20,7 +20,7 @@ export class SidebarComponent {
     { name: 'Productos', icon: 'square', route: '/products' },
     { name: 'Proveedores', icon: 'people', route: '/suppliers' },
     { name: 'Compras', icon: 'shopping_cart', route: '/purchases' },
-    { name: 'Reportes', icon: 'article', route: '/reports' },
+    // { name: 'Reportes', icon: 'article', route: '/reports' },
     { name: 'Salir', icon: 'logout', route: 'logout'}
   ];
   
