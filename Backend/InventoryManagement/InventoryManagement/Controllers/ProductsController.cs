@@ -59,6 +59,7 @@ public class ProductsController : ControllerBase
 
             var newProduct = new Product
             {
+                SerialCode = productDto.SerialCode,
                 Name = productDto.Name,
                 Description = productDto.Description,
                 CategoryId = productDto.CategoryId,
@@ -76,6 +77,9 @@ public class ProductsController : ControllerBase
         {
             if (ex.InnerException?.Message.Contains("Duplicate entry") == true)
             {
+                if (ex.InnerException.Message.Contains("serial_code"))
+                    return BadRequest("Ya existe un producto con ese código serial.");
+
                 if (ex.InnerException.Message.Contains("name"))
                     return BadRequest("Ya existe un producto con ese nombre.");
             }
@@ -111,6 +115,7 @@ public class ProductsController : ControllerBase
                 return BadRequest("La categoría seleccionada está inactiva.");
             }
 
+            product.SerialCode = productDto.SerialCode;
             product.Name = productDto.Name;
             product.Description = productDto.Description;
             product.CategoryId = productDto.CategoryId;
@@ -121,10 +126,13 @@ public class ProductsController : ControllerBase
         }
         catch (DbUpdateException ex)
         {
-            if (ex.InnerException?.Message.Contains("Duplicate entry") == true &&
-                ex.InnerException.Message.Contains("name"))
+            if (ex.InnerException?.Message.Contains("Duplicate entry") == true)
             {
-                return BadRequest("Ya existe un producto con ese nombre.");
+                if (ex.InnerException.Message.Contains("serial_code"))
+                    return BadRequest("Ya existe un producto con ese código serial.");
+                    
+                if (ex.InnerException.Message.Contains("name"))
+                    return BadRequest("Ya existe un producto con ese nombre.");
             }
 
             return BadRequest("Error al actualizar el producto.");
