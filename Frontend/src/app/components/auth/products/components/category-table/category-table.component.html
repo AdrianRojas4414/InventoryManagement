@@ -19,10 +19,12 @@
         </td>
         <td class="options-cell" *ngIf="isAdmin || category.status">
           <span class="options-icon" (click)="toggleOptions(category)">...</span>
-          <div class="options-menu" *ngIf="category['showOptions']">
-            <ng-container *ngIf="category.status === 1">
-              <button (click)="edit.emit(category)">Editar</button>
-            </ng-container>
+          <div class="options-menu" *ngIf="category['showOptions'] && category.status">
+            <button (click)="edit.emit(category)">Editar</button>
+            <button  *ngIf="isAdmin" (click)="disable.emit(category)">Deshabilitar</button>
+          </div>
+          <div class="options-menu" *ngIf="category['showOptions'] && !category.status">
+            <button (click)="enableCategory(category)">Habilitar</button>
           </div>
         </td>
       </tr>

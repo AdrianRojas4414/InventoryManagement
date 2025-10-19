@@ -33,7 +33,7 @@ export class ProductsComponent implements OnInit {
   products: (Product & { categoryName?: string })[] = [];
 
   currentProduct: Product & { categoryId?: number } = {} as Product;
-  currentCategory: Category = { name: '', description: '' };
+  currentCategory: Category = {} as Category;
 
   showProductForm = false;
   showCategoryForm = false;
@@ -85,9 +85,7 @@ export class ProductsComponent implements OnInit {
 
   openCategoryForm(category?: Category): void {
     this.showCategoryForm = true;
-    this.currentCategory = category
-      ? { ...category }
-      : { name: '', description: '' };
+    this.currentCategory = category ? { ...category } : {} as Category;
   }
 
   closeForms(formType?: 'product' | 'category'): void {
@@ -100,23 +98,30 @@ export class ProductsComponent implements OnInit {
   }
 
   saveCategory(category: Category): void {
-  this.categoryService.addCategory(category, this.userId).subscribe({
-    next: (createdCategory: Category) => {
-      const categoryId = Number(createdCategory.id);
-      this.categories.push(createdCategory);
-      if (this.showProductForm && categoryId > 0) {
-        this.currentProduct.categoryId = categoryId;
-      }
+    const categoryId = Number(category.id);
+  
+    // Agregar la nueva categoría a la lista
+    this.categories.push(category);
+    
+    // Si el formulario de producto está abierto, asignar la nueva categoría
+    if (this.showProductForm && categoryId > 0) {
+      this.currentProduct.categoryId = categoryId;
+    }
 
-      this.showCategoryForm = false;
-      this.loadCategories();
-    },
-    error: (err) => console.error('Error al guardar categoría:', err)
-  });
+    // Cerrar el formulario de categoría
+    this.showCategoryForm = false;
+    
+    // Recargar las categorías para asegurar sincronización
+    this.loadCategories();
   }
 
   openConfirm(type: 'product' | 'category', item: Product | Category) {
     this.disableMode = { type, id: item.id!, active: true };
+    if (type === 'product') {
+      this.currentProduct = item as Product;
+    } else {
+      this.currentCategory = item as Category;
+    }
   }
 
   confirmDisable() {
@@ -127,6 +132,15 @@ export class ProductsComponent implements OnInit {
           this.disableMode.active = false;
         },
         error: (err) => console.error('Error al desactivar producto:', err)
+      });
+    }
+    if (this.disableMode.type === 'category') {
+      this.categoryService.desactivate(this.disableMode.id, this.userRole).subscribe({
+        next: () => {
+          this.loadCategories();
+          this.disableMode.active = false;
+        },
+        error: (err) => console.error('Error al desactivar categoria:', err)
       });
     }
   }

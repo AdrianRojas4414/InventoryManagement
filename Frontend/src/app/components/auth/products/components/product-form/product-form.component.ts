@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Product, CreateProductDto, ProductService } from '../../../../../services/product.service';
@@ -11,7 +11,7 @@ import { Category } from '../../../../../services/category.service';
   imports: [FormsModule, CommonModule],
   standalone: true
 })
-export class ProductFormComponent implements OnInit {
+export class ProductFormComponent implements OnInit, OnChanges {
   @Input() product: Product & { categoryId?: number } = {} as Product;
   @Input() categories: Category[] = [];
 
@@ -26,22 +26,48 @@ export class ProductFormComponent implements OnInit {
 
   constructor(private productService: ProductService) {}
 
-  ngOnInit(): void {
-    this.editMode = !!this.product.id;
-    if (!this.product.categoryId && this.categories.length > 0) {
-      this.product.categoryId = this.categories[0].id!;
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['categories'] && !changes['categories'].firstChange) {
+      this.loadActiveCategories();
     }
   }
+  ngOnInit(): void {
+    this.editMode = !!this.product.id;
+    this.loadActiveCategories();
+    
+  }
+
+  loadActiveCategories(): void{
+    const activeCategories = this.categories.filter(cat => cat.status === 1);
+
+    if (!this.product.categoryId && activeCategories.length > 0) {
+      this.product.categoryId = activeCategories[0].id!;
+    }
+
+    this.categories = activeCategories;
+  }
+
 
   save(): void {
-    this.product.name?.trim();
-    this.product.description;
+    this.product.name = this.product.name.trim();
+    this.product.description = this.product.description.trim();
+    
+
+    if (this.product.name.length < 3) {
+      this.errorMessage = 'El nombre debe tener al menos 3 caracteres válidos.';
+      return;
+    }
+    if (this.product.description.length < 5) {
+      this.errorMessage = 'La descripción debe tener al menos 5 caracteres válidos.';
+      return;
+    }
 
     const dto: CreateProductDto = {
       name: this.product.name,
       description: this.product.description,
       categoryId: this.product.categoryId,
-      totalStock: this.product.totalStock
+      totalStock: this.product.totalStock,
+      serialCode: Number(this.product.serialCode),
     };
 
     const request = this.editMode
@@ -80,4 +106,12 @@ export class ProductFormComponent implements OnInit {
   openCategoryForm(): void {
     this.openCategory.emit();
   }
+
+  // Llamado desde el modal de categoría
+  onCategoryCreated(newCategory: Category) {
+    this.categories.push(newCategory);
+    this.loadActiveCategories(); // recarga la lista activa y asigna al select
+    this.product.categoryId = newCategory.id; // opcional: seleccionar la nueva
+  }
+
 }

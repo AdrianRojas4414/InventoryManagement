@@ -57,6 +57,19 @@ export class SupplierFormComponent implements OnInit {
       return;
     }
 
+    // Validar longitudes mínimas manualmente
+    if (
+      !this.supplier.name || this.supplier.name.length < 4 ||
+      !this.supplier.nit || this.supplier.nit.length < 7 ||
+      !this.phoneNumber || this.phoneNumber.length < 6 ||
+      !this.supplier.email || this.supplier.email.length < 5 ||
+      !this.supplier.contactName || this.supplier.contactName.length < 2 ||
+      !this.supplier.address || this.supplier.address.length < 4
+    ) {
+      this.errorMessage = 'No se cumple con el tamaño mínimo requerido.';
+      return;
+    }
+
     // Unir el código y el número en un solo string
     const fullPhone = `${this.countryCode} ${this.phoneNumber}`;
 

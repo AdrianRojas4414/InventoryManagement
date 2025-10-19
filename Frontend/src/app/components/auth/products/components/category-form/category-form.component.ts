@@ -11,7 +11,7 @@ import { Category, CategoryService } from '../../../../../services/category.serv
   standalone: true
 })
 export class CategoryFormComponent implements OnInit {
-  @Input() category: Category = { name: '', description: '' };
+  @Input() category: Category = {} as Category;
   @Output() close = new EventEmitter<void>();
   @Output() saved = new EventEmitter<Category>(); 
 
@@ -34,6 +34,16 @@ export class CategoryFormComponent implements OnInit {
     this.category.description = this.category.description.trim();
     this.category.name = this.category.name.trim();
 
+    if (!this.category.name || this.category.name.length < 3) {
+      this.errorMessage = 'El nombre debe tener al menos 3 caracteres válidos.';
+      return;
+    }
+
+    if (!this.category.description || this.category.description.length < 5) {
+      this.errorMessage = 'La descripción debe tener al menos 5 caracteres válidos.';
+      return;
+    }
+
     const request = this.editMode
       ? this.categoryService.update(this.category.id!, this.category)
       : this.categoryService.addCategory(this.category, this.userId);
@@ -43,6 +53,8 @@ export class CategoryFormComponent implements OnInit {
         this.successMessage = this.editMode
           ? 'Categoría actualizada exitosamente.'
           : 'Categoría creada exitosamente.';
+
+        this.saved.emit(newCategory);
 
         setTimeout(() => {
           this.close.emit();            

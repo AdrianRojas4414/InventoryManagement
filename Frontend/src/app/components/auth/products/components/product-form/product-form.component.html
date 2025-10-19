@@ -45,6 +45,22 @@
         </div>
       </div>
 
+      <div class="form-group">
+        <label for="serialCode">Código Serial</label>
+        <input 
+          [(ngModel)]="product.serialCode"
+          name="serialCode"
+          #serialCode="ngModel"
+          required
+          pattern="^[0-9]{5}$"
+          placeholder="Ej: 11111"
+        >
+        <div class="error" *ngIf="serialCode.invalid && (serialCode.dirty || serialCode.touched)">
+          <p *ngIf="serialCode.errors?.['required']">El código serial es obligatorio.</p>
+          <p *ngIf="serialCode.errors?.['pattern']">Debe ingresar 5 digitos</p>
+        </div>
+      </div>
+
       <!-- Categoría -->
       <div class="form-group">
         <label>Categoría</label>
