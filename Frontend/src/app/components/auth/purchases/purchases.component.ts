@@ -61,20 +61,7 @@ interface CreatePurchaseDetail {
   styleUrl: './purchases.component.css'
 })
 export class PurchasesComponent implements OnInit {
-  purchases: Purchase[] = [
-    // {
-    //   id: 0,
-    //   fecha: '14/09/2025',
-    //   proveedor: 'MILCAR',
-    //   total: '300 BOB',
-    //   expanded: false,
-    //   detalles: [
-    //     { producto: 'Arroz 1kg', cantidad: 10, precioUnitario: 15 },
-    //     { producto: 'Azúcar 1kg', cantidad: 8, precioUnitario: 12 },
-    //     { producto: 'Aceite 1L', cantidad: 5, precioUnitario: 18 }
-    //   ]
-    // }
-  ];
+  purchases: Purchase[] = [];
 
   showPurchaseForm = false;
   purchaseForm!: FormGroup;
@@ -326,22 +313,6 @@ export class PurchasesComponent implements OnInit {
     return this.products.filter(p => 
       p.name.toLowerCase().includes(this.productSearchTerm.toLowerCase())
     );
-    // const searchTerm = this.productSearchTerms[index] || '';
-    
-    // // Filtrar productos que ya están seleccionados
-    // const selectedProductIds = this.purchaseDetails.controls
-    //   .map(control => control.get('productId')?.value)
-    //   .filter(id => id);
-
-    // let filtered = this.products.filter(p => !selectedProductIds.includes(p.id));
-
-    // if (searchTerm) {
-    //   filtered = filtered.filter(p => 
-    //     p.name.toLowerCase().includes(searchTerm.toLowerCase())
-    //   );
-    // }
-    // //console.log(filtered)
-    // return filtered;
   }
 
   // Manejo del formulario

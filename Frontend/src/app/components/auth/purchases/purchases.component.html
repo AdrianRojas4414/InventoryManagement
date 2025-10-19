@@ -187,7 +187,7 @@
                                 <button 
                                     class="add"
                                     type="submit" 
-                                    [disabled]="isSubmitting || purchaseForm.invalid"
+                                    [disabled]="isSubmitting || purchaseForm.invalid || purchaseDetails.length === 0"
                                     (click)="onSubmit()">
                                     {{ isSubmitting ? 'Guardando...' : 'Registrar Compra' }}
                                 </button>
