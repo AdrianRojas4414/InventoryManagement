@@ -161,4 +161,110 @@ export class SupplierFormComponent implements OnInit {
   cancel(): void {
     this.close.emit();
   }
+
+   getNameError(name: any): string | null {
+    if (!name) return null;
+    const value = this.supplier.name || '';
+    if (!(name.dirty || name.touched)) return null;
+    if (name.errors?.['required']) {
+      return 'El nombre es obligatorio.';
+    }
+    if (name.errors?.['minlength']) {
+      return 'Debe tener al menos 4 caracteres.';
+    }
+    if (value.length > 31) {
+      return 'Debe tener menos de 31 caracteres.';
+    }
+    if (name.errors?.['pattern']) {
+      return 'No puede ser solo números ni contener caracteres inválidos.';
+    }
+    return null;
+  }
+
+  getNitError(nit: any): string | null {
+  if (!nit) return null;
+    const value = this.supplier.nit || '';
+    if (!(nit.dirty || nit.touched)) return null;
+    if (nit.errors?.['required']) {
+      return 'El NIT es obligatorio.';
+    }
+    if (nit.errors?.['pattern']) {
+      return 'Formato inválido. Ejemplo: 12345678-9';
+    }
+    const cleanNit = value.replace('-', '');
+    if (cleanNit.length < 7 || cleanNit.length > 12) {
+      return 'El NIT debe tener entre 7 y 12 dígitos.';
+    }
+    return null;
+  }
+
+  getPhoneError(phone: any): string | null {
+    if (!phone) return null;
+    const value = this.phoneNumber || '';
+    if (!(phone.dirty || phone.touched)) return null;
+    if (phone.errors?.['required']) {
+      return 'El teléfono es obligatorio.';
+    }
+    if (phone.errors?.['pattern']) {
+      return 'Debe tener entre 6 y 10 dígitos.';
+    }
+    if (/^0/.test(value)) {
+      return 'El número no puede comenzar con 0.';
+    }
+    return null;
+  }
+
+  getEmailError(email: any): string | null {
+    if (!email) return null;
+    const value = this.supplier.email || '';
+    if (!(email.dirty || email.touched)) return null;
+    if (email.errors?.['required']) {
+      return 'El correo es obligatorio.';
+    }
+    if (email.errors?.['minlength']) {
+      return 'Debe tener al menos 5 caracteres.';
+    }
+    if (value.length > 30) {
+      return 'Debe tener menos de 30 caracteres.';
+    }
+    if (email.errors?.['pattern']) {
+      return 'Debe tener un formato válido (ej. usuario@dominio.com).';
+    }
+    return null;
+  }
+
+  getContactNameError(contactName: any): string | null {
+    if (!contactName) return null;
+    const value = this.supplier.contactName || '';
+    if (!(contactName.dirty || contactName.touched)) return null;
+    if (contactName.errors?.['required']) {
+      return 'El nombre de contacto es obligatorio.';
+    }
+    if (contactName.errors?.['minlength']) {
+      return 'Debe tener al menos 2 caracteres.';
+    }
+    if (value.length > 50) {
+      return 'Debe tener menos de 50 caracteres.';
+    }
+    if (contactName.errors?.['pattern']) {
+      return 'Solo se permiten letras y espacios.';
+    }
+    return null;
+  }
+
+  getAddressError(address: any): string | null {
+    if (!address) return null;
+    const value = this.supplier.address || '';
+    if (!(address.dirty || address.touched)) return null;
+    if (address.errors?.['required']) {
+      return 'La dirección es obligatoria.';
+    }
+    if (address.errors?.['minlength']) {
+      return 'Debe tener al menos 4 caracteres.';
+    }
+    if (value.length > 100) {
+      return 'Debe tener menos de 100 caracteres.';
+    }
+    return null;
+  }
 }

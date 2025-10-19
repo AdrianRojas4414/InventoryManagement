@@ -7,10 +7,10 @@ export interface Supplier {
   id: number;
   name: string;
   nit: string;
-  address?: string;
+  address: string;
   phone?: string;
-  email?: string;
-  contactName?: string;
+  email: string;
+  contactName: string;
   status?: number;
   showOptions?: boolean;
 }
