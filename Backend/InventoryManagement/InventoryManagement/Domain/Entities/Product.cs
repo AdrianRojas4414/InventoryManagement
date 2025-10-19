@@ -14,6 +14,10 @@ public class Product : AuditableEntity
     public short Id { get; set; }
 
     [Required]
+    [Column("serial_code")]
+    public short SerialCode { get; set; }
+
+    [Required]
     [MaxLength(100)]
     [Column("name")]
     public string Name { get; set; } = null!;
