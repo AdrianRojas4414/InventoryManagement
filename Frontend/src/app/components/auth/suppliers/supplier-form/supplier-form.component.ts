@@ -13,7 +13,7 @@ import { CreateSupplierDto, Supplier, SupplierService } from '../../../../servic
 export class SupplierFormComponent implements OnInit {
   @Input() supplier: Supplier = {} as Supplier;
   @Output() close = new EventEmitter<void>();
-  @Output() saved = new EventEmitter<void>();
+  @Output() saved = new EventEmitter<Supplier>();
 
   editMode = false;
   userId = Number(localStorage.getItem('userId'));
@@ -87,13 +87,13 @@ export class SupplierFormComponent implements OnInit {
       : this.supplierService.createSupplier(supplierData, this.userId);
 
     request.subscribe({
-      next: () => {
+      next: (createdSupplier: Supplier) => {
         this.successMessage = this.editMode
           ? 'Proveedor actualizado correctamente.'
           : 'Proveedor agregado correctamente.';
 
         setTimeout(() => {
-          this.saved.emit();
+          this.saved.emit(createdSupplier);
           this.close.emit();
         }, 1000);
       },

@@ -1,10 +1,11 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SupplierService } from '../../../services/supplier.service';
 import { ProductService } from '../../../services/product.service';
 import { PaginatedResponse, PurchaseService } from '../../../services/purchase.service';
+import { SupplierFormComponent } from "../suppliers/supplier-form/supplier-form.component";
 
 interface PurchaseDetail {
   producto: string;
@@ -56,25 +57,12 @@ interface CreatePurchaseDetail {
 
 @Component({
   selector: 'app-purchases',
-  imports: [ReactiveFormsModule, SidebarComponent, CommonModule],
+  imports: [ReactiveFormsModule, SidebarComponent, CommonModule, SupplierFormComponent],
   templateUrl: './purchases.component.html',
   styleUrl: './purchases.component.css'
 })
 export class PurchasesComponent implements OnInit {
-  purchases: Purchase[] = [
-    // {
-    //   id: 0,
-    //   fecha: '14/09/2025',
-    //   proveedor: 'MILCAR',
-    //   total: '300 BOB',
-    //   expanded: false,
-    //   detalles: [
-    //     { producto: 'Arroz 1kg', cantidad: 10, precioUnitario: 15 },
-    //     { producto: 'Azúcar 1kg', cantidad: 8, precioUnitario: 12 },
-    //     { producto: 'Aceite 1L', cantidad: 5, precioUnitario: 18 }
-    //   ]
-    // }
-  ];
+  purchases: Purchase[] = [];
 
   showPurchaseForm = false;
   purchaseForm!: FormGroup;
@@ -106,7 +94,9 @@ export class PurchasesComponent implements OnInit {
     totalItems: 0,
     totalPages: 0
   };
-  pageChange = new EventEmitter<number>();
+
+  //Proveedores formulario
+  showSupplierForm = false;
 
   constructor(
     private fb: FormBuilder,
@@ -326,22 +316,6 @@ export class PurchasesComponent implements OnInit {
     return this.products.filter(p => 
       p.name.toLowerCase().includes(this.productSearchTerm.toLowerCase())
     );
-    // const searchTerm = this.productSearchTerms[index] || '';
-    
-    // // Filtrar productos que ya están seleccionados
-    // const selectedProductIds = this.purchaseDetails.controls
-    //   .map(control => control.get('productId')?.value)
-    //   .filter(id => id);
-
-    // let filtered = this.products.filter(p => !selectedProductIds.includes(p.id));
-
-    // if (searchTerm) {
-    //   filtered = filtered.filter(p => 
-    //     p.name.toLowerCase().includes(searchTerm.toLowerCase())
-    //   );
-    // }
-    // //console.log(filtered)
-    // return filtered;
   }
 
   // Manejo del formulario
@@ -358,6 +332,23 @@ export class PurchasesComponent implements OnInit {
     this.showPurchaseForm = false;
     this.activeProductDropdown = null;
     this.showSupplierDropdown = false;
+  }
+
+  //Formulario proveedores
+  openSupplierForm(){
+    this.showSupplierForm = true;
+  }
+
+  closeSupplierForm(): void {
+    this.showSupplierForm = false;
+  }
+
+  savedSupplierForm(newSupplier: Supplier): void {
+    console.log('✅ Proveedor creado:', newSupplier);
+    this.showSupplierForm = false;
+    this.suppliers.push(newSupplier);
+    this.purchaseForm.patchValue({ supplierId: newSupplier.id });
+    this.loadSuppliers();
   }
 
   onSubmit(): void {

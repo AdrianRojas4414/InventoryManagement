@@ -9,6 +9,15 @@
             </div>
         </header>
 
+        <!-- FORMULARIO DE REGISTRO DE PROVEEDOR -->
+         <app-supplier-form
+         *ngIf="showSupplierForm"
+         (close)="closeSupplierForm()"
+         (saved)="savedSupplierForm($event)"
+        >
+
+         </app-supplier-form>
+
         <!-- FORMULARIO DE REGISTRO DE COMPRA -->
         <ng-container *ngIf="showPurchaseForm">
             <div class="modal-backdrop" (click)="closePurchaseForm()">
@@ -18,38 +27,49 @@
                         
                         <!-- Proveedor y Fecha -->
                         <div class="form-grid">
-                            <!-- Proveedor con dropdown custom -->
-                            <div class="form-group">
-                                <label>Proveedor *</label>
-                                <div class="custom-select-wrapper">
-                                    <div class="custom-select" 
-                                         [class.open]="showSupplierDropdown"
-                                         (click)="toggleSupplierDropdown()">
-                                        <span class="select-value">{{ getSelectedSupplierName() }}</span>
-                                        <span class="select-arrow">▼</span>
-                                    </div>
-                                    <div class="dropdown-menu" *ngIf="showSupplierDropdown">
-                                        <input type="text" 
-                                               class="dropdown-search"
-                                               placeholder="Buscar proveedor..."
-                                               [value]="supplierSearchTerm"
-                                               (input)="supplierSearchTerm = $any($event.target).value"
-                                               (click)="$event.stopPropagation()">
-                                        <div class="dropdown-options">
-                                            <div class="dropdown-option" 
-                                                 *ngFor="let supplier of getFilteredSuppliers()"
-                                                 (click)="selectSupplier(supplier)">
-                                                {{ supplier.name }}
-                                            </div>
-                                            <div class="dropdown-option empty" 
-                                                 *ngIf="getFilteredSuppliers().length === 0">
-                                                No se encontraron proveedores
+                            <div class="supplier-row">
+                                <!-- Proveedor con dropdown custom -->
+                                <div class="form-group">
+                                    <label>Proveedor *</label>
+                                    <div class="custom-select-wrapper">
+                                        <div class="custom-select" 
+                                            [class.open]="showSupplierDropdown"
+                                            (click)="toggleSupplierDropdown()">
+                                            <span class="select-value">{{ getSelectedSupplierName() }}</span>
+                                            <span class="select-arrow">▼</span>
+                                        </div>
+                                        <div class="dropdown-menu" *ngIf="showSupplierDropdown">
+                                            <input type="text" 
+                                                class="dropdown-search"
+                                                placeholder="Buscar proveedor..."
+                                                [value]="supplierSearchTerm"
+                                                (input)="supplierSearchTerm = $any($event.target).value"
+                                                (click)="$event.stopPropagation()">
+                                            <div class="dropdown-options">
+                                                <div class="dropdown-option" 
+                                                    *ngFor="let supplier of getFilteredSuppliers()"
+                                                    (click)="selectSupplier(supplier)">
+                                                    {{ supplier.name }}
+                                                </div>
+                                                <div class="dropdown-option empty" 
+                                                    *ngIf="getFilteredSuppliers().length === 0">
+                                                    No se encontraron proveedores
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- Botón para abrir formulario de proveedores -->
+                                </div>
+                                <div class="form-group">
+                                    <button 
+                                    type="button" 
+                                    class="add-supplier"
+                                    (click)="openSupplierForm()"
+                                    title="Crear un nueva proveedor sin salir del formulario">
+                                        + Nueva
+                                    </button>
                                 </div>
                             </div>
-
                             <!-- Fecha -->
                             <div class="form-group">
                                 <label>Fecha *</label>
@@ -187,7 +207,7 @@
                                 <button 
                                     class="add"
                                     type="submit" 
-                                    [disabled]="isSubmitting || purchaseForm.invalid"
+                                    [disabled]="isSubmitting || purchaseForm.invalid || purchaseDetails.length === 0"
                                     (click)="onSubmit()">
                                     {{ isSubmitting ? 'Guardando...' : 'Registrar Compra' }}
                                 </button>
