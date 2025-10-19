@@ -28,20 +28,41 @@ export class ProductFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.editMode = !!this.product.id;
-    if (!this.product.categoryId && this.categories.length > 0) {
-      this.product.categoryId = this.categories[0].id!;
-    }
+    this.loadActiveCategories();
+    
   }
 
+  loadActiveCategories(): void{
+    const activeCategories = this.categories.filter(cat => cat.status === 1);
+
+    if (!this.product.categoryId && activeCategories.length > 0) {
+      this.product.categoryId = activeCategories[0].id!;
+    }
+
+    this.categories = activeCategories;
+  }
+
+
   save(): void {
-    this.product.name?.trim();
-    this.product.description;
+    this.product.name = this.product.name.trim();
+    this.product.description = this.product.description.trim();
+    
+
+    if (this.product.name.length < 3) {
+      this.errorMessage = 'El nombre debe tener al menos 3 caracteres válidos.';
+      return;
+    }
+    if (this.product.description.length < 5) {
+      this.errorMessage = 'La descripción debe tener al menos 5 caracteres válidos.';
+      return;
+    }
 
     const dto: CreateProductDto = {
       name: this.product.name,
       description: this.product.description,
       categoryId: this.product.categoryId,
-      totalStock: this.product.totalStock
+      totalStock: this.product.totalStock,
+      serialCode: Number(this.product.serialCode),
     };
 
     const request = this.editMode
@@ -80,4 +101,12 @@ export class ProductFormComponent implements OnInit {
   openCategoryForm(): void {
     this.openCategory.emit();
   }
+
+  // Llamado desde el modal de categoría
+  onCategoryCreated(newCategory: Category) {
+    this.categories.push(newCategory);
+    this.loadActiveCategories(); // recarga la lista activa y asigna al select
+    this.product.categoryId = newCategory.id; // opcional: seleccionar la nueva
+  }
+
 }

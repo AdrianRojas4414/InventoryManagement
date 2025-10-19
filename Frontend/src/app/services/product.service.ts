@@ -9,6 +9,7 @@ export interface Product {
   description: string;
   categoryId: number;
   totalStock: number;
+  serialCode: number;
   status?: number;
   showOptions?: boolean;
 }
@@ -18,6 +19,7 @@ export interface CreateProductDto {
   description: string;
   categoryId: number;
   totalStock: number;
+  serialCode: number;
 }
 
 @Injectable({

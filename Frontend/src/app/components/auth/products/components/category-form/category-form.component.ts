@@ -34,6 +34,16 @@ export class CategoryFormComponent implements OnInit {
     this.category.description = this.category.description.trim();
     this.category.name = this.category.name.trim();
 
+    if (!this.category.name || this.category.name.length < 3) {
+      this.errorMessage = 'El nombre debe tener al menos 3 caracteres válidos.';
+      return;
+    }
+
+    if (!this.category.description || this.category.description.length < 5) {
+      this.errorMessage = 'La descripción debe tener al menos 5 caracteres válidos.';
+      return;
+    }
+
     const request = this.editMode
       ? this.categoryService.update(this.category.id!, this.category)
       : this.categoryService.addCategory(this.category, this.userId);
