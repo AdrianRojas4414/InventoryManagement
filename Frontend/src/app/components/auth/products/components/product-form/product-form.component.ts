@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Product, CreateProductDto, ProductService } from '../../../../../services/product.service';
@@ -11,7 +11,7 @@ import { Category } from '../../../../../services/category.service';
   imports: [FormsModule, CommonModule],
   standalone: true
 })
-export class ProductFormComponent implements OnInit {
+export class ProductFormComponent implements OnInit, OnChanges {
   @Input() product: Product & { categoryId?: number } = {} as Product;
   @Input() categories: Category[] = [];
 
@@ -26,6 +26,11 @@ export class ProductFormComponent implements OnInit {
 
   constructor(private productService: ProductService) {}
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['categories'] && !changes['categories'].firstChange) {
+      this.loadActiveCategories();
+    }
+  }
   ngOnInit(): void {
     this.editMode = !!this.product.id;
     this.loadActiveCategories();

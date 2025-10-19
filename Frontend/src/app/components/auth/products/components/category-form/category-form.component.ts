@@ -54,6 +54,8 @@ export class CategoryFormComponent implements OnInit {
           ? 'Categoría actualizada exitosamente.'
           : 'Categoría creada exitosamente.';
 
+        this.saved.emit(newCategory);
+
         setTimeout(() => {
           this.close.emit();            
         }, 800);
