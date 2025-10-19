@@ -24,6 +24,10 @@ export class ProductFormComponent implements OnInit, OnChanges {
   errorMessage = '';
   successMessage = '';
 
+  // Dropdown de categorías
+  showCategoryDropdown = false;
+  categorySearchTerm = '';
+
   constructor(private productService: ProductService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -47,6 +51,7 @@ export class ProductFormComponent implements OnInit, OnChanges {
     this.categories = activeCategories;
   }
 
+  
 
   save(): void {
     this.product.name = this.product.name.trim();
@@ -87,6 +92,7 @@ export class ProductFormComponent implements OnInit, OnChanges {
       },
       error: (error: any) => {
         console.error('Error al guardar producto:', error);
+        console.log(dto)
 
         if (error.status === 400 && error.error) {
           this.errorMessage = error.error; // mensaje específico del backend
@@ -103,6 +109,33 @@ export class ProductFormComponent implements OnInit, OnChanges {
     this.close.emit();
   }
 
+  //Dropdown de categorías
+  toggleCategoryDropdown(): void {
+    this.showCategoryDropdown = !this.showCategoryDropdown;
+    if (this.showCategoryDropdown) {
+      this.categorySearchTerm = '';
+    }
+  }
+
+  getSelectedCategoryName(): string {
+    const category = this.categories.find(c => c.id === this.product.categoryId);
+    return category ? category.name : 'Seleccione una categoría';
+  }
+
+  getFilteredCategories(): Category[] {
+    if (!this.categorySearchTerm) {
+      return this.categories;
+    }
+    return this.categories.filter(c => 
+      c.name.toLowerCase().includes(this.categorySearchTerm.toLowerCase())
+    );
+  }
+
+  selectCategory(category: Category): void {
+    this.product.categoryId = category.id;
+    this.showCategoryDropdown = false;
+  }
+
   openCategoryForm(): void {
     this.openCategory.emit();
   }
@@ -112,6 +145,7 @@ export class ProductFormComponent implements OnInit, OnChanges {
     this.categories.push(newCategory);
     this.loadActiveCategories(); // recarga la lista activa y asigna al select
     this.product.categoryId = newCategory.id; // opcional: seleccionar la nueva
+    this.showCategoryDropdown = false;
   }
 
 }

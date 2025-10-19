@@ -45,14 +45,33 @@
         <div class="form-group">
           <label for="phone">Teléfono</label>
           <div class="phone-group">
-            <select [(ngModel)]="countryCode" name="countryCode" required>
-              <option value="+591">+591 (Bolivia)</option>
-              <option value="+54">+54 (Argentina)</option>
-              <option value="+56">+56 (Chile)</option>
-              <option value="+57">+57 (Colombia)</option>
-              <option value="+51">+51 (Perú)</option>
-              <option value="+52">+52 (México)</option>
-            </select>
+            <div class="custom-select-wrapper country-code-select">
+              <div class="custom-select" 
+                  [class.open]="showCountryDropdown"
+                  (click)="toggleCountryDropdown()">
+                <span class="select-value">{{ getSelectedCountryCode() }}</span>
+                <span class="select-arrow">▼</span>
+              </div>
+              <div class="dropdown-menu" *ngIf="showCountryDropdown">
+                <input type="text" 
+                    class="dropdown-search"
+                    placeholder="Buscar país..."
+                    [value]="countrySearchTerm"
+                    (input)="countrySearchTerm = $any($event.target).value"
+                    (click)="$event.stopPropagation()">
+                <div class="dropdown-options">
+                  <div class="dropdown-option" 
+                      *ngFor="let country of getFilteredCountries()"
+                      (click)="selectCountry(country)">
+                    {{ country.label }}
+                  </div>
+                  <div class="dropdown-option empty" 
+                      *ngIf="getFilteredCountries().length === 0">
+                    No se encontraron países
+                  </div>
+                </div>
+              </div>
+            </div>
 
             <input 
               type="text"
