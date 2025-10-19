@@ -1,10 +1,11 @@
-import { Component, EventEmitter, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { CommonModule } from '@angular/common';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SupplierService } from '../../../services/supplier.service';
 import { ProductService } from '../../../services/product.service';
 import { PaginatedResponse, PurchaseService } from '../../../services/purchase.service';
+import { SupplierFormComponent } from "../suppliers/supplier-form/supplier-form.component";
 
 interface PurchaseDetail {
   producto: string;
@@ -56,7 +57,7 @@ interface CreatePurchaseDetail {
 
 @Component({
   selector: 'app-purchases',
-  imports: [ReactiveFormsModule, SidebarComponent, CommonModule],
+  imports: [ReactiveFormsModule, SidebarComponent, CommonModule, SupplierFormComponent],
   templateUrl: './purchases.component.html',
   styleUrl: './purchases.component.css'
 })
@@ -93,7 +94,9 @@ export class PurchasesComponent implements OnInit {
     totalItems: 0,
     totalPages: 0
   };
-  pageChange = new EventEmitter<number>();
+
+  //Proveedores formulario
+  showSupplierForm = false;
 
   constructor(
     private fb: FormBuilder,
@@ -329,6 +332,23 @@ export class PurchasesComponent implements OnInit {
     this.showPurchaseForm = false;
     this.activeProductDropdown = null;
     this.showSupplierDropdown = false;
+  }
+
+  //Formulario proveedores
+  openSupplierForm(){
+    this.showSupplierForm = true;
+  }
+
+  closeSupplierForm(): void {
+    this.showSupplierForm = false;
+  }
+
+  savedSupplierForm(newSupplier: Supplier): void {
+    console.log('✅ Proveedor creado:', newSupplier);
+    this.showSupplierForm = false;
+    this.suppliers.push(newSupplier);
+    this.purchaseForm.patchValue({ supplierId: newSupplier.id });
+    this.loadSuppliers();
   }
 
   onSubmit(): void {
