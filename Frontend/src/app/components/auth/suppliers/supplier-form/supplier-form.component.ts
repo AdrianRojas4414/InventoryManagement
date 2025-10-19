@@ -3,6 +3,11 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CreateSupplierDto, Supplier, SupplierService } from '../../../../services/supplier.service';
 
+interface CountryCode {
+  code: string;
+  label: string;
+}
+
 @Component({
   selector: 'app-supplier-form',
   standalone: true,
@@ -25,6 +30,19 @@ export class SupplierFormComponent implements OnInit {
   countryCode: string = '+591';
   phoneNumber: string = '';
 
+  // Dropdown de países
+  showCountryDropdown = false;
+  countrySearchTerm = '';
+  
+  countries: CountryCode[] = [
+    { code: '+591', label: '+591 (Bolivia)' },
+    { code: '+54', label: '+54 (Argentina)' },
+    { code: '+56', label: '+56 (Chile)' },
+    { code: '+57', label: '+57 (Colombia)' },
+    { code: '+51', label: '+51 (Perú)' },
+    { code: '+52', label: '+52 (México)' }
+  ];
+
   constructor(private supplierService: SupplierService) {}
 
   ngOnInit(): void {
@@ -42,6 +60,34 @@ export class SupplierFormComponent implements OnInit {
     } else {
       this.phoneNumber = '';
     }
+  }
+
+  // Métodos para el manejo del dropdown de países
+  toggleCountryDropdown(): void {
+    this.showCountryDropdown = !this.showCountryDropdown;
+    if (this.showCountryDropdown) {
+      this.countrySearchTerm = '';
+    }
+  }
+
+  getSelectedCountryCode(): string {
+    const country = this.countries.find(c => c.code === this.countryCode);
+    return country ? country.label : '+591 (Bolivia)';
+  }
+
+  getFilteredCountries(): CountryCode[] {
+    if (!this.countrySearchTerm) {
+      return this.countries;
+    }
+    return this.countries.filter(c => 
+      c.label.toLowerCase().includes(this.countrySearchTerm.toLowerCase()) ||
+      c.code.includes(this.countrySearchTerm)
+    );
+  }
+
+  selectCountry(country: CountryCode): void {
+    this.countryCode = country.code;
+    this.showCountryDropdown = false;
   }
 
   save(): void {
