@@ -65,15 +65,34 @@
       <div class="form-group">
         <label>Categoría</label>
         <div class="category-row">
-          <select 
-            [(ngModel)]="product.categoryId" 
-            name="categoryId" 
-            #categorySelect="ngModel"
-            required
-          >
-            <option [ngValue]="null" disabled selected>Selecciona una categoría</option>
-            <option *ngFor="let cat of categories" [ngValue]="cat.id">{{ cat.name }}</option>
-          </select>
+          <div class="custom-select-wrapper">
+            <div class="custom-select" 
+                [class.open]="showCategoryDropdown"
+                (click)="toggleCategoryDropdown()">
+              <span class="select-value">{{ getSelectedCategoryName() }}</span>
+              <span class="select-arrow">▼</span>
+            </div>
+            <div class="dropdown-menu" *ngIf="showCategoryDropdown">
+              <input type="text" 
+                  class="dropdown-search"
+                  placeholder="Buscar categoría..."
+                  [value]="categorySearchTerm"
+                  (input)="categorySearchTerm = $any($event.target).value"
+                  (click)="$event.stopPropagation()">
+              <div class="dropdown-options">
+                <div class="dropdown-option" 
+                    *ngFor="let cat of getFilteredCategories()"
+                    (click)="selectCategory(cat)">
+                  {{ cat.name }}
+                </div>
+                <div class="dropdown-option empty" 
+                    *ngIf="getFilteredCategories().length === 0">
+                  No se encontraron categorías
+                </div>
+              </div>
+            </div>
+          </div>
+
 
 
           <!-- Botón para abrir el modal de categoría -->
