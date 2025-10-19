@@ -11,7 +11,7 @@ import { Category, CategoryService } from '../../../../../services/category.serv
   standalone: true
 })
 export class CategoryFormComponent implements OnInit {
-  @Input() category: Category = { name: '', description: '' };
+  @Input() category: Category = {} as Category;
   @Output() close = new EventEmitter<void>();
   @Output() saved = new EventEmitter<Category>(); 
 

@@ -33,7 +33,7 @@ export class ProductsComponent implements OnInit {
   products: (Product & { categoryName?: string })[] = [];
 
   currentProduct: Product & { categoryId?: number } = {} as Product;
-  currentCategory: Category = { name: '', description: '' };
+  currentCategory: Category = {} as Category;;
 
   showProductForm = false;
   showCategoryForm = false;
@@ -85,9 +85,7 @@ export class ProductsComponent implements OnInit {
 
   openCategoryForm(category?: Category): void {
     this.showCategoryForm = true;
-    this.currentCategory = category
-      ? { ...category }
-      : { name: '', description: '' };
+    this.currentCategory = category ? { ...category } : {} as Category;
   }
 
   closeForms(formType?: 'product' | 'category'): void {
@@ -127,6 +125,15 @@ export class ProductsComponent implements OnInit {
           this.disableMode.active = false;
         },
         error: (err) => console.error('Error al desactivar producto:', err)
+      });
+    }
+    if (this.disableMode.type === 'category') {
+      this.categoryService.desactivate(this.disableMode.id, this.userRole).subscribe({
+        next: () => {
+          this.loadCategories();
+          this.disableMode.active = false;
+        },
+        error: (err) => console.error('Error al desactivar categoria:', err)
       });
     }
   }

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { API_URL } from '../config';
 
 export interface Category {
-  id?: number;
+  id: number;
   name: string;
   description: string;
   status?: number;
@@ -30,5 +30,15 @@ export class CategoryService {
 
   update(id: number, category: Category): Observable<Category> {
     return this.http.put<Category>(`${this.apiUrl}/${id}`, category);
+  }
+
+  desactivate(id: number, userRole: string): Observable<string> {
+    const headers = new HttpHeaders().set('userRole', userRole);
+    return this.http.delete(`${this.apiUrl}/${id}`, { headers, responseType: 'text' });
+  }
+
+  activate(id: number, userRole: string): Observable<string> {
+    const headers = new HttpHeaders().set('userRole', userRole);
+    return this.http.put(`${this.apiUrl}/${id}/activate`, null, { headers, responseType: 'text' });
   }
 }

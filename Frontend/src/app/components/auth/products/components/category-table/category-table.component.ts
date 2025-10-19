@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../../../services/auth.service';
-import { Category } from '../../../../../services/category.service';
+import { Category, CategoryService } from '../../../../../services/category.service';
 
 @Component({
   selector: 'app-category-table',
@@ -12,7 +12,7 @@ import { Category } from '../../../../../services/category.service';
 })
 export class CategoryTableComponent {
   Math = Math;
-  constructor(private authService: AuthService) {} 
+  constructor(private authService: AuthService, private categoryService: CategoryService) {} 
   @Input() categories: Category[] = [];
   @Output() edit = new EventEmitter<Category>();
   @Output() disable = new EventEmitter<Category>();
@@ -58,4 +58,14 @@ export class CategoryTableComponent {
     const end = start + this.pageSize;
     this.pagedCategories = this.categories.slice(start, end);
   }
+
+  enableCategory(category: Category) {
+      this.categoryService.activate(category.id, localStorage.getItem('role')!).subscribe({
+        next: () => {
+          console.log('Producto habilitado correctamente en la BD');
+          category.status = 1; // actualizar estado local
+        },
+        error: (err: any) => console.error('Error al habilitar producto:', err)
+      });
+    }
 }
