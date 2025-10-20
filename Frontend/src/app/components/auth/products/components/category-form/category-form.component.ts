@@ -70,4 +70,42 @@ export class CategoryFormComponent implements OnInit {
   cancel(): void {
     this.close.emit();
   }
+
+  getNameError(name: any): string | null {
+    if (!name) return null;
+    const value = this.category.name || '';
+    if (!(name.dirty || name.touched)) return null;
+    if (name.errors?.['required']) {
+      return 'El nombre es obligatorio.';
+    }
+    if (name.errors?.['minlength']) {
+      return 'Debe tener al menos 3 caracteres.';
+    }
+    if (value.length > 50) {
+      return 'No puede tener más de 50 caracteres.';
+    }
+    if (name.errors?.['pattern']) {
+      return 'No se permiten números, espacios seguidos ni espacios al principio ni el final.';
+    }
+    return null;
+  }
+
+  getDescriptionError(description: any): string | null {
+  if (!description) return null;
+    const value = this.category.description || '';
+    if (!(description.dirty || description.touched)) return null;
+    if (description.errors?.['required']) {
+      return 'La descripción es obligatoria.';
+    }
+    if (description.errors?.['minlength']) {
+      return 'Debe tener al menos 5 caracteres.';
+    }
+    if (description.errors?.['pattern']) {
+      return 'No se permiten caracteres extraños.';
+    }
+    if (value.length > 500) {
+      return 'No puede tener más de 500 caracteres.';
+    }
+    return null;
+  }
 }
