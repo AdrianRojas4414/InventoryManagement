@@ -321,6 +321,7 @@ label {
   cursor: pointer;
   transition: all 0.2s;
   height: 46px;
+  width: fit-content;
 }
 
 .add-supplier:hover {
