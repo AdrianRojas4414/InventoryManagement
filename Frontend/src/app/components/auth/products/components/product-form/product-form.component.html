@@ -14,15 +14,14 @@
           #name="ngModel"
           required
           minlength="3"
-          maxlength="100"
-          pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9 ,.\-]+$"
+          pattern="^(?!\d+$)[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s,.-]+$"
           placeholder="Ej: Pelota"
         />
-        <div class="error" *ngIf="name.invalid && (name.dirty || name.touched)">
+        <div class="error" *ngIf="name.invalid && (name.dirty || name.touched) || (product.name.length > 100 && (name.dirty || name.touched))">
           <p *ngIf="name.errors?.['required']">El nombre es obligatorio.</p>
           <p *ngIf="name.errors?.['minlength']">Debe tener al menos 3 caracteres.</p>
-          <p *ngIf="name.errors?.['maxlength']">Debe tener menos de 100 caracteres.</p>
-          <p *ngIf="name.errors?.['pattern']">No se permiten caracteres extraños.</p>
+          <p *ngIf="product.name.length > 100">Debe tener un máximo de 100 caracteres.</p>
+          <p *ngIf="name.errors?.['pattern']">No se permiten caracteres extraños o sólo números.</p>
         </div>
       </div>
 
@@ -38,26 +37,32 @@
           pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9 ,.\-]+$"
           placeholder="Ej: Producto de diversión"
         />
-        <div class="error" *ngIf="description.invalid && (description.dirty || description.touched)">
+        <div class="error" *ngIf="description.invalid && (description.dirty || description.touched) || (product.description.length > 100 && (description.dirty || description.touched))">
           <p *ngIf="description.errors?.['required']">La descripción es obligatoria.</p>
           <p *ngIf="description.errors?.['minlength']">Debe tener al menos 5 caracteres.</p>
+          <p *ngIf="product.description.length > 500">Debe tener un máximo de 500 caracteres.</p>
           <p *ngIf="description.errors?.['pattern']">No se permiten caracteres extraños.</p>
         </div>
       </div>
 
+      <!-- Código Serial -->
       <div class="form-group">
-        <label for="serialCode">Código Serial</label>
+        <label for="serialCode">Código Serial Único</label>
         <input 
           [(ngModel)]="product.serialCode"
           name="serialCode"
           #serialCode="ngModel"
           required
-          pattern="^[0-9]{5}$"
+          minlength="5"
+          pattern="^[0-9]+$"
           placeholder="Ej: 11111"
         >
-        <div class="error" *ngIf="serialCode.invalid && (serialCode.dirty || serialCode.touched)">
+        <div class="error" *ngIf="serialCode.invalid && (serialCode.dirty || serialCode.touched) || (product.serialCode.length > 5 && (serialCode.dirty || serialCode.touched)) || (+product.serialCode > 32767 && (serialCode.dirty || serialCode.touched))">
           <p *ngIf="serialCode.errors?.['required']">El código serial es obligatorio.</p>
-          <p *ngIf="serialCode.errors?.['pattern']">Debe ingresar 5 digitos</p>
+          <p *ngIf="serialCode.errors?.['pattern']">Solo se debe ingresar numeros.</p>
+          <p *ngIf="serialCode.errors?.['minlength']">Debe ingresar 5 digitos.</p>
+          <p *ngIf="product.serialCode.length > 5">No debe exceder los 5 digitos.</p>
+          <p *ngIf="+product.serialCode > 32767">El valor del codigo no debe ser mayor a 32767.</p>
         </div>
       </div>
 
@@ -100,9 +105,10 @@
           min="0"
           placeholder="Ej: 10"
         />
-        <div class="error" *ngIf="stock.invalid && (stock.dirty || stock.touched)">
+        <div class="error" *ngIf="stock.invalid && (stock.dirty || stock.touched) || (product.totalStock > 32767 && (stock.dirty || stock.touched))">
           <p *ngIf="stock.errors?.['required']">El stock es obligatorio.</p>
           <p *ngIf="stock.errors?.['min']">El stock no puede ser negativo.</p>
+          <p *ngIf="product.totalStock > 32767">La cantidad no debe superar las 32767 unidades.</p>
         </div>
       </div>
 

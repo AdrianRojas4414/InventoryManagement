@@ -10,18 +10,16 @@
           name="name" 
           required 
           minlength="3"
-          maxlength="50"
-          pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]+$"
+          pattern="^(?! *$)[A-Za-zÁÉÍÓÚáéíóúÑñ.,\-]+(?: {1,2}[A-Za-zÁÉÍÓÚáéíóúÑñ.,\-]+)*$"
           placeholder="Ej: Juguetería"
           #name="ngModel"
         />
         <!-- Mensajes de error -->
-        <div class="error" *ngIf="name.invalid && (name.dirty || name.touched)">
+        <div class="error" *ngIf="name.invalid && (name.dirty || name.touched) || (category.name.length > 50 && (name.dirty || name.touched))">
           <p *ngIf="name.errors?.['required']">El nombre es obligatorio.</p>
+          <p *ngIf="name.errors?.['pattern']">No se permiten números, espacios seguidos ni espacios al principio ni el final.</p>
           <p *ngIf="name.errors?.['minlength']">Debe tener al menos 3 caracteres.</p>
-          <p *ngIf="name.errors?.['maxlength']">No puede tener más de 50 caracteres.</p>
-          <p *ngIf="name.errors?.['pattern']">Solo se permiten letras.</p>
-          <p *ngIf="category.name.trim().length <= 3">El nombre no puede estar vacío o solo tener espacios.</p>
+          <p *ngIf="category.name.length > 50">No puede tener más de 50 caracteres.</p>
         </div>
       </div>
 
@@ -37,10 +35,11 @@
           #description="ngModel"
         />
         <!-- Mensajes de error -->
-        <div class="error" *ngIf="description.invalid && (description.dirty || description.touched)">
+        <div class="error" *ngIf="description.invalid && (description.dirty || description.touched) || (category.description.length > 500 && (description.dirty || description.touched))">
           <p *ngIf="description.errors?.['required']">La descripción es obligatoria.</p>
           <p *ngIf="description.errors?.['minlength']">Debe tener al menos 5 caracteres.</p>
           <p *ngIf="description.errors?.['pattern']">No se permiten caracteres extraños</p>
+          <p *ngIf="category.description.length > 500">No puede tener más de 500 caracteres.</p>
         </div>
       </div>
 
