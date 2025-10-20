@@ -14,14 +14,10 @@
           placeholder="Ej: Juguetería"
           #name="ngModel"
         />
-        <!-- Mensajes de error -->
-        <div class="error" *ngIf="name.invalid && (name.dirty || name.touched) || (category.name.length > 50 && (name.dirty || name.touched))">
-          <p *ngIf="name.errors?.['required']">El nombre es obligatorio.</p>
-          <p *ngIf="name.errors?.['pattern']">No se permiten números, espacios seguidos ni espacios al principio ni el final.</p>
-          <p *ngIf="name.errors?.['minlength']">Debe tener al menos 3 caracteres.</p>
-          <p *ngIf="category.name.length > 50">No puede tener más de 50 caracteres.</p>
+        <div class="error" *ngIf="getNameError(name)">
+            <p>{{ getNameError(name) }}</p>
+          </div>
         </div>
-      </div>
 
       <div class="form-group">
         <label>Descripción</label>
@@ -34,14 +30,10 @@
           placeholder="Ej: Productos de diversión"
           #description="ngModel"
         />
-        <!-- Mensajes de error -->
-        <div class="error" *ngIf="description.invalid && (description.dirty || description.touched) || (category.description.length > 500 && (description.dirty || description.touched))">
-          <p *ngIf="description.errors?.['required']">La descripción es obligatoria.</p>
-          <p *ngIf="description.errors?.['minlength']">Debe tener al menos 5 caracteres.</p>
-          <p *ngIf="description.errors?.['pattern']">No se permiten caracteres extraños</p>
-          <p *ngIf="category.description.length > 500">No puede tener más de 500 caracteres.</p>
+        <div class="error" *ngIf="getDescriptionError(description)">
+            <p>{{ getDescriptionError(description) }}</p>
+          </div>
         </div>
-      </div>
 
       <div class="form-actions">
         <button class="cancel" type="button" (click)="cancel()">Cancelar</button>
