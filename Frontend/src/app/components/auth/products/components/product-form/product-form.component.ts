@@ -200,7 +200,7 @@ export class ProductFormComponent implements OnInit, OnChanges {
     if (value.length > 5) {
       return 'No debe exceder los 5 digitos.';
     }
-    if (+value.length > 32767) {
+    if (+value > 32767) {
       return 'El valor del codigo no debe ser mayor a 32767.';
     }
 
