@@ -577,3 +577,16 @@ app-supplier-form .form-card {
   transform: scale(1.02);
   box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
 }
+
+.details-wrapper {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+}
+
+.details-row.show .details-wrapper {
+  max-height: 500px;
+  opacity: 1;
+  transition: max-height 0.4s ease-in, opacity 0.3s ease-in;
+}
