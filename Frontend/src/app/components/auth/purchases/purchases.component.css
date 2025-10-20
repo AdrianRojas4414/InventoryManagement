@@ -563,3 +563,115 @@ input[type="date"]:focus {
     gap: 8px;
   }
 }
+/* ==================== DETALLES DE COMPRA (EXPANDIBLE) ==================== */
+
+/* Fila del cuerpo principal */
+.main-row {
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.main-row:hover {
+  background-color: #f1f5f9;
+}
+
+/* Celda con la flechita */
+.expand-cell {
+  width: 50px;
+  text-align: center;
+}
+
+.chevron {
+  display: inline-block;
+  transition: transform 0.3s ease;
+  color: #1e3a8a;
+}
+
+.chevron.rotated {
+  transform: rotate(90deg);
+}
+
+/* Fila de detalles (oculta por defecto) */
+.details-row {
+  display: none;
+  transition: all 0.3s ease;
+}
+
+.details-row.show {
+  display: table-row;
+}
+
+.details-cell {
+  padding: 0;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+}
+
+/* Contenedor interno de detalles */
+.details-wrapper {
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.details-content {
+  padding: 15px 20px;
+  background-color: #ffffff;
+  border-left: 4px solid #2563eb;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  animation: slideDown 0.3s ease;
+}
+
+/* Animación al desplegar */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Título de la sección Detalles */
+.details-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1e3a8a;
+  margin-bottom: 0.8rem;
+}
+
+/* Tabla interna de los detalles */
+.details-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.details-table th {
+  background: #1e3a8a;
+  color: white;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  padding: 8px 10px;
+  text-align: left;
+}
+
+.details-table td {
+  padding: 10px;
+  border-bottom: 1px solid #e2e8f0;
+  color: #334155;
+}
+
+/* Suaviza la transición visual */
+.details-row.show .details-wrapper {
+  max-height: 1000px;
+  opacity: 1;
+}
+
+.details-row:not(.show) .details-wrapper {
+  max-height: 0;
+  opacity: 0;
+}
+
+
