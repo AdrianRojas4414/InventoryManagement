@@ -20,7 +20,7 @@ export class ProductTableComponent {
   isAdmin = false;
   pageSize = 5;    
   currentPage = 0;   
-  pagedCategories: Product[] = [];
+  pagedProducts: (Product & { categoryName?: string })[] = [];
 
   ngOnInit() {
     this.isAdmin = this.authService.isAdmin();
@@ -53,7 +53,7 @@ export class ProductTableComponent {
   updatePagedProducts() {
     const start = this.currentPage * this.pageSize;
     const end = start + this.pageSize;
-    this.pagedCategories = this.products.slice(start, end);
+    this.pagedProducts = this.products.slice(start, end);
   }
 
   enableProduct(product: Product) {
