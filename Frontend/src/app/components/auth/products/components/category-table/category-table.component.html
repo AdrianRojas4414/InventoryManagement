@@ -14,7 +14,7 @@
         <td id="description">{{ category.description }}</td>
         <td>
           <span [ngClass]="category.status ? 'status-active' : 'status-desactive'">
-            {{ category.status ? 'ACTIVO' : 'DESACTIVO' }}
+            {{ category.status ? 'ACTIVO' : 'INACTIVO' }}
           </span>
         </td>
         <td class="options-cell" *ngIf="isAdmin || category.status">
