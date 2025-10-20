@@ -156,13 +156,49 @@ export class ProductFormComponent implements OnInit, OnChanges {
       return 'El nombre es obligatorio.';
     }
     if (name.errors?.['minlength']) {
-      return 'Debe tener al menos 4 caracteres.';
+      return 'Debe tener al menos 3 caracteres.';
     }
-    if (value.length > 31) {
-      return 'Debe tener menos de 31 caracteres.';
+    if (value.length > 100) {
+      return 'Debe tener un máximo de 100 caracteres.';
     }
     if (name.errors?.['pattern']) {
-      return 'No puede ser solo números ni contener caracteres inválidos.';
+      return 'No se permiten caracteres extraños o sólo números.';
+    }
+    return null;
+  }
+
+  getDescriptionError(description: any): string | null {
+  if (!description) return null;
+    const value = this.product.description || '';
+    if (!(description.dirty || description.touched)) return null;
+    if (description.errors?.['required']) {
+      return 'La descripción es obligatoria.';
+    }
+    if (description.errors?.['minlength']) {
+      return 'Debe tener al menos 3 caracteres.';
+    }
+    if (description.errors?.['pattern']) {
+      return 'No se permiten caracteres extraños.';
+    }
+    const cleanNit = value.replace('-', '');
+    if (cleanNit.length < 7 || cleanNit.length > 12) {
+      return 'El NIT debe tener entre 7 y 12 dígitos.';
+    }
+    return null;
+  }
+
+  getPhoneError(phone: any): string | null {
+    if (!phone) return null;
+    const value = this.phoneNumber || '';
+    if (!(phone.dirty || phone.touched)) return null;
+    if (phone.errors?.['required']) {
+      return 'El teléfono es obligatorio.';
+    }
+    if (phone.errors?.['pattern']) {
+      return 'Debe tener entre 6 y 10 dígitos.';
+    }
+    if (/^0/.test(value)) {
+      return 'El número no puede comenzar con 0.';
     }
     return null;
   }
