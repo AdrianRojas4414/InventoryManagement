@@ -148,4 +148,23 @@ export class ProductFormComponent implements OnInit, OnChanges {
     this.showCategoryDropdown = false;
   }
 
+  getNameError(name: any): string | null {
+    if (!name) return null;
+    const value = this.product.name || '';
+    if (!(name.dirty || name.touched)) return null;
+    if (name.errors?.['required']) {
+      return 'El nombre es obligatorio.';
+    }
+    if (name.errors?.['minlength']) {
+      return 'Debe tener al menos 4 caracteres.';
+    }
+    if (value.length > 31) {
+      return 'Debe tener menos de 31 caracteres.';
+    }
+    if (name.errors?.['pattern']) {
+      return 'No puede ser solo números ni contener caracteres inválidos.';
+    }
+    return null;
+  }
+
 }

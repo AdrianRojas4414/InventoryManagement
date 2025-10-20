@@ -17,13 +17,10 @@
           pattern="^(?!\d+$)[A-Za-zÁÉÍÓÚáéíóúÑñ0-9\s,.-]+$"
           placeholder="Ej: Pelota"
         />
-        <div class="error" *ngIf="name.invalid && (name.dirty || name.touched) || (product.name.length > 100 && (name.dirty || name.touched))">
-          <p *ngIf="name.errors?.['required']">El nombre es obligatorio.</p>
-          <p *ngIf="name.errors?.['minlength']">Debe tener al menos 3 caracteres.</p>
-          <p *ngIf="product.name.length > 100">Debe tener un máximo de 100 caracteres.</p>
-          <p *ngIf="name.errors?.['pattern']">No se permiten caracteres extraños o sólo números.</p>
+        <div class="error" *ngIf="getNameError(name)">
+            <p>{{ getNameError(name) }}</p>
+          </div>
         </div>
-      </div>
 
       <!-- Descripción -->
       <div class="form-group">
