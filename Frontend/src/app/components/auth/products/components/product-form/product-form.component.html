@@ -5,7 +5,6 @@
 
     <form #productForm="ngForm" (ngSubmit)="save()">
 
-      <!-- Nombre -->
       <div class="form-group">
         <label>Nombre</label>
         <input 
@@ -24,8 +23,6 @@
           <p *ngIf="name.errors?.['pattern']">No se permiten caracteres extraños o sólo números.</p>
         </div>
       </div>
-
-      <!-- Descripción -->
       <div class="form-group">
         <label>Descripción</label>
         <input 
@@ -45,7 +42,6 @@
         </div>
       </div>
 
-      <!-- Código Serial -->
       <div class="form-group">
         <label for="serialCode">Código Serial Único</label>
         <input 
@@ -65,8 +61,6 @@
           <p *ngIf="+product.serialCode > 32767">El valor del codigo no debe ser mayor a 32767.</p>
         </div>
       </div>
-
-      <!-- Categoría -->
       <div class="form-group">
         <label>Categoría</label>
         <div class="category-row">
@@ -99,8 +93,6 @@
           </div>
 
 
-
-          <!-- Botón para abrir el modal de categoría -->
           <button 
             type="button" 
             class="add-category" 
@@ -112,7 +104,6 @@
         </div>
       </div>
 
-      <!-- Stock -->
       <div class="form-group">
         <label>Stock</label>
         <input 
@@ -131,7 +122,6 @@
         </div>
       </div>
 
-      <!-- Botones -->
       <div class="form-actions">
         <button class="cancel" type="button" (click)="cancel()">Cancelar</button>
         <button class="add" type="submit" [disabled]="productForm.invalid">
@@ -139,7 +129,6 @@
         </button>
       </div>
 
-      <!-- Mensajes -->
       <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
       <div class="success-message" *ngIf="successMessage">{{ successMessage }}</div>
     </form>

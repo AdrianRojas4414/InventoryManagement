@@ -66,13 +66,9 @@ export class PurchasesComponent implements OnInit {
 
   showPurchaseForm = false;
   purchaseForm!: FormGroup;
-  
-  // Datos para los dropdowns
   suppliers: Supplier[] = [];
   products: Product[] = [];
   filteredProducts: Product[] = [];
-  
-  // Control de dropdowns abiertos
   showSupplierDropdown = false;
   supplierSearchTerm = '';
   showProductDropdown = false;
@@ -80,14 +76,10 @@ export class PurchasesComponent implements OnInit {
   activeProductDropdown: number | null = null;
   productSearchTerms: { [key: number]: string } = {};
   isSubmitting: boolean = false;
-
-  //propiedades para el modal
   showModal = false;
   modalTitle = '';
   modalMessage = '';
   modalType: 'success' | 'error' | 'warning' | 'info' = 'info';
-
-  //Paginación
   paginationParameters = {
     currentPage: 0,
     pageSize: 5,
@@ -95,7 +87,6 @@ export class PurchasesComponent implements OnInit {
     totalPages: 0
   };
 
-  //Proveedores formulario
   showSupplierForm = false;
 
   constructor(
@@ -238,7 +229,6 @@ export class PurchasesComponent implements OnInit {
     return total;
   }
 
-  // Manejo de dropdown de proveedores
   toggleSupplierDropdown(): void {
     this.showSupplierDropdown = !this.showSupplierDropdown;
     if (this.showSupplierDropdown) {
@@ -266,7 +256,6 @@ export class PurchasesComponent implements OnInit {
     );
   }
 
-  // Manejo de dropdown de productos
   toggleProductDropdown(
     index: number
   ): void {
@@ -285,7 +274,6 @@ export class PurchasesComponent implements OnInit {
   }
 
   selectProduct(product: Product, index: number): void {
-    // Verificar si el producto ya está seleccionado
     const alreadySelected = this.purchaseDetails.controls.some((control, i) => 
       i !== index && control.get('productId')?.value === product.id
     );
@@ -318,7 +306,6 @@ export class PurchasesComponent implements OnInit {
     );
   }
 
-  // Manejo del formulario
   openPurchaseProductForm(): void {
     this.showPurchaseForm = true;
     this.initForm();
@@ -334,7 +321,6 @@ export class PurchasesComponent implements OnInit {
     this.showSupplierDropdown = false;
   }
 
-  //Formulario proveedores
   openSupplierForm(){
     this.showSupplierForm = true;
   }
@@ -344,7 +330,7 @@ export class PurchasesComponent implements OnInit {
   }
 
   savedSupplierForm(newSupplier: Supplier): void {
-    console.log('✅ Proveedor creado:', newSupplier);
+    console.log('Proveedor creado:', newSupplier);
     this.showSupplierForm = false;
     this.suppliers.push(newSupplier);
     this.purchaseForm.patchValue({ supplierId: newSupplier.id });
@@ -352,7 +338,6 @@ export class PurchasesComponent implements OnInit {
   }
 
   onSubmit(): void {
-  // Validaciones...
   if (this.purchaseDetails.length === 0) {
     this.showAlert('Error', 'Debe agregar al menos un producto', 'error');
     return;
@@ -373,31 +358,25 @@ export class PurchasesComponent implements OnInit {
   //   return;
   // }
 
-  // Activar estado de carga
   this.isSubmitting = true;
 
-  // Preparar los datos
   const purchaseData = this.purchaseForm.value;
   console.log('Enviando compra:', purchaseData);
 
-  // Realizar la petición
   this.purchaseService.createPurchase(purchaseData, 1).subscribe({
     next: (response) => {
-      console.log('✅ Compra registrada:', response);
+      console.log('Compra registrada:', response);
       
-      
-      // Resetear formulario
+    
       this.purchaseForm.reset();
       this.purchaseDetails.clear();
-      
-      // Cerrar modal/formulario
+
       this.closePurchaseForm();
       this.loadPurchases(this.paginationParameters.currentPage);
     },
     error: (error) => {
       console.error('❌ Error:', error);
-      
-      // Manejo de errores específicos
+    
       let errorMessage = 'Error al registrar la compra';
       
       if (error.status === 400) {
@@ -411,14 +390,12 @@ export class PurchasesComponent implements OnInit {
       this.showAlert('Error', errorMessage, 'error');
     },
     complete: () => {
-      // Desactivar estado de carga
       this.isSubmitting = false;
       console.log('Petición completada');
     }
   });
 }
 
-// Método helper para limpiar el formulario
 resetForm(): void {
   this.purchaseForm.reset({
     supplierId: null,
@@ -427,7 +404,6 @@ resetForm(): void {
   this.purchaseDetails.clear();
 }
 
-  // Para la tabla de compras existente
   toggleDetails(purchase: Purchase): void {
     purchase.expanded = !purchase.expanded;
   }
@@ -436,7 +412,6 @@ resetForm(): void {
     return detalle.cantidad * detalle.precioUnitario;
   }
 
-  // Método para mostrar el modal
 showAlert(title: string, message: string, type: 'success' | 'error' | 'warning' | 'info' = 'info'): void {
   this.modalTitle = title;
   this.modalMessage = message;
@@ -444,7 +419,6 @@ showAlert(title: string, message: string, type: 'success' | 'error' | 'warning' 
   this.showModal = true;
 }
 
-// Método para cerrar el modal
 closeModal(): void {
   this.showModal = false;
 }
