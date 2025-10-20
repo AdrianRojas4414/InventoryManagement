@@ -34,13 +34,10 @@
           pattern="^[A-Za-zÁÉÍÓÚáéíóúÑñ0-9 ,.\-]+$"
           placeholder="Ej: Producto de diversión"
         />
-        <div class="error" *ngIf="description.invalid && (description.dirty || description.touched) || (product.description.length > 100 && (description.dirty || description.touched))">
-          <p *ngIf="description.errors?.['required']">La descripción es obligatoria.</p>
-          <p *ngIf="description.errors?.['minlength']">Debe tener al menos 5 caracteres.</p>
-          <p *ngIf="product.description.length > 500">Debe tener un máximo de 500 caracteres.</p>
-          <p *ngIf="description.errors?.['pattern']">No se permiten caracteres extraños.</p>
+        <div class="error" *ngIf="getDescriptionError(description)">
+            <p>{{ getDescriptionError(description) }}</p>
+          </div>
         </div>
-      </div>
 
       <!-- Código Serial -->
       <div class="form-group">
@@ -54,14 +51,10 @@
           pattern="^[0-9]+$"
           placeholder="Ej: 11111"
         >
-        <div class="error" *ngIf="serialCode.invalid && (serialCode.dirty || serialCode.touched) || (product.serialCode.length > 5 && (serialCode.dirty || serialCode.touched)) || (+product.serialCode > 32767 && (serialCode.dirty || serialCode.touched))">
-          <p *ngIf="serialCode.errors?.['required']">El código serial es obligatorio.</p>
-          <p *ngIf="serialCode.errors?.['pattern']">Solo se debe ingresar numeros.</p>
-          <p *ngIf="serialCode.errors?.['minlength']">Debe ingresar 5 digitos.</p>
-          <p *ngIf="product.serialCode.length > 5">No debe exceder los 5 digitos.</p>
-          <p *ngIf="+product.serialCode > 32767">El valor del codigo no debe ser mayor a 32767.</p>
+        <div class="error" *ngIf="getSerialCodeError(serialCode)">
+            <p>{{ getSerialCodeError(serialCode) }}</p>
+          </div>
         </div>
-      </div>
 
       <!-- Categoría -->
       <div class="form-group">
@@ -95,8 +88,6 @@
             </div>
           </div>
 
-
-
           <!-- Botón para abrir el modal de categoría -->
           <button 
             type="button" 
@@ -121,12 +112,10 @@
           min="0"
           placeholder="Ej: 10"
         />
-        <div class="error" *ngIf="stock.invalid && (stock.dirty || stock.touched) || (product.totalStock > 32767 && (stock.dirty || stock.touched))">
-          <p *ngIf="stock.errors?.['required']">El stock es obligatorio.</p>
-          <p *ngIf="stock.errors?.['min']">El stock no puede ser negativo.</p>
-          <p *ngIf="product.totalStock > 32767">La cantidad no debe superar las 32767 unidades.</p>
+        <div class="error" *ngIf="getStockError(stock)">
+            <p>{{ getStockError(stock) }}</p>
+          </div>
         </div>
-      </div>
 
       <!-- Botones -->
       <div class="form-actions">

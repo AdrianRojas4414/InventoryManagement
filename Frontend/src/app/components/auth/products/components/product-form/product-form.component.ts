@@ -175,31 +175,57 @@ export class ProductFormComponent implements OnInit, OnChanges {
       return 'La descripción es obligatoria.';
     }
     if (description.errors?.['minlength']) {
-      return 'Debe tener al menos 3 caracteres.';
+      return 'Debe tener al menos 5 caracteres.';
     }
     if (description.errors?.['pattern']) {
       return 'No se permiten caracteres extraños.';
     }
-    const cleanNit = value.replace('-', '');
-    if (cleanNit.length < 7 || cleanNit.length > 12) {
-      return 'El NIT debe tener entre 7 y 12 dígitos.';
+    if (value.length > 500) {
+      return 'Debe tener un máximo de 500 caracteres.';
     }
     return null;
   }
 
-  getPhoneError(phone: any): string | null {
-    if (!phone) return null;
-    const value = this.phoneNumber || '';
-    if (!(phone.dirty || phone.touched)) return null;
-    if (phone.errors?.['required']) {
-      return 'El teléfono es obligatorio.';
+  getSerialCodeError(serialCode: any): string | null {
+    if (!serialCode) return null;
+    const value = this.product.serialCode || '';
+    if (!(serialCode.dirty || serialCode.touched)) return null;
+    if (serialCode.errors?.['required']) {
+      return 'El código serial es obligatorio.';
     }
-    if (phone.errors?.['pattern']) {
-      return 'Debe tener entre 6 y 10 dígitos.';
+    if (serialCode.errors?.['pattern']) {
+      return 'Solo se debe ingresar numeros.';
     }
-    if (/^0/.test(value)) {
-      return 'El número no puede comenzar con 0.';
+    if (serialCode.errors?.['minlength']) {
+      return 'Debe ingresar 5 digitos.';
     }
+    if (value.length > 5) {
+      return 'No debe exceder los 5 digitos.';
+    }
+    if (+value.length > 32767) {
+      return 'El valor del codigo no debe ser mayor a 32767.';
+    }
+
+    return null;
+  }
+
+  getStockError(stock: any): string | null {
+    if (!stock) return null;
+    const value = this.product.totalStock || '';
+    if (!(stock.dirty || stock.touched)) return null;
+    if (stock.errors?.['required']) {
+      return 'El stock es obligatorio.';
+    }
+    if (stock.errors?.['pattern']) {
+      return 'Solo se debe ingresar numeros.';
+    }
+    if (stock.errors?.['min']) {
+      return 'El stock no puede ser negativo.';
+    }
+    if (+value > 32767) {
+      return 'La cantidad no debe superar las 32767 unidades.';
+    }
+
     return null;
   }
 
