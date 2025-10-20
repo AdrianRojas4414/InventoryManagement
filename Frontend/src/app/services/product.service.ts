@@ -9,7 +9,7 @@ export interface Product {
   description: string;
   categoryId: number;
   totalStock: number;
-  serialCode: number;
+  serialCode: string;
   status?: number;
   showOptions?: boolean;
 }

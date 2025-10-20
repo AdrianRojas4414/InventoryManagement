@@ -21,7 +21,7 @@
         }">{{ product.totalStock }}</td>
         <td>
           <span [ngClass]="product.status ? 'status-active' : 'status-desactive'">
-            {{ product.status ? 'ACTIVO' : 'DESACTIVO' }}
+            {{ product.status ? 'ACTIVO' : 'INACTIVO' }}
           </span>
         </td>
         <td class="options-cell" *ngIf="isAdmin || product.status">

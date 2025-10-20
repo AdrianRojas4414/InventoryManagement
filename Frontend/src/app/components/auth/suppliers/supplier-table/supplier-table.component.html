@@ -22,7 +22,7 @@
        <td>{{ supplier.contactName }}</td>
        <td>
          <span [ngClass]="supplier.status ? 'status-active' : 'status-desactive'">
-           {{ supplier.status ? 'ACTIVE' : 'DESACTIVE' }}
+           {{ supplier.status ? 'ACTIVO' : 'INACTIVO' }}
          </span>
        </td>
        <td class="options-cell" *ngIf="isAdmin || supplier.status">
