@@ -10,7 +10,6 @@
       </div>
     </header>
 
-    <!-- Formularios modulares -->
     <app-product-form
       *ngIf="showProductForm"
       [product]="currentProduct"
@@ -20,23 +19,25 @@
       (openCategory)="openCategoryForm()">
     </app-product-form>
 
-
     <app-category-form
       *ngIf="showCategoryForm"
       [category]="currentCategory"
       (close)="closeForms('category')"
-      (saved)="saveCategory($event)"
-    ></app-category-form>
+      (saved)="saveCategory($event)">
+    </app-category-form>
 
-
-    <!-- Tablas -->
     <app-product-table
       [products]="products"
       (edit)="openProductForm($event)"
       (disable)="openConfirm('product', $event)">
     </app-product-table>
 
-    <hr style="margin: 20px 0;">
+    <hr style="margin: 30px 0;">
+
+    <section class="section-header">
+      <h1>Categorías</h1>
+      <h2>Administre las categorías disponibles en el sistema</h2>
+    </section>
 
     <app-category-table
       [categories]="categories"
@@ -44,7 +45,6 @@
       (disable)="openConfirm('category', $event)">
     </app-category-table>
 
-    <!-- Confirmación -->
     <app-confirm-modal
       *ngIf="disableMode.active"
       title="Confirmar desactivación"

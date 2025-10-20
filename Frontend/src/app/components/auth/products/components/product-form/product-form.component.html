@@ -5,7 +5,6 @@
 
     <form #productForm="ngForm" (ngSubmit)="save()">
 
-      <!-- Nombre -->
       <div class="form-group">
         <label>Nombre</label>
         <input 
@@ -39,7 +38,6 @@
           </div>
         </div>
 
-      <!-- Código Serial -->
       <div class="form-group">
         <label for="serialCode">Código Serial Único</label>
         <input 
@@ -100,7 +98,6 @@
         </div>
       </div>
 
-      <!-- Stock -->
       <div class="form-group">
         <label>Stock</label>
         <input 
@@ -117,7 +114,6 @@
           </div>
         </div>
 
-      <!-- Botones -->
       <div class="form-actions">
         <button class="cancel" type="button" (click)="cancel()">Cancelar</button>
         <button class="add" type="submit" [disabled]="productForm.invalid">
@@ -125,7 +121,6 @@
         </button>
       </div>
 
-      <!-- Mensajes -->
       <div class="error-message" *ngIf="errorMessage">{{ errorMessage }}</div>
       <div class="success-message" *ngIf="successMessage">{{ successMessage }}</div>
     </form>

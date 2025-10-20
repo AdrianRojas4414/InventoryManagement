@@ -61,7 +61,7 @@ export class ProductTableComponent {
     this.productService.activate(product.id, localStorage.getItem('role')!).subscribe({
       next: () => {
         console.log('Producto habilitado correctamente en la BD');
-        product.status = 1; // actualizar estado local
+        product.status = 1; 
       },
       error: (err: any) => console.error('Error al habilitar producto:', err)
     });

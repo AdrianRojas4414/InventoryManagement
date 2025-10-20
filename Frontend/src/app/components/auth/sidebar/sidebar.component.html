@@ -1,20 +1,24 @@
-<aside [ngClass]="getSidebarClasses()" id="sidebar">
-    <div class="sidebar-header">
-        <div class="logo-container">
-            <span class="header-title">Inventory Pro</span>
-        </div>
+<aside [ngClass]="getSidebarClasses()" id="sidebar" class="sidebar">
+  <div class="sidebar-header">
+    <div class="logo-container d-flex align-items-center">
+      <!-- Aquí va tu logo -->
+      <div class="logo-box d-flex align-items-center justify-content-center me-2">
+        <span class="material-icons text-white fs-5">inventory_2</span>
+      </div>
+      <span class="header-title">Inventory Pro</span>
     </div>
-    
-    <nav class="nav-container">
-        <a 
-            *ngFor="let item of navItems"
-            [ngClass]="getNavItemClasses(item.route)"
-            (click)="navigateTo(item.route)"
-            style="cursor: pointer;">
-            <span class="material-icons nav-icon">{{ item.icon }}</span>
-            <span class="nav-text">{{ item.name }}</span>
-        </a>
-    </nav>
+  </div>
+
+  <nav class="nav-container">
+    <a 
+      *ngFor="let item of navItems"
+      [ngClass]="getNavItemClasses(item.route)"
+      (click)="navigateTo(item.route)"
+      style="cursor: pointer;">
+      <span class="material-icons nav-icon">{{ item.icon }}</span>
+      <span class="nav-text">{{ item.name }}</span>
+    </a>
+  </nav>
 </aside>
 
 <app-confirm-modal
