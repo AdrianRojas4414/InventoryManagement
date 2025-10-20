@@ -67,8 +67,6 @@
   display: inline-block;
   text-align: center;
 }
-
-/* --- OPCIONES --- */
 .options-icon {
   font-size: 1.2rem;
   cursor: pointer;
@@ -98,7 +96,6 @@
   transition: all 0.2s ease;
 }
 
-/* --- PAGINACIÓN --- */
 .pagination {
   display: flex;
   justify-content: center;

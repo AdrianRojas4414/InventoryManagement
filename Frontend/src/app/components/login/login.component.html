@@ -1,26 +1,45 @@
-<div class="login-container">
-  <h1>Iniciar Sesión</h1>
+<div class="login-wrapper">
+  <div class="login-container">
+    <div class="logo-section">
+      <div class="logo-circle">
+        <span class="material-icons">inventory_2</span>
+      </div>
+      <h1>Inventory Pro</h1>
+      <p class="subtitle">Inicie sesión para continuar</p>
+    </div>
 
-  <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Usuario</mat-label>
-      <input matInput [(ngModel)]="username" name="username" required placeholder="Ingrese su usuario" />
-    </mat-form-field>
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Usuario</mat-label>
+        <input
+          matInput
+          [(ngModel)]="username"
+          name="username"
+          required
+          placeholder="Ingrese su usuario"
+        />
+      </mat-form-field>
 
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Contraseña</mat-label>
-      <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="password" name="password" required placeholder="Ingrese su contraseña" />
-      <button mat-icon-button matSuffix type="button" (click)="hide = !hide">
-        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-      </button>
-    </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Contraseña</mat-label>
+        <input
+          matInput
+          [type]="hide ? 'password' : 'text'"
+          [(ngModel)]="password"
+          name="password"
+          required
+          placeholder="Ingrese su contraseña"
+        />
+        <button mat-icon-button matSuffix type="button" (click)="hide = !hide">
+          <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+      </mat-form-field>
 
-    <button type="submit" class="add">
-        Ingresar
-    </button>
-    @if (error) {
-        <p class="error">{{ error }}</p>
-    }
+      <button type="submit" class="login-btn">Ingresar</button>
 
-  </form>
+      @if (error) {
+      <p class="error">{{ error }}</p>
+      }
+    </form>
+  </div>
 </div>

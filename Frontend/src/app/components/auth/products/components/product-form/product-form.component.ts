@@ -24,7 +24,6 @@ export class ProductFormComponent implements OnInit, OnChanges {
   errorMessage = '';
   successMessage = '';
 
-  // Dropdown de categorías
   showCategoryDropdown = false;
   categorySearchTerm = '';
 
@@ -95,7 +94,7 @@ export class ProductFormComponent implements OnInit, OnChanges {
         console.log(dto)
 
         if (error.status === 400 && error.error) {
-          this.errorMessage = error.error; // mensaje específico del backend
+          this.errorMessage = error.error; 
         } else if (error.status === 500) {
           this.errorMessage = 'Error interno del servidor.';
         } else {
@@ -109,7 +108,6 @@ export class ProductFormComponent implements OnInit, OnChanges {
     this.close.emit();
   }
 
-  //Dropdown de categorías
   toggleCategoryDropdown(): void {
     this.showCategoryDropdown = !this.showCategoryDropdown;
     if (this.showCategoryDropdown) {
@@ -140,11 +138,11 @@ export class ProductFormComponent implements OnInit, OnChanges {
     this.openCategory.emit();
   }
 
-  // Llamado desde el modal de categoría
+
   onCategoryCreated(newCategory: Category) {
     this.categories.push(newCategory);
-    this.loadActiveCategories(); // recarga la lista activa y asigna al select
-    this.product.categoryId = newCategory.id; // opcional: seleccionar la nueva
+    this.loadActiveCategories(); 
+    this.product.categoryId = newCategory.id; 
     this.showCategoryDropdown = false;
   }
 

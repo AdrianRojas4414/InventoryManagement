@@ -100,18 +100,14 @@ export class ProductsComponent implements OnInit {
   saveCategory(category: Category): void {
     const categoryId = Number(category.id);
   
-    // Agregar la nueva categoría a la lista
     this.categories.push(category);
     
-    // Si el formulario de producto está abierto, asignar la nueva categoría
     if (this.showProductForm && categoryId > 0) {
       this.currentProduct.categoryId = categoryId;
     }
 
-    // Cerrar el formulario de categoría
     this.showCategoryForm = false;
-    
-    // Recargar las categorías para asegurar sincronización
+  
     this.loadCategories();
   }
 

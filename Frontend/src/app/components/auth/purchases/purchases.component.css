@@ -1,4 +1,3 @@
-/* ==================== LAYOUT BASE ==================== */
 div {
   display: flex;
   width: 100%;
@@ -16,7 +15,6 @@ main {
   background: #f9fafb;
 }
 
-/* ==================== CABECERA ==================== */
 header h1 {
   font-size: 2rem;
   font-weight: 700;
@@ -31,7 +29,6 @@ header h2 {
   max-width: 800px;
 }
 
-/* --- BOTONES DE ACCIÓN --- */
 .actions {
   margin-top: 1.8rem;
   display: flex;
@@ -58,7 +55,6 @@ header h2 {
   transform: translateY(-2px);
 }
 
-/* ==================== TABLA ==================== */
 .table-container {
   border-radius: 12px;
   background: #ffffff;
@@ -102,7 +98,6 @@ header h2 {
   word-break: break-word;
 }
 
-/* --- ESTADOS --- */
 .status-active {
   background-color: #10b981;
   color: #ffffff;
@@ -125,7 +120,6 @@ header h2 {
   text-align: center;
 }
 
-/* --- PAGINACIÓN --- */
 .pagination {
   display: flex;
   justify-content: center;
@@ -164,7 +158,7 @@ header h2 {
   background-color: #f3f4f6;
   cursor: not-allowed;
 }
-/* ==================== MODAL GENERAL ==================== */
+
 .modal-backdrop {
   position: fixed;
   top: 0;
@@ -212,7 +206,6 @@ h3 {
   text-align: center;
 }
 
-/* ==================== FORM GRID ==================== */
 .form-grid {
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -232,14 +225,12 @@ label {
   font-size: 0.95rem;
 }
 
-/* ==================== PROVEEDOR ==================== */
 .supplier-row {
   display: flex;
   align-items: flex-end;
   gap: 10px;
 }
 
-/* Campo proveedor */
 .custom-select-wrapper {
   position: relative;
   flex: 1;
@@ -287,7 +278,6 @@ label {
   transform: rotate(180deg);
 }
 
-/* Dropdown */
 .dropdown-menu {
   position: absolute;
   top: calc(100% + 4px);
@@ -359,7 +349,6 @@ label {
   padding: 10px;
 }
 
-/* Botón + Nueva */
 .add-supplier {
   background-color: #10b981;
   color: white;
@@ -378,7 +367,6 @@ label {
   transform: translateY(-2px);
 }
 
-/* ==================== FECHA ==================== */
 input[type="date"] {
   height: 46px;
   border: 1px solid #d1d5db;
@@ -396,7 +384,6 @@ input[type="date"]:focus {
   outline: none;
 }
 
-/* ==================== PRODUCTOS ==================== */
 .products-section {
   margin-top: 1.8rem;
   border-top: 2px solid #e5e7eb;
@@ -435,7 +422,6 @@ input[type="date"]:focus {
   transform: translateY(-2px);
 }
 
-/* ==================== TABLA DETALLES ==================== */
 .details-table-container {
   background: #f9fafb;
   border-radius: 10px;
@@ -469,7 +455,6 @@ input[type="date"]:focus {
   font-weight: 600;
 }
 
-/* ==================== TOTAL ==================== */
 .total-section {
   display: flex;
   justify-content: flex-end;
@@ -494,7 +479,7 @@ input[type="date"]:focus {
   border-radius: 6px;
 }
 
-/* ==================== BOTONES ==================== */
+
 .form-actions {
   display: flex;
   justify-content: flex-end;
@@ -532,7 +517,6 @@ input[type="date"]:focus {
   transform: translateY(-2px);
 }
 
-/* ==================== RESPONSIVO ==================== */
 @media (max-width: 768px) {
   .form-grid {
     grid-template-columns: 1fr;
@@ -563,9 +547,7 @@ input[type="date"]:focus {
     gap: 8px;
   }
 }
-/* ==================== DETALLES DE COMPRA (EXPANDIBLE) ==================== */
 
-/* Fila del cuerpo principal */
 .main-row {
   cursor: pointer;
   transition: background-color 0.2s ease;
@@ -575,7 +557,6 @@ input[type="date"]:focus {
   background-color: #f1f5f9;
 }
 
-/* Celda con la flechita */
 .expand-cell {
   width: 50px;
   text-align: center;
@@ -591,7 +572,6 @@ input[type="date"]:focus {
   transform: rotate(90deg);
 }
 
-/* Fila de detalles (oculta por defecto) */
 .details-row {
   display: none;
   transition: all 0.3s ease;
@@ -607,7 +587,6 @@ input[type="date"]:focus {
   border-top: 1px solid #e2e8f0;
 }
 
-/* Contenedor interno de detalles */
 .details-wrapper {
   overflow: hidden;
   transition: all 0.3s ease;
@@ -622,7 +601,6 @@ input[type="date"]:focus {
   animation: slideDown 0.3s ease;
 }
 
-/* Animación al desplegar */
 @keyframes slideDown {
   from {
     opacity: 0;
@@ -634,7 +612,6 @@ input[type="date"]:focus {
   }
 }
 
-/* Título de la sección Detalles */
 .details-title {
   font-size: 1.1rem;
   font-weight: 600;
@@ -642,7 +619,6 @@ input[type="date"]:focus {
   margin-bottom: 0.8rem;
 }
 
-/* Tabla interna de los detalles */
 .details-table {
   width: 100%;
   border-collapse: collapse;
@@ -663,7 +639,6 @@ input[type="date"]:focus {
   color: #334155;
 }
 
-/* Suaviza la transición visual */
 .details-row.show .details-wrapper {
   max-height: 1000px;
   opacity: 1;
@@ -674,7 +649,6 @@ input[type="date"]:focus {
   opacity: 0;
 }
 
-/* ==================== CONTROLES DE CANTIDAD ==================== */
 
 .quantity-control {
   display: flex;
@@ -726,7 +700,6 @@ input[type="date"]:focus {
   outline: none;
 }
 
-/* ==================== INPUT DE PRECIO ==================== */
 
 .price-input {
   width: 100%;
@@ -745,8 +718,6 @@ input[type="date"]:focus {
   outline: none;
 }
 
-/* ==================== CELDA DE SUBTOTAL ==================== */
-
 .subtotal-cell {
   text-align: right;
   color: #22c55e;
@@ -754,7 +725,6 @@ input[type="date"]:focus {
   font-size: 1rem;
 }
 
-/* ==================== BOTÓN DE ELIMINAR ==================== */
 
 .action-cell {
   text-align: center;

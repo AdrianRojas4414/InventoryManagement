@@ -9,24 +9,20 @@
             </div>
         </header>
 
-        <!-- FORMULARIO DE REGISTRO DE PROVEEDOR -->
         <app-supplier-form
             *ngIf="showSupplierForm"
             (close)="closeSupplierForm()"
             (saved)="savedSupplierForm($event)">
         </app-supplier-form>
 
-        <!-- FORMULARIO DE REGISTRO DE COMPRA -->
         <ng-container *ngIf="showPurchaseForm">
             <div class="modal-backdrop" (click)="closePurchaseForm()">
                 <div class="form-card" (click)="$event.stopPropagation()">
                     <h3>Registrar una compra</h3>
                     <form [formGroup]="purchaseForm" (ngSubmit)="onSubmit()">
 
-                        <!-- Proveedor y Fecha -->
                         <div class="form-grid">
                             <div class="supplier-row">
-                                <!-- Proveedor con dropdown custom -->
                                 <div class="form-group">
                                     <label>Proveedor *</label>
                                     <div class="custom-select-wrapper">
@@ -67,7 +63,6 @@
                                     </button>
                                 </div>
                             </div>
-                            <!-- Fecha -->
                             <div class="form-group">
                                 <label>Fecha *</label>
                                 <input type="date" 
@@ -76,7 +71,6 @@
                             </div>
                         </div>
 
-                        <!-- Sección de Productos -->
                         <div class="products-section">
                             <div class="products-header">
                                 <h4>Productos</h4>
@@ -87,7 +81,6 @@
                                 </button>
                             </div>
 
-                            <!-- Tabla de detalles -->
                             <div class="details-table-container" *ngIf="purchaseDetails.length > 0">
                                 <table class="form-details-table">
                                     <thead>
@@ -194,7 +187,6 @@
             </div>
         </ng-container>
 
-        <!-- TABLA DE COMPRAS EXISTENTE -->
         <section class="table-container">
             <table class="product-table">
                 <thead>
@@ -215,14 +207,13 @@
                                     </svg>
                                 </span>
                             </td>
-                            <!-- 🔴 ID eliminada -->
                             <td>{{ purchase.fecha }}</td>
                             <td>{{ purchase.proveedor }}</td>
                             <td><strong>{{ purchase.total }}</strong></td>
                         </tr>
                         
                         <tr class="details-row" [class.show]="purchase.expanded">
-                            <td colspan="4" class="details-cell"><!-- 🔴 colspan ajustado -->
+                            <td colspan="4" class="details-cell">
                                 <div class="details-wrapper">
                                     <div class="details-content">
                                         <h3 class="details-title">Detalles de la Compra</h3>
@@ -258,8 +249,6 @@
             <span>Página {{ paginationParameters.currentPage + 1 }} de {{ paginationParameters.totalPages }}</span>
             <button (click)="nextPage()" [disabled]="paginationParameters.currentPage >= paginationParameters.totalPages - 1">Siguiente &raquo;</button>
         </div>
-
-        <!-- MODAL DE ALERTAS -->
         <div class="custom-modal-backdrop" *ngIf="showModal" (click)="closeModal()">
             <div class="custom-modal" (click)="$event.stopPropagation()" [class]="'modal-' + modalType">
                 <div class="modal-header">
