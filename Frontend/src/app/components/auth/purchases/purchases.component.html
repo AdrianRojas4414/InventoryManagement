@@ -10,13 +10,11 @@
         </header>
 
         <!-- FORMULARIO DE REGISTRO DE PROVEEDOR -->
-         <app-supplier-form
-         *ngIf="showSupplierForm"
-         (close)="closeSupplierForm()"
-         (saved)="savedSupplierForm($event)"
-        >
-
-         </app-supplier-form>
+        <app-supplier-form
+            *ngIf="showSupplierForm"
+            (close)="closeSupplierForm()"
+            (saved)="savedSupplierForm($event)">
+        </app-supplier-form>
 
         <!-- FORMULARIO DE REGISTRO DE COMPRA -->
         <ng-container *ngIf="showPurchaseForm">
@@ -24,7 +22,7 @@
                 <div class="form-card" (click)="$event.stopPropagation()">
                     <h3>Registrar una compra</h3>
                     <form [formGroup]="purchaseForm" (ngSubmit)="onSubmit()">
-                        
+
                         <!-- Proveedor y Fecha -->
                         <div class="form-grid">
                             <div class="supplier-row">
@@ -58,14 +56,13 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- Botón para abrir formulario de proveedores -->
                                 </div>
                                 <div class="form-group">
                                     <button 
-                                    type="button" 
-                                    class="add-supplier"
-                                    (click)="openSupplierForm()"
-                                    title="Crear un nueva proveedor sin salir del formulario">
+                                        type="button" 
+                                        class="add-supplier"
+                                        (click)="openSupplierForm()"
+                                        title="Crear un nueva proveedor sin salir del formulario">
                                         + Nueva
                                     </button>
                                 </div>
@@ -104,7 +101,6 @@
                                     </thead>
                                     <tbody formArrayName="purchaseDetails">
                                         <tr *ngFor="let detail of purchaseDetails.controls; let i = index" [formGroupName]="i">
-                                            <!-- Producto -->
                                             <td>
                                                 <div class="custom-select-wrapper">
                                                     <div class="custom-select small" 
@@ -136,27 +132,14 @@
                                                 </div>
                                             </td>
 
-                                            <!-- Cantidad con controles +/- -->
                                             <td>
                                                 <div class="quantity-control">
-                                                    <button type="button" 
-                                                            class="qty-btn" 
-                                                            (click)="decrementQuantity(i)">
-                                                            -
-                                                    </button>
-                                                    <input type="number" 
-                                                           formControlName="quantity"
-                                                           class="qty-input"
-                                                           min="1">
-                                                    <button type="button" 
-                                                            class="qty-btn" 
-                                                            (click)="incrementQuantity(i)">
-                                                            +
-                                                    </button>
+                                                    <button type="button" class="qty-btn" (click)="decrementQuantity(i)">-</button>
+                                                    <input type="number" formControlName="quantity" class="qty-input" min="1">
+                                                    <button type="button" class="qty-btn" (click)="incrementQuantity(i)">+</button>
                                                 </div>
                                             </td>
 
-                                            <!-- Precio Unitario -->
                                             <td>
                                                 <input type="number" 
                                                        formControlName="unitPrice"
@@ -166,17 +149,12 @@
                                                        min="0.01">
                                             </td>
 
-                                            <!-- Subtotal -->
                                             <td class="subtotal-cell">
                                                 <strong>{{ getRowSubtotal(i).toFixed(2) }}</strong>
                                             </td>
 
-                                            <!-- Eliminar -->
                                             <td class="action-cell">
-                                                <button type="button" 
-                                                        class="btn-remove" 
-                                                        (click)="removeDetailRow(i)"
-                                                        title="Eliminar">
+                                                <button type="button" class="btn-remove" (click)="removeDetailRow(i)" title="Eliminar">
                                                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                                                         <path d="M2 4h12M5.333 4V2.667a1.333 1.333 0 0 1 1.334-1.334h2.666a1.333 1.333 0 0 1 1.334 1.334V4m2 0v9.333a1.333 1.333 0 0 1-1.334 1.334H4.667a1.333 1.333 0 0 1-1.334-1.334V4h9.334Z" 
                                                               stroke="currentColor" 
@@ -190,20 +168,18 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <!-- Mensaje cuando no hay productos -->
+
                             <div class="empty-state" *ngIf="purchaseDetails.length === 0">
                                 <p>No hay productos agregados. Haga clic en "+ Agregar Producto" para comenzar.</p>
                             </div>
-                            <!-- Total -->
+
                             <div class="total-section">
                                 <div class="total-label">Total:</div>
                                 <div class="total-amount">{{ getTotalAmount().toFixed(2) }} BOB</div>
                             </div>
-                            <!-- Botones de acción -->
+
                             <div class="form-actions">
-                                <button type="button" class="cancel" (click)="closePurchaseForm()">
-                                    Cancelar
-                                </button>
+                                <button type="button" class="cancel" (click)="closePurchaseForm()">Cancelar</button>
                                 <button 
                                     class="add"
                                     type="submit" 
@@ -239,14 +215,14 @@
                                     </svg>
                                 </span>
                             </td>
-                            <td>{{ purchase.id }}</td>
+                            <!-- 🔴 ID eliminada -->
                             <td>{{ purchase.fecha }}</td>
                             <td>{{ purchase.proveedor }}</td>
                             <td><strong>{{ purchase.total }}</strong></td>
                         </tr>
                         
                         <tr class="details-row" [class.show]="purchase.expanded">
-                            <td colspan="5" class="details-cell">
+                            <td colspan="4" class="details-cell"><!-- 🔴 colspan ajustado -->
                                 <div class="details-wrapper">
                                     <div class="details-content">
                                         <h3 class="details-title">Detalles de la Compra</h3>
@@ -276,40 +252,38 @@
                 </tbody>
             </table>
         </section>
+
         <div class="pagination">
             <button (click)="prevPage()" [disabled]="paginationParameters.currentPage === 0">&laquo; Anterior</button>
-                <span>Página {{ paginationParameters.currentPage + 1 }} de {{ paginationParameters.totalPages  }}</span>
+            <span>Página {{ paginationParameters.currentPage + 1 }} de {{ paginationParameters.totalPages }}</span>
             <button (click)="nextPage()" [disabled]="paginationParameters.currentPage >= paginationParameters.totalPages - 1">Siguiente &raquo;</button>
         </div>
+
         <!-- MODAL DE ALERTAS -->
-<div class="custom-modal-backdrop" *ngIf="showModal" (click)="closeModal()">
-    <div class="custom-modal" (click)="$event.stopPropagation()" [class]="'modal-' + modalType">
-        <div class="modal-header">
-            <div class="modal-icon">
-                <!-- Icono de éxito -->
-                <svg *ngIf="modalType === 'success'" width="48" height="48" viewBox="0 0 48 48" fill="none">
-                    <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="3"/>
-                    <path d="M14 24l8 8 12-16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <!-- Icono de error -->
-                <svg *ngIf="modalType === 'error'" width="48" height="48" viewBox="0 0 48 48" fill="none">
-                    <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="3"/>
-                    <path d="M16 16l16 16M32 16l-16 16" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-                </svg>
-                <!-- Icono de advertencia -->
-                <svg *ngIf="modalType === 'warning'" width="48" height="48" viewBox="0 0 48 48" fill="none">
-                    <path d="M24 4L44 40H4L24 4z" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
-                    <path d="M24 18v12M24 34v2" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-                </svg>
-                <!-- Icono de info -->
-                <svg *ngIf="modalType === 'info'" width="48" height="48" viewBox="0 0 48 48" fill="none">
-                    <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="3"/>
-                    <path d="M24 16v16M24 36v2" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-                </svg>
-            </div>
-            <h3 class="modal-title">{{ modalTitle }}</h3>
-        </div>
-        <div class="modal-body">
+        <div class="custom-modal-backdrop" *ngIf="showModal" (click)="closeModal()">
+            <div class="custom-modal" (click)="$event.stopPropagation()" [class]="'modal-' + modalType">
+                <div class="modal-header">
+                    <div class="modal-icon">
+                        <svg *ngIf="modalType === 'success'" width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="3"/>
+                            <path d="M14 24l8 8 12-16" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <svg *ngIf="modalType === 'error'" width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="3"/>
+                            <path d="M16 16l16 16M32 16l-16 16" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        </svg>
+                        <svg *ngIf="modalType === 'warning'" width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <path d="M24 4L44 40H4L24 4z" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/>
+                            <path d="M24 18v12M24 34v2" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        </svg>
+                        <svg *ngIf="modalType === 'info'" width="48" height="48" viewBox="0 0 48 48" fill="none">
+                            <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="3"/>
+                            <path d="M24 16v16M24 36v2" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3 class="modal-title">{{ modalTitle }}</h3>
+                </div>
+                <div class="modal-body">
                     <p>{{ modalMessage }}</p>
                 </div>
                 <div class="modal-footer">
