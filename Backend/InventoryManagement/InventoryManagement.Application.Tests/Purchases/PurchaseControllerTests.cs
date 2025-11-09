@@ -81,7 +81,7 @@ public class PurchasesControllerTests
     {
         _mockRepo.Setup(r => r.GetAllAsync()).ReturnsAsync(new List<Purchase> { GetSamplePurchase() });
 
-        var result = await _controller.GetAllPurchases("Admin");
+        var result = await _controller.GetAllPurchases("Admin",1,1);
 
         var okResult = Assert.IsType<OkObjectResult>(result);
         var response = Assert.IsAssignableFrom<List<PurchaseResponseDto>>(okResult.Value);
@@ -95,7 +95,7 @@ public class PurchasesControllerTests
     [InlineData("Guest")]
     public async Task GetAllPurchases_AsNonAdmin_ReturnsForbid(string role)
     {
-        var result = await _controller.GetAllPurchases(role);
+        var result = await _controller.GetAllPurchases(role,1,1);
 
         Assert.IsType<ForbidResult>(result);
     }
