@@ -5,6 +5,7 @@ using InventoryManagement.Infrastructure.Repositories;
 using DotNetEnv;
 using System.IO;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Cargar variables de entorno

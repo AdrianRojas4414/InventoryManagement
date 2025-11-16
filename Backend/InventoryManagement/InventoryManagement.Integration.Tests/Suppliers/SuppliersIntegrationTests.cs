@@ -194,7 +194,7 @@ public class SuppliersIntegrationTests : IntegrationTestBase
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-        // Verificar que el proveedor se actualizó correctamente
+        // Verificar que el proveedor se actualizï¿½ correctamente
         var getResponse = await Client.GetAsync($"/api/Suppliers/{supplier.Id}");
         var updatedSupplier = await getResponse.Content.ReadFromJsonAsync<Supplier>();
 
@@ -324,7 +324,7 @@ public class SuppliersIntegrationTests : IntegrationTestBase
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-        // Verificar que el proveedor está inactivo
+        // Verificar que el proveedor estï¿½ inactivo
         var getResponse = await Client.GetAsync($"/api/Suppliers/{supplier.Id}");
         Assert.Equal(HttpStatusCode.NotFound, getResponse.StatusCode);
 
@@ -382,7 +382,7 @@ public class SuppliersIntegrationTests : IntegrationTestBase
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-        // Verificar que el proveedor está activo usando GetById
+        // Verificar que el proveedor estï¿½ activo usando GetById
         var getResponse = await Client.GetAsync($"/api/Suppliers/{supplier.Id}");
         Assert.Equal(HttpStatusCode.OK, getResponse.StatusCode);
 

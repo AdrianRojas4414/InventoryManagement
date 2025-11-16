@@ -94,7 +94,7 @@ public class IntegrationTestBase : IClassFixture<CustomWebApplicationFactory>
     {
         var category = new Category
         {
-            Name = $"TestCategory_{Guid.NewGuid():N}",
+            Name = "Juegos",
             Description = "Test category description",
             Status = 1,
             CreationDate = DateTime.UtcNow,

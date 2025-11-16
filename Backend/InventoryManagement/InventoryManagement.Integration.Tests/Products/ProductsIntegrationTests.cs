@@ -21,8 +21,8 @@ public class ProductsIntegrationTests : IntegrationTestBase
 
         var createDto = new CreateProductDto
         {
-            SerialCode = (short)Random.Shared.Next(10000, 99999),
-            Name = $"NewProduct_{Guid.NewGuid():N}",
+            SerialCode = 12563,
+            Name = "Laptop",
             Description = "New product description",
             CategoryId = category.Id,
             TotalStock = 50
@@ -59,7 +59,7 @@ public class ProductsIntegrationTests : IntegrationTestBase
 
         var createDto = new CreateProductDto
         {
-            SerialCode = existingProduct.SerialCode, // Código duplicado
+            SerialCode = existingProduct.SerialCode, // Cï¿½digo duplicado
             Name = $"AnotherProduct_{Guid.NewGuid():N}",
             Description = "Description",
             CategoryId = category.Id,
@@ -72,7 +72,7 @@ public class ProductsIntegrationTests : IntegrationTestBase
         // Assert
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         var errorMessage = await response.Content.ReadAsStringAsync();
-        Assert.Contains("código serial", errorMessage.ToLower());
+        Assert.Contains("cï¿½digo serial", errorMessage.ToLower());
     }
 
     [Fact]
@@ -86,7 +86,7 @@ public class ProductsIntegrationTests : IntegrationTestBase
             SerialCode = (short)Random.Shared.Next(10000, 99999),
             Name = $"Product_{Guid.NewGuid():N}",
             Description = "Description",
-            CategoryId = 9999, // Categoría inexistente
+            CategoryId = 9999, // Categorï¿½a inexistente
             TotalStock = 10
         };
 
@@ -96,7 +96,7 @@ public class ProductsIntegrationTests : IntegrationTestBase
         // Assert
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         var errorMessage = await response.Content.ReadAsStringAsync();
-        Assert.Contains("categoría", errorMessage.ToLower());
+        Assert.Contains("categorï¿½a", errorMessage.ToLower());
     }
 
     [Fact]
@@ -105,7 +105,7 @@ public class ProductsIntegrationTests : IntegrationTestBase
         // Arrange
         var user = await CreateTestUserAsync();
         var category = await CreateTestCategoryAsync(user.Id);
-        category.Status = 0; // Inactivar categoría
+        category.Status = 0; // Inactivar categorï¿½a
         DbContext.Categories.Update(category);
         await DbContext.SaveChangesAsync();
 
@@ -224,7 +224,7 @@ public class ProductsIntegrationTests : IntegrationTestBase
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-        // Verificar que el producto se actualizó correctamente
+        // Verificar que el producto se actualizï¿½ correctamente
         var getResponse = await Client.GetAsync($"/api/Products/{product.Id}");
         var updatedProduct = await getResponse.Content.ReadFromJsonAsync<Product>();
 
@@ -295,7 +295,7 @@ public class ProductsIntegrationTests : IntegrationTestBase
 
         var updateDto = new CreateProductDto
         {
-            SerialCode = product1.SerialCode, // Código duplicado
+            SerialCode = product1.SerialCode, // Cï¿½digo duplicado
             Name = "Updated Product",
             Description = "Description",
             CategoryId = category.Id,
@@ -308,7 +308,7 @@ public class ProductsIntegrationTests : IntegrationTestBase
         // Assert
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
         var errorMessage = await response.Content.ReadAsStringAsync();
-        Assert.Contains("código serial", errorMessage.ToLower());
+        Assert.Contains("cï¿½digo serial", errorMessage.ToLower());
     }
 
     #endregion
@@ -329,7 +329,7 @@ public class ProductsIntegrationTests : IntegrationTestBase
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-        // Verificar que el producto está inactivo
+        // Verificar que el producto estï¿½ inactivo
         var getResponse = await Client.GetAsync($"/api/Products/{product.Id}");
         Assert.Equal(HttpStatusCode.NotFound, getResponse.StatusCode);
 
@@ -389,7 +389,7 @@ public class ProductsIntegrationTests : IntegrationTestBase
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-        // Verificar que el producto está activo usando GetById
+        // Verificar que el producto estï¿½ activo usando GetById
         var getResponse = await Client.GetAsync($"/api/Products/{product.Id}");
         Assert.Equal(HttpStatusCode.OK, getResponse.StatusCode);
 

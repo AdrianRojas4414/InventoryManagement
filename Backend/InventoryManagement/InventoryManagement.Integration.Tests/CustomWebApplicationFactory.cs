@@ -1,3 +1,4 @@
+extern alias Web;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
@@ -7,10 +8,13 @@ using DotNetEnv;
 
 namespace InventoryManagement.Integration.Tests;
 
-public class CustomWebApplicationFactory : WebApplicationFactory<Program>
+public class CustomWebApplicationFactory : WebApplicationFactory<Web::Program>
 {
-    protected override void ConfigureWebHost(IWebHostBuilder builder)
+     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
+        // Cargar variables de entorno
+        Env.Load(Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "..", "..", ".env"));
+
         builder.ConfigureServices(services =>
         {
             // Remover el DbContext existente
@@ -22,31 +26,25 @@ public class CustomWebApplicationFactory : WebApplicationFactory<Program>
                 services.Remove(descriptor);
             }
 
-            // Cargar variables de entorno
-            Env.Load(Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "..", "..", ".env"));
-
+            // Agregar DbContext usando la base de datos de pruebas
             var dbHost = "localhost";
-            var dbName = "StagingInventoryManagementDB";
+            var dbName = "StagingInventoryManagementDB"; // Base de datos separada para tests
             var dbUser = Env.GetString("DB_USER");
             var dbPass = Env.GetString("DB_PASSWORD");
 
             var connectionString = $"Server={dbHost};Database={dbName};User={dbUser};Password={dbPass};";
 
-            // Agregar el DbContext con la base de datos de staging
             services.AddDbContext<InventoryDbContext>(options =>
             {
                 options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
             });
 
-            // Construir el service provider
+            // Crear la base de datos y aplicar migraciones
             var sp = services.BuildServiceProvider();
-
-            // Crear el scope y obtener el contexto
             using var scope = sp.CreateScope();
             var scopedServices = scope.ServiceProvider;
             var db = scopedServices.GetRequiredService<InventoryDbContext>();
-
-            // Asegurar que la base de datos esté creada
+            
             db.Database.EnsureCreated();
         });
     }

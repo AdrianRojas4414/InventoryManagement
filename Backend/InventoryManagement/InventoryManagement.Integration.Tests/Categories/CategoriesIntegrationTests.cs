@@ -19,7 +19,7 @@ public class CategoriesIntegrationTests : IntegrationTestBase
 
         var createDto = new CreateCategoryDto
         {
-            Name = $"NewCategory_{Guid.NewGuid():N}",
+            Name = "dsdsdsdsd",
             Description = "New category description"
         };
 
@@ -52,7 +52,7 @@ public class CategoriesIntegrationTests : IntegrationTestBase
 
         var createDto = new CreateCategoryDto
         {
-            Name = "ABC", // Nombre mínimo de 3 caracteres
+            Name = "ABC", // Nombre mï¿½nimo de 3 caracteres
             Description = null
         };
 
@@ -159,7 +159,7 @@ public class CategoriesIntegrationTests : IntegrationTestBase
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-        // Verificar que la categoría se actualizó correctamente
+        // Verificar que la categorï¿½a se actualizï¿½ correctamente
         var getResponse = await Client.GetAsync($"/api/Categories/{category.Id}");
         var updatedCategory = await getResponse.Content.ReadFromJsonAsync<Category>();
 
@@ -227,7 +227,7 @@ public class CategoriesIntegrationTests : IntegrationTestBase
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-        // Verificar que la categoría está inactiva
+        // Verificar que la categorï¿½a estï¿½ inactiva
         var getResponse = await Client.GetAsync($"/api/Categories/{category.Id}");
         Assert.Equal(HttpStatusCode.BadRequest, getResponse.StatusCode);
 
@@ -285,7 +285,7 @@ public class CategoriesIntegrationTests : IntegrationTestBase
         // Assert
         Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-        // Verificar que la categoría está activa usando GetById
+        // Verificar que la categorï¿½a estï¿½ activa usando GetById
         var getResponse = await Client.GetAsync($"/api/Categories/{category.Id}");
         Assert.Equal(HttpStatusCode.OK, getResponse.StatusCode);
 
