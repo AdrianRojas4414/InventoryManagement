@@ -1,13 +1,11 @@
 using System.Net.Http.Json;
-using System.Text;
-using System.Text.Json;
 using Microsoft.Extensions.DependencyInjection;
 using InventoryManagement.Infrastructure.Persistence;
 using InventoryManagement.Domain.Entities;
 
 namespace InventoryManagement.Integration.Tests;
 
-public class IntegrationTestBase : IClassFixture<CustomWebApplicationFactory>
+public class IntegrationTestBase : IClassFixture<CustomWebApplicationFactory>, IAsyncLifetime
 {
     protected readonly HttpClient Client;
     protected readonly CustomWebApplicationFactory Factory;
@@ -22,11 +20,29 @@ public class IntegrationTestBase : IClassFixture<CustomWebApplicationFactory>
         DbContext = scope.ServiceProvider.GetRequiredService<InventoryDbContext>();
     }
 
-    protected async Task<T?> GetAsync<T>(string url)
+    public async Task InitializeAsync()
     {
-        var response = await Client.GetAsync(url);
-        response.EnsureSuccessStatusCode();
-        return await response.Content.ReadFromJsonAsync<T>();
+        // Limpieza de datos antes de cada test
+        await CleanupDatabaseAsync();
+    }
+
+    public Task DisposeAsync()
+    {
+        // Opcional: limpieza después del test
+        return Task.CompletedTask;
+    }
+
+    private async Task CleanupDatabaseAsync()
+    {
+        // Eliminar datos en orden correcto respetando FK
+        DbContext.PurchaseDetails.RemoveRange(DbContext.PurchaseDetails);
+        DbContext.Purchases.RemoveRange(DbContext.Purchases);
+        DbContext.Products.RemoveRange(DbContext.Products);
+        DbContext.Categories.RemoveRange(DbContext.Categories);
+        DbContext.Suppliers.RemoveRange(DbContext.Suppliers);
+        DbContext.Users.RemoveRange(DbContext.Users);
+        
+        await DbContext.SaveChangesAsync();
     }
 
     protected async Task<HttpResponseMessage> PostAsync<T>(string url, T content, short? userId = null, string? userRole = null)
@@ -75,10 +91,10 @@ public class IntegrationTestBase : IClassFixture<CustomWebApplicationFactory>
     {
         var user = new User
         {
-            Username = $"testuser_{Guid.NewGuid():N}",
-            PasswordHash = "testpassword",
-            FirstName = "Test",
-            LastName = "User",
+            Username = role == "Admin" ? "AdminPedro" : "EmpleadoJuan",
+            PasswordHash = "password123",
+            FirstName = role == "Admin" ? "Pedro" : "Juan",
+            LastName = role == "Admin" ? "García" : "López",
             Role = role,
             Status = 1,
             CreationDate = DateTime.UtcNow,
@@ -94,8 +110,8 @@ public class IntegrationTestBase : IClassFixture<CustomWebApplicationFactory>
     {
         var category = new Category
         {
-            Name = "Juegos",
-            Description = "Test category description",
+            Name = "Electrónica",
+            Description = "Productos electrónicos",
             Status = 1,
             CreationDate = DateTime.UtcNow,
             ModificationDate = DateTime.UtcNow,
@@ -111,12 +127,12 @@ public class IntegrationTestBase : IClassFixture<CustomWebApplicationFactory>
     {
         var supplier = new Supplier
         {
-            Name = $"TestSupplier_{Guid.NewGuid():N}",
-            Nit = $"{Random.Shared.Next(1000000, 9999999)}",
-            Address = "Test Address",
-            Phone = "12345678",
-            Email = $"test_{Guid.NewGuid():N}@test.com",
-            ContactName = "Test Contact",
+            Name = "Proveedor ABC",
+            Nit = "1234567890",
+            Address = "Av. Siempre Viva 123",
+            Phone = "77123456",
+            Email = "contacto@gmail.com",
+            ContactName = "Carlos Pérez",
             Status = 1,
             CreationDate = DateTime.UtcNow,
             ModificationDate = DateTime.UtcNow,
@@ -130,13 +146,11 @@ public class IntegrationTestBase : IClassFixture<CustomWebApplicationFactory>
 
     protected async Task<Product> CreateTestProductAsync(short categoryId, short userId)
     {
-        var serialCode = (short)Random.Shared.Next(1000, 9999);
-
         var product = new Product
         {
-            SerialCode = serialCode,
-            Name = $"TestProduct_{Guid.NewGuid():N}",
-            Description = "Test product description",
+            SerialCode = 1001,
+            Name = "Laptop Dell",
+            Description = "Laptop empresarial",
             CategoryId = categoryId,
             TotalStock = 10,
             Status = 1,
