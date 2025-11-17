@@ -5,6 +5,7 @@ using InventoryManagement.Infrastructure.Repositories;
 using DotNetEnv;
 using System.IO;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Cargar variables de entorno
@@ -12,7 +13,9 @@ Env.Load(Path.Combine(Directory.GetCurrentDirectory(), "..", ".env"));
 
 // Construye la cadena de conexión
 var dbHost = "localhost";
-var dbName = "inventorymanagementdb";
+var dbName = builder.Environment.IsDevelopment() 
+    ? "StagingInventoryManagementDB" // Para tests
+    : "inventorymanagementdb";
 var dbUser = Env.GetString("DB_USER");
 var dbPass = Env.GetString("DB_PASSWORD");
 
@@ -70,3 +73,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }

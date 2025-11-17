@@ -5,6 +5,7 @@ namespace InventoryManagement.Domain.Entities;
 public abstract class AuditableEntity
 {
     [Column("id_user_creation")]
+    [ForeignKey("CreatedByUser")]
     public short? CreatedByUserId { get; set; }
 
     [JsonRequired]

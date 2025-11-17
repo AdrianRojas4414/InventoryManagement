@@ -8,10 +8,12 @@ public class PurchaseDetail
 {
     [JsonRequired]
     [Column("id_purchase")]
+    [ForeignKey("Purchase")]
     public int PurchaseId { get; set; }
 
     [JsonRequired]
     [Column("id_product")]
+    [ForeignKey("Product")]
     public short ProductId { get; set; }
 
     [JsonRequired]
