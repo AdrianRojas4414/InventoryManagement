@@ -2,6 +2,7 @@ using System.Net.Http.Json;
 using Microsoft.Extensions.DependencyInjection;
 using InventoryManagement.Infrastructure.Persistence;
 using InventoryManagement.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace InventoryManagement.Integration.Tests;
 
@@ -32,17 +33,44 @@ public class IntegrationTestBase : IClassFixture<CustomWebApplicationFactory>, I
         return Task.CompletedTask;
     }
 
+    //
+    // --- AQUÍ ESTÁ LA CORRECCIÓN ---
+    //
     private async Task CleanupDatabaseAsync()
     {
-        // Eliminar datos en orden correcto respetando FK
-        DbContext.PurchaseDetails.RemoveRange(DbContext.PurchaseDetails);
-        DbContext.Purchases.RemoveRange(DbContext.Purchases);
-        DbContext.Products.RemoveRange(DbContext.Products);
-        DbContext.Categories.RemoveRange(DbContext.Categories);
-        DbContext.Suppliers.RemoveRange(DbContext.Suppliers);
-        DbContext.Users.RemoveRange(DbContext.Users);
+        // 1. Iniciar una transacción explícita
+        using var transaction = await DbContext.Database.BeginTransactionAsync();
         
-        await DbContext.SaveChangesAsync();
+        try
+        {
+            // 2. Desactivar FK checks (DENTRO de la transacción)
+            await DbContext.Database.ExecuteSqlRawAsync("SET FOREIGN_KEY_CHECKS = 0;");
+
+            // 3. Eliminar datos
+            DbContext.ProductPriceHistories.RemoveRange(DbContext.ProductPriceHistories);
+            DbContext.PurchaseDetails.RemoveRange(DbContext.PurchaseDetails);
+            DbContext.SupplierProducts.RemoveRange(DbContext.SupplierProducts);
+            DbContext.Purchases.RemoveRange(DbContext.Purchases);
+            DbContext.Products.RemoveRange(DbContext.Products);
+            DbContext.Categories.RemoveRange(DbContext.Categories);
+            DbContext.Suppliers.RemoveRange(DbContext.Suppliers);
+            DbContext.Users.RemoveRange(DbContext.Users);
+            
+            // 4. Guardar todos los borrados (DENTRO de la transacción)
+            await DbContext.SaveChangesAsync();
+
+            // 5. Reactivar FK checks (DENTRO de la transacción)
+            await DbContext.Database.ExecuteSqlRawAsync("SET FOREIGN_KEY_CHECKS = 1;");
+
+            // 6. Si todo fue bien, comitear la transacción
+            await transaction.CommitAsync();
+        }
+        catch (Exception)
+        {
+            // 7. Si algo falla, revertir todo
+            await transaction.RollbackAsync();
+            throw; // Relanzar la excepción para que el test falle y nos enteremos
+        }
     }
 
     protected async Task<HttpResponseMessage> PostAsync<T>(string url, T content, short? userId = null, string? userRole = null)
@@ -103,6 +131,12 @@ public class IntegrationTestBase : IClassFixture<CustomWebApplicationFactory>, I
 
         DbContext.Users.Add(user);
         await DbContext.SaveChangesAsync();
+
+        if (user.CreatedByUserId == null)
+        {
+            user.CreatedByUserId = user.Id;
+            await DbContext.SaveChangesAsync();
+        }
         return user;
     }
 

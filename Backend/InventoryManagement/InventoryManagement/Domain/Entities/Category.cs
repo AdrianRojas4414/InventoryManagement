@@ -13,7 +13,7 @@ public class Category : AuditableEntity
     public short Id { get; set; } //NOSONAR
 
     [Required]
-    [MaxLength(100)]
+    [MaxLength(50)]
     [Column("name")]
     public required string Name { get; set; } = null!;
 
