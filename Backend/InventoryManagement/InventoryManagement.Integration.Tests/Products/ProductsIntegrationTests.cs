@@ -112,6 +112,78 @@ public class ProductsIntegrationTests : IntegrationTestBase
     }
 
     // -----------------------------------------------------------------
+    // PRUEBA 2.5: GET ALL (Select All)
+    // -----------------------------------------------------------------
+    [Theory]
+    // 1. Happy Path (Hay productos en la DB)
+    [InlineData(true)]
+    // 2. Unhappy Path (No hay productos en la DB)
+    [InlineData(false)]
+    public async Task GetAllProducts_Test(bool isHappyPath)
+    {
+        // Arrange
+        var adminUser = await CreateTestUserAsync("Admin");
+        
+        if (isHappyPath)
+        {
+            var category = await CreateTestCategoryAsync(adminUser.Id);
+            
+            // Creamos varios productos para el Happy Path
+            await CreateTestProductAsync(category.Id, adminUser.Id);
+            
+            // Producto 2 con serial y nombre únicos
+            var product2 = new Product
+            {
+                SerialCode = 1002,
+                Name = "Mouse Inalámbrico",
+                CategoryId = category.Id,
+                TotalStock = 15,
+                Status = 1,
+                CreationDate = DateTime.UtcNow,
+                ModificationDate = DateTime.UtcNow,
+                CreatedByUserId = adminUser.Id
+            };
+            DbContext.Products.Add(product2);
+            
+            // Producto 3 con serial y nombre únicos
+            var product3 = new Product
+            {
+                SerialCode = 1003,
+                Name = "Teclado Mecánico",
+                CategoryId = category.Id,
+                TotalStock = 8,
+                Status = 1,
+                CreationDate = DateTime.UtcNow,
+                ModificationDate = DateTime.UtcNow,
+                CreatedByUserId = adminUser.Id
+            };
+            DbContext.Products.Add(product3);
+            
+            await DbContext.SaveChangesAsync();
+        }
+        // Para Unhappy Path, no creamos nada (DB limpia)
+
+        // Act
+        var response = await Client.GetAsync("/api/products");
+
+        // Assert
+        if (isHappyPath)
+        {
+            response.EnsureSuccessStatusCode();
+            var products = await response.Content.ReadFromJsonAsync<List<Product>>();
+            Assert.NotNull(products);
+            Assert.True(products.Count >= 3); // Al menos los 3 que creamos
+        }
+        else
+        {
+            response.EnsureSuccessStatusCode();
+            var products = await response.Content.ReadFromJsonAsync<List<Product>>();
+            Assert.NotNull(products);
+            Assert.Empty(products); // No debe haber productos
+        }
+    }
+
+    // -----------------------------------------------------------------
     // PRUEBA 3: UPDATE (Actualizar)
     // -----------------------------------------------------------------
     [Theory]

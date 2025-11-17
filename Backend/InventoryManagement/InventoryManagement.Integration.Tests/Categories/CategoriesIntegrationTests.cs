@@ -104,6 +104,48 @@ public class CategoriesIntegrationTests : IntegrationTestBase
     }
 
     // -----------------------------------------------------------------
+    // PRUEBA 2.5: GET ALL (Select All)
+    // -----------------------------------------------------------------
+    [Theory]
+    // 1. Happy Path (Hay categorías en la DB)
+    [InlineData(true)]
+    // 2. Unhappy Path (No hay categorías en la DB)
+    [InlineData(false)]
+    public async Task GetAllCategories_Test(bool isHappyPath)
+    {
+        // Arrange
+        var adminUser = await CreateTestUserAsync("Admin");
+        
+        if (isHappyPath)
+        {
+            // Creamos varias categorías para el Happy Path
+            await CreateTestCategoryAsync(adminUser.Id);
+            await CreateTestCategoryAsync(adminUser.Id);
+            await CreateTestCategoryAsync(adminUser.Id);
+        }
+        // Para Unhappy Path, no creamos nada (DB limpia)
+
+        // Act
+        var response = await Client.GetAsync("/api/categories");
+
+        // Assert
+        if (isHappyPath)
+        {
+            response.EnsureSuccessStatusCode();
+            var categories = await response.Content.ReadFromJsonAsync<List<Category>>();
+            Assert.NotNull(categories);
+            Assert.True(categories.Count >= 3); // Al menos las 3 que creamos
+        }
+        else
+        {
+            response.EnsureSuccessStatusCode();
+            var categories = await response.Content.ReadFromJsonAsync<List<Category>>();
+            Assert.NotNull(categories);
+            Assert.Empty(categories); // No debe haber categorías
+        }
+    }
+
+    // -----------------------------------------------------------------
     // PRUEBA 3: UPDATE (Actualizar)
     // -----------------------------------------------------------------
     [Theory]

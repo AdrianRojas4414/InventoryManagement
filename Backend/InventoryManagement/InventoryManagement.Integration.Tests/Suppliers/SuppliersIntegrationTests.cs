@@ -114,6 +114,80 @@ public class SuppliersIntegrationTests : IntegrationTestBase
     }
 
     // -----------------------------------------------------------------
+    // PRUEBA 2.5: GET ALL (Select All)
+    // -----------------------------------------------------------------
+    [Theory]
+    // 1. Happy Path (Hay proveedores en la DB)
+    [InlineData(true)]
+    // 2. Unhappy Path (No hay proveedores en la DB)
+    [InlineData(false)]
+    public async Task GetAllSuppliers_Test(bool isHappyPath)
+    {
+        // Arrange
+        var adminUser = await CreateTestUserAsync("Admin");
+        
+        if (isHappyPath)
+        {
+            // Creamos varios proveedores para el Happy Path
+            await CreateTestSupplierAsync(adminUser.Id);
+            
+            // Proveedor 2 con NIT y Email únicos
+            var supplier2 = new Supplier
+            {
+                Name = "Proveedor XYZ",
+                Nit = "9876543210",
+                Address = "Calle Los Olivos 456",
+                Phone = "77654321",
+                Email = "xyz@gmail.com",
+                ContactName = "María López",
+                Status = 1,
+                CreationDate = DateTime.UtcNow,
+                ModificationDate = DateTime.UtcNow,
+                CreatedByUserId = adminUser.Id
+            };
+            DbContext.Suppliers.Add(supplier2);
+            
+            // Proveedor 3 con NIT y Email únicos
+            var supplier3 = new Supplier
+            {
+                Name = "Proveedor LMN",
+                Nit = "5555555555",
+                Address = "Av. Principal 789",
+                Phone = "77999888",
+                Email = "lmn@gmail.com",
+                ContactName = "Jorge Ramírez",
+                Status = 1,
+                CreationDate = DateTime.UtcNow,
+                ModificationDate = DateTime.UtcNow,
+                CreatedByUserId = adminUser.Id
+            };
+            DbContext.Suppliers.Add(supplier3);
+            
+            await DbContext.SaveChangesAsync();
+        }
+        // Para Unhappy Path, no creamos nada (DB limpia)
+
+        // Act
+        var response = await Client.GetAsync("/api/suppliers");
+
+        // Assert
+        if (isHappyPath)
+        {
+            response.EnsureSuccessStatusCode();
+            var suppliers = await response.Content.ReadFromJsonAsync<List<Supplier>>();
+            Assert.NotNull(suppliers);
+            Assert.True(suppliers.Count >= 3); // Al menos los 3 que creamos
+        }
+        else
+        {
+            response.EnsureSuccessStatusCode();
+            var suppliers = await response.Content.ReadFromJsonAsync<List<Supplier>>();
+            Assert.NotNull(suppliers);
+            Assert.Empty(suppliers); // No debe haber proveedores
+        }
+    }
+
+    // -----------------------------------------------------------------
     // PRUEBA 3: UPDATE (Actualizar)
     // -----------------------------------------------------------------
     [Theory]
