@@ -23,30 +23,22 @@ public class IntegrationTestBase : IClassFixture<CustomWebApplicationFactory>, I
 
     public async Task InitializeAsync()
     {
-        // Limpieza de datos antes de cada test
         await CleanupDatabaseAsync();
     }
 
     public Task DisposeAsync()
     {
-        // Opcional: limpieza después del test
         return Task.CompletedTask;
     }
 
-    //
-    // --- AQUÍ ESTÁ LA CORRECCIÓN ---
-    //
     private async Task CleanupDatabaseAsync()
     {
-        // 1. Iniciar una transacción explícita
         using var transaction = await DbContext.Database.BeginTransactionAsync();
         
         try
         {
-            // 2. Desactivar FK checks (DENTRO de la transacción)
             await DbContext.Database.ExecuteSqlRawAsync("SET FOREIGN_KEY_CHECKS = 0;");
 
-            // 3. Eliminar datos
             DbContext.ProductPriceHistories.RemoveRange(DbContext.ProductPriceHistories);
             DbContext.PurchaseDetails.RemoveRange(DbContext.PurchaseDetails);
             DbContext.SupplierProducts.RemoveRange(DbContext.SupplierProducts);
@@ -56,20 +48,16 @@ public class IntegrationTestBase : IClassFixture<CustomWebApplicationFactory>, I
             DbContext.Suppliers.RemoveRange(DbContext.Suppliers);
             DbContext.Users.RemoveRange(DbContext.Users);
             
-            // 4. Guardar todos los borrados (DENTRO de la transacción)
             await DbContext.SaveChangesAsync();
 
-            // 5. Reactivar FK checks (DENTRO de la transacción)
             await DbContext.Database.ExecuteSqlRawAsync("SET FOREIGN_KEY_CHECKS = 1;");
 
-            // 6. Si todo fue bien, comitear la transacción
             await transaction.CommitAsync();
         }
         catch (Exception)
         {
-            // 7. Si algo falla, revertir todo
             await transaction.RollbackAsync();
-            throw; // Relanzar la excepción para que el test falle y nos enteremos
+            throw; 
         }
     }
 
