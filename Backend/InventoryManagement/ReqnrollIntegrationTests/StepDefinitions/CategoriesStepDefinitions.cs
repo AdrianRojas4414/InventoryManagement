@@ -1,105 +1,108 @@
-using Reqnroll;
-using System.Net.Http.Json;
 using System.Net;
-using InventoryManagement.Application.DTOs; //
+using System.Net.Http.Json;
+using InventoryManagement.Application.DTOs;
+using InventoryManagement.Domain.Entities;
+using Reqnroll;
+using ReqnrollIntegrationTests.Support;
 using Xunit;
 
-namespace ReqnrollIntegrationTests.StepDefinitions
+namespace ReqnrollIntegrationTests.StepDefinitions;
+
+[Binding]
+public class CategoriesStepDefinitions
 {
-    [Binding]
-    public class CategoriesStepDefinitions
+    private readonly IntegrationTestBase _testBase;
+    private HttpResponseMessage? _response;
+    private User? _currentUser;
+    private Category? _currentCategory;
+
+    public CategoriesStepDefinitions(IntegrationTestBase testBase)
     {
-        private readonly ScenarioContext _scenarioContext;
-        private readonly HttpClient _client;
-        private HttpResponseMessage _response;
-        private int _categoryIdToDelete;
+        _testBase = testBase;
+    }
 
-        public CategoriesStepDefinitions(ScenarioContext scenarioContext)
+    [Given(@"Que soy un usuario autenticado")]
+    public async Task GivenQueSoyUnUsuarioAutenticado()
+    {
+        _currentUser = await _testBase.CreateTestUserAsync("Admin");
+    }
+
+    [When(@"Intento crear una categoria con nombre ""(.*)"" y descripcion ""(.*)""")]
+    public async Task WhenIntentoCrearUnaCategoriaConNombreYDescripcion(string name, string description)
+    {
+        var dto = new CreateCategoryDto
         {
-            _scenarioContext = scenarioContext;
-            _client = scenarioContext.Get<HttpClient>("HttpClient");
-        }
+            Name = name,
+            Description = description
+        };
 
-        [Given("Que soy un usuario autenticado")]
-        public void GivenQueSoyUnUsuarioAutenticado()
+        _response = await _testBase.PostAsync("/api/categories", dto, _currentUser?.Id ?? 1);
+    }
+
+    [Then(@"La respuesta debe ser (\d+) (.*)")]
+    public void ThenLaRespuestaDebeSer(int statusCode, string statusText)
+    {
+        Assert.NotNull(_response);
+        Assert.Equal((HttpStatusCode)statusCode, _response.StatusCode);
+    }
+
+    [Given(@"Existe una categoria con ID (\d+) llamada ""(.*)""")]
+    public async Task GivenExisteUnaCategoriaConIDLlamada(int id, string name)
+    {
+        _currentUser = await _testBase.CreateTestUserAsync("Admin");
+        _currentCategory = await _testBase.CreateTestCategoryAsync(_currentUser.Id, name, "Descripción de prueba");
+    }
+
+    [Given(@"Existe una categoria con ID (\d+)")]
+    public async Task GivenExisteUnaCategoriaConID(int id)
+    {
+        _currentUser = await _testBase.CreateTestUserAsync("Admin");
+        _currentCategory = await _testBase.CreateTestCategoryAsync(_currentUser.Id);
+    }
+
+    [When(@"Actualizo la categoria (\d+) con nombre ""(.*)""")]
+    public async Task WhenActualizoLaCategoriaConNombre(int id, string newName)
+    {
+        var dto = new CreateCategoryDto
         {
-            // Aquí idealmente llamarías al endpoint de login si tienes Auth activado
-            // O configurarías el WebApplicationFactory para bypassear auth.
-        }
+            Name = newName,
+            Description = "Descripción actualizada"
+        };
 
-        // --- CREATE ---
-        [When("Intento crear una categoria con nombre {string} y descripcion {string}")]
-        public async Task WhenIntentoCrearUnaCategoria(string name, string description)
-        {
-            var command = new CreateCategoryDto { Name = name, Description = description }; //
-            _response = await _client.PostAsJsonAsync("/api/Category", command); //
-        }
+        _response = await _testBase.PutAsync($"/api/categories/{_currentCategory?.Id ?? id}", dto);
+    }
 
-        // --- UPDATE ---
-        [Given("Existe una categoria con ID {int} llamada {string}")]
-        public async Task GivenExisteUnaCategoria(int id, string name)
-        {
-            // Aseguramos que exista para el test de update (Seed rápido)
-            var command = new CreateCategoryDto { Name = name, Description = "Pre-created" };
-            await _client.PostAsJsonAsync("/api/Category", command);
-        }
+    [When(@"Solicito la lista de categorias")]
+    public async Task WhenSolicitoLaListaDeCategorias()
+    {
+        // Primero crear algunas categorías para que la lista no esté vacía
+        var user = await _testBase.CreateTestUserAsync("Admin");
+        await _testBase.CreateTestCategoryAsync(user.Id, "Cat1", "Desc1");
+        await _testBase.CreateTestCategoryAsync(user.Id, "Cat2", "Desc2");
 
-        [Given("Existe una categoria con ID {int}")]
-        public void GivenExisteCategoriaSimple(int id) { /* Asumimos existencia por staging o paso previo */ }
+        _response = await _testBase.Client.GetAsync("/api/categories");
+    }
 
-        [When("Actualizo la categoria {int} con nombre {string}")]
-        public async Task WhenActualizoLaCategoria(int id, string name)
-        {
-            // Usamos un DTO, suponiendo que tienes UpdateCategoryDto o reutilizas Create
-            var command = new CreateCategoryDto { Name = name, Description = "Updated Desc" };
-            _response = await _client.PutAsJsonAsync($"/api/Category/{id}", command); //
-        }
+    [Then(@"La lista no debe estar vacia")]
+    public async Task ThenLaListaNoDebeEstarVacia()
+    {
+        Assert.NotNull(_response);
+        var categories = await _response.Content.ReadFromJsonAsync<List<Category>>();
+        Assert.NotNull(categories);
+        Assert.NotEmpty(categories);
+    }
 
-        // --- DELETE ---
-        [Given("Existe una categoria para eliminar")]
-        public async Task GivenExisteUnaCategoriaParaEliminar()
-        {
-            var command = new CreateCategoryDto { Name = "To Delete", Description = "Temp" };
-            var res = await _client.PostAsJsonAsync("/api/Category", command);
-            var created = await res.Content.ReadFromJsonAsync<CategoryResponseStub>(); // Necesitas un DTO de respuesta o leer ID
-            _categoryIdToDelete = created.Id;
-        }
+    [Given(@"Existe una categoria para eliminar")]
+    public async Task GivenExisteUnaCategoriaParaEliminar()
+    {
+        _currentUser = await _testBase.CreateTestUserAsync("Admin");
+        _currentCategory = await _testBase.CreateTestCategoryAsync(_currentUser.Id);
+    }
 
-        [When("Elimino la categoria")]
-        public async Task WhenEliminoLaCategoria()
-        {
-            _response = await _client.DeleteAsync($"/api/Category/{_categoryIdToDelete}"); //
-        }
-
-        // --- GET ---
-        [When("Solicito la lista de categorias")]
-        public async Task WhenSolicitoLaListaDeCategorias()
-        {
-            _response = await _client.GetAsync("/api/Category"); //
-        }
-
-        // --- ASSERTIONS (Reusable) ---
-        [Then("La respuesta debe ser {int} {word}")]
-        public void ThenLaRespuestaDebeSer(int statusCode, string statusDescription)
-        {
-            var expectedCode = (HttpStatusCode)statusCode;
-            Assert.Equal(expectedCode, _response.StatusCode);
-        }
-
-        [Then("La respuesta debe ser {int} Bad Request")]
-        public void ThenBadRequest(int statusCode)
-        {
-            Assert.Equal(HttpStatusCode.BadRequest, _response.StatusCode);
-        }
-
-        [Then("La lista no debe estar vacia")]
-        public async Task ThenLaListaNoDebeEstarVacia()
-        {
-            var content = await _response.Content.ReadFromJsonAsync<List<object>>();
-            Assert.NotEmpty(content);
-        }
-
-        // Stub rápido para leer respuesta, ajusta a tus DTOs reales
-        private class CategoryResponseStub { public int Id { get; set; } }
+    [When(@"Elimino la categoria")]
+    public async Task WhenEliminoLaCategoria()
+    {
+        Assert.NotNull(_currentCategory);
+        _response = await _testBase.DeleteAsync($"/api/categories/{_currentCategory.Id}", "Admin");
     }
 }

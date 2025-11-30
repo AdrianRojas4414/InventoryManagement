@@ -7,7 +7,7 @@ Feature: Categories Management
 Scenario Outline: Crear categorias validas (Happy Path)
     Given Que soy un usuario autenticado
     When Intento crear una categoria con nombre "<Name>" y descripcion "<Description>"
-    Then La respuesta debe ser 201 Created
+    Then La respuesta debe ser 200 OK
     
     Examples:
       | Name          | Description       |
@@ -31,7 +31,7 @@ Scenario: Intentar crear categoria sin nombre (Unhappy Path)
 Scenario Outline: Actualizar categorias exitosamente (Happy Path)
     Given Existe una categoria con ID 1 llamada "OldName"
     When Actualizo la categoria 1 con nombre "<NewName>"
-    Then La respuesta debe ser 204 No Content
+    Then La respuesta debe ser 200 OK
     
     Examples:
       | NewName       |
@@ -48,7 +48,7 @@ Scenario: Intentar actualizar con nombre nulo (Unhappy Path)
     Then La respuesta debe ser 400 Bad Request
 
 # -------------------------------------------------------------------------
-# ESCENARIO 5: Obetener Categorias (Happy Path)
+# ESCENARIO 5: Obtener Categorias (Happy Path)
 # -------------------------------------------------------------------------
 
 Scenario: Obtener todas las categorias (Happy Path)
@@ -57,10 +57,10 @@ Scenario: Obtener todas las categorias (Happy Path)
     And La lista no debe estar vacia
 
 # -------------------------------------------------------------------------
-# ESCENARIO 5: Eliminar Categoria (Happy Path)
+# ESCENARIO 6: Eliminar Categoria (Happy Path)
 # -------------------------------------------------------------------------
 
 Scenario: Eliminar una categoria (Happy Path)
     Given Existe una categoria para eliminar
     When Elimino la categoria
-    Then La respuesta debe ser 204 No Content
+    Then La respuesta debe ser 200 OK
