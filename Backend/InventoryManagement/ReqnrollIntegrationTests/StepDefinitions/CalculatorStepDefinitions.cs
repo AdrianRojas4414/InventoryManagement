@@ -1,44 +1,43 @@
+using Reqnroll;
+using Xunit; // Necesario para Assert.Equal
+
 namespace ReqnrollIntegrationTests.StepDefinitions
 {
     [Binding]
     public sealed class CalculatorStepDefinitions
     {
-        // For additional details on Reqnroll step definitions see https://go.reqnroll.net/doc-stepdef
+        // Variables privadas para almacenar los datos entre los pasos (Given/When/Then)
+        private int _firstNumber;
+        private int _secondNumber;
+        private int _result;
 
         [Given("the first number is {int}")]
         public void GivenTheFirstNumberIs(int number)
         {
-            //TODO: implement arrange (precondition) logic
-            // For storing and retrieving scenario-specific data see https://go.reqnroll.net/doc-sharingdata
-            // To use the multiline text or the table argument of the scenario,
-            // additional string/Table parameters can be defined on the step definition
-            // method. 
-
-            throw new PendingStepException();
+            // Guardamos el número que viene del archivo .feature
+            _firstNumber = number;
         }
 
         [Given("the second number is {int}")]
         public void GivenTheSecondNumberIs(int number)
         {
-            //TODO: implement arrange (precondition) logic
-
-            throw new PendingStepException();
+            // Guardamos el segundo número
+            _secondNumber = number;
         }
 
         [When("the two numbers are added")]
         public void WhenTheTwoNumbersAreAdded()
         {
-            //TODO: implement act (action) logic
-
-            throw new PendingStepException();
+            // Ejecutamos la lógica de la prueba (la suma)
+            _result = _firstNumber + _secondNumber;
         }
 
         [Then("the result should be {int}")]
-        public void ThenTheResultShouldBe(int result)
+        public void ThenTheResultShouldBe(int expectedResult)
         {
-            //TODO: implement assert (verification) logic
-
-            throw new PendingStepException();
+            // Verificamos que el resultado real (_result) coincida con el esperado (expectedResult)
+            // Usamos Assert de xUnit ya que tu proyecto lo tiene referenciado
+            Assert.Equal(expectedResult, _result);
         }
     }
 }
