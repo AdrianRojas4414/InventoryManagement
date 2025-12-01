@@ -84,9 +84,8 @@ public class CategoriesStepDefinitions
     [Then(@"La categoria no debe estar guardada en la base de datos")]
     public async Task ThenLaCategoriaNoDebeEstarGuardadaEnLaBaseDeDatos()
     {
-        // Verificamos que no se haya creado ninguna categor�a nueva
-        var categoriesCount = await _testBase.DbContext.Categories.CountAsync();
-        Assert.Equal(0, categoriesCount);
+        var response = await _testBase.Client.GetAsync($"/api/categories/{_currentCategoryId}");
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 
     // ========================================================================

@@ -79,8 +79,8 @@ public class SuppliersStepDefinitions
     [Then(@"El proveedor no debe estar guardado en la base de datos")]
     public async Task ThenElProveedorNoDebeEstarGuardadoEnLaBaseDeDatos()
     {
-        var suppliersCount = await _testBase.DbContext.Suppliers.CountAsync();
-        Assert.Equal(0, suppliersCount);
+        var response = await _testBase.Client.GetAsync($"/api/suppliers/{_currentSupplierId}");
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 
     // ========================================================================

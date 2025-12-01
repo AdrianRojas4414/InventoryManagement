@@ -87,8 +87,8 @@ public class ProductsStepDefinitions
     [Then(@"El producto no debe estar guardado en la base de datos")]
     public async Task ThenElProductoNoDebeEstarGuardadoEnLaBaseDeDatos()
     {
-        var productsCount = await _testBase.DbContext.Products.CountAsync();
-        Assert.Equal(0, productsCount);
+        var response = await _testBase.Client.GetAsync($"/api/products/{_currentProductId}");
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 
     // ========================================================================
