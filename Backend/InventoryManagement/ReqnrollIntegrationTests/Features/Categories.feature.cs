@@ -24,7 +24,7 @@ namespace ReqnrollIntegrationTests.Features
         
         private static string[] featureTags = ((string[])(null));
         
-        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new global::System.Globalization.CultureInfo("en-US"), "Features", "Categories Management", "", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags, InitializeCucumberMessages());
+        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new global::System.Globalization.CultureInfo("en-US"), "Features", "Categories Management", null, global::Reqnroll.ProgrammingLanguage.CSharp, featureTags, InitializeCucumberMessages());
         
         private global::Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
@@ -103,6 +103,18 @@ namespace ReqnrollIntegrationTests.Features
             await testRunner.CollectScenarioErrorsAsync();
         }
         
+        public virtual async global::System.Threading.Tasks.Task FeatureBackgroundAsync()
+        {
+#line 3
+#line hidden
+#line 4
+    await testRunner.GivenAsync("La base de datos esta disponible", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 5
+    await testRunner.AndAsync("Existe un usuario administrador creado", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+        }
+        
         private static global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages InitializeCucumberMessages()
         {
             return new global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages("Features/Categories.feature.ndjson", 10);
@@ -133,22 +145,22 @@ namespace ReqnrollIntegrationTests.Features
             await this.TestTearDownAsync();
         }
         
-        [global::Xunit.SkippableTheoryAttribute(DisplayName="Crear categorias validas (Happy Path)")]
+        [global::Xunit.SkippableTheoryAttribute(DisplayName="Crear categoria valida (Happy Path)")]
         [global::Xunit.TraitAttribute("FeatureTitle", "Categories Management")]
-        [global::Xunit.TraitAttribute("Description", "Crear categorias validas (Happy Path)")]
-        [global::Xunit.InlineDataAttribute("Electronics", "Gadgets and more", "0", new string[0])]
-        [global::Xunit.InlineDataAttribute("Home & Garden", "Decoration items", "1", new string[0])]
-        public async global::System.Threading.Tasks.Task CrearCategoriasValidasHappyPath(string name, string description, string @__pickleIndex, string[] exampleTags)
+        [global::Xunit.TraitAttribute("Description", "Crear categoria valida (Happy Path)")]
+        [global::Xunit.InlineDataAttribute("Tecnologia", "Productos de tecnologia de gama alta", "0", new string[0])]
+        [global::Xunit.InlineDataAttribute("Hogar y Jardineria", "Productos de decoracion", "1", new string[0])]
+        public async global::System.Threading.Tasks.Task CrearCategoriaValidaHappyPath(string name, string description, string @__pickleIndex, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("Name", name);
             argumentsOfScenario.Add("Description", description);
             string pickleIndex = @__pickleIndex;
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Crear categorias validas (Happy Path)", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Crear categoria valida (Happy Path)", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 7
+#line 11
 this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -158,68 +170,34 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 8
-    await testRunner.GivenAsync("Que soy un usuario autenticado", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line 3
+await this.FeatureBackgroundAsync();
 #line hidden
-#line 9
-    await testRunner.WhenAsync(string.Format("Intento crear una categoria con nombre \"{0}\" y descripcion \"{1}\"", name, description), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line 12
+    await testRunner.WhenAsync(string.Format("Creo una categoria con nombre \"{0}\" y descripcion \"{1}\"", name, description), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 10
+#line 13
     await testRunner.ThenAsync("La respuesta debe ser 200 OK", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 14
+    await testRunner.AndAsync("La categoria debe estar guardada en la base de datos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
-        [global::Xunit.SkippableFactAttribute(DisplayName="Intentar crear categoria sin nombre (Unhappy Path)")]
+        [global::Xunit.SkippableFactAttribute(DisplayName="Intentar crear categoria con datos invalidos (Unhappy Path)")]
         [global::Xunit.TraitAttribute("FeatureTitle", "Categories Management")]
-        [global::Xunit.TraitAttribute("Description", "Intentar crear categoria sin nombre (Unhappy Path)")]
-        public async global::System.Threading.Tasks.Task IntentarCrearCategoriaSinNombreUnhappyPath()
+        [global::Xunit.TraitAttribute("Description", "Intentar crear categoria con datos invalidos (Unhappy Path)")]
+        public async global::System.Threading.Tasks.Task IntentarCrearCategoriaConDatosInvalidosUnhappyPath()
         {
             string[] tagsOfScenario = ((string[])(null));
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
             string pickleIndex = "2";
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Intentar crear categoria sin nombre (Unhappy Path)", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Intentar crear categoria con datos invalidos (Unhappy Path)", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 22
-this.ScenarioInitialize(scenarioInfo, ruleInfo);
-#line hidden
-            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                await testRunner.SkipScenarioAsync();
-            }
-            else
-            {
-                await this.ScenarioStartAsync();
-#line 23
-    await testRunner.GivenAsync("Que soy un usuario autenticado", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
-#line hidden
-#line 24
-    await testRunner.WhenAsync("Intento crear una categoria con nombre \"\" y descripcion \"Invalid\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
 #line 25
-    await testRunner.ThenAsync("La respuesta debe ser 400 Bad Request", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
-#line hidden
-            }
-            await this.ScenarioCleanupAsync();
-        }
-        
-        [global::Xunit.SkippableTheoryAttribute(DisplayName="Actualizar categorias exitosamente (Happy Path)")]
-        [global::Xunit.TraitAttribute("FeatureTitle", "Categories Management")]
-        [global::Xunit.TraitAttribute("Description", "Actualizar categorias exitosamente (Happy Path)")]
-        [global::Xunit.InlineDataAttribute("Updated Tech", "3", new string[0])]
-        [global::Xunit.InlineDataAttribute("Updated Home", "4", new string[0])]
-        public async global::System.Threading.Tasks.Task ActualizarCategoriasExitosamenteHappyPath(string newName, string @__pickleIndex, string[] exampleTags)
-        {
-            string[] tagsOfScenario = exampleTags;
-            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
-            argumentsOfScenario.Add("NewName", newName);
-            string pickleIndex = @__pickleIndex;
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Actualizar categorias exitosamente (Happy Path)", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
-            string[] tagsOfRule = ((string[])(null));
-            global::Reqnroll.RuleInfo ruleInfo = null;
-#line 31
 this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -229,48 +207,17 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 32
-    await testRunner.GivenAsync("Existe una categoria con ID 1 llamada \"OldName\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line 3
+await this.FeatureBackgroundAsync();
 #line hidden
-#line 33
-    await testRunner.WhenAsync(string.Format("Actualizo la categoria 1 con nombre \"{0}\"", newName), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line 26
+    await testRunner.WhenAsync(@"Creo una categoria con nombre ""Tecnologia"" y descripcion ""Esta es una descripci�n extremadamente larga que est� dise�ada para fallar la validaci�n de 500 caracteres. Repetiremos esta frase varias veces para asegurarnos de que el l�mite se exceda con creces. Esta es una descripci�n extremadamente larga que est� dise�ada para fallar la validaci�n de 500 caracteres. Repetiremos esta frase varias veces para asegurarnos de que el l�mite se exceda con creces. Esta es una descripci�n extremadamente larga que est� dise�ada para fallar la validaci�n de 500 caracteres. Repetiremos esta frase varias veces para asegurarnos de que el l�mite se exceda con creces.""", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 34
-    await testRunner.ThenAsync("La respuesta debe ser 200 OK", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
-#line hidden
-            }
-            await this.ScenarioCleanupAsync();
-        }
-        
-        [global::Xunit.SkippableFactAttribute(DisplayName="Intentar actualizar con nombre nulo (Unhappy Path)")]
-        [global::Xunit.TraitAttribute("FeatureTitle", "Categories Management")]
-        [global::Xunit.TraitAttribute("Description", "Intentar actualizar con nombre nulo (Unhappy Path)")]
-        public async global::System.Threading.Tasks.Task IntentarActualizarConNombreNuloUnhappyPath()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
-            string pickleIndex = "5";
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Intentar actualizar con nombre nulo (Unhappy Path)", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
-            string[] tagsOfRule = ((string[])(null));
-            global::Reqnroll.RuleInfo ruleInfo = null;
-#line 45
-this.ScenarioInitialize(scenarioInfo, ruleInfo);
-#line hidden
-            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                await testRunner.SkipScenarioAsync();
-            }
-            else
-            {
-                await this.ScenarioStartAsync();
-#line 46
-    await testRunner.GivenAsync("Existe una categoria con ID 1", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
-#line hidden
-#line 47
-    await testRunner.WhenAsync("Actualizo la categoria 1 con nombre \"\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 48
+#line 27
     await testRunner.ThenAsync("La respuesta debe ser 400 Bad Request", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 28
+    await testRunner.AndAsync("La categoria no debe estar guardada en la base de datos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
@@ -283,11 +230,11 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
         {
             string[] tagsOfScenario = ((string[])(null));
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
-            string pickleIndex = "6";
+            string pickleIndex = "3";
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Obtener todas las categorias (Happy Path)", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 54
+#line 34
 this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -297,31 +244,41 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 55
+#line 3
+await this.FeatureBackgroundAsync();
+#line hidden
+#line 35
+    await testRunner.GivenAsync("Existen 3 categorias creadas previamente", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 36
     await testRunner.WhenAsync("Solicito la lista de categorias", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 56
+#line 37
     await testRunner.ThenAsync("La respuesta debe ser 200 OK", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 57
-    await testRunner.AndAsync("La lista no debe estar vacia", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 38
+    await testRunner.AndAsync("La lista debe contener al menos 3 categorias", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
-        [global::Xunit.SkippableFactAttribute(DisplayName="Eliminar una categoria (Happy Path)")]
+        [global::Xunit.SkippableTheoryAttribute(DisplayName="Actualizar categoria exitosamente (Happy Path)")]
         [global::Xunit.TraitAttribute("FeatureTitle", "Categories Management")]
-        [global::Xunit.TraitAttribute("Description", "Eliminar una categoria (Happy Path)")]
-        public async global::System.Threading.Tasks.Task EliminarUnaCategoriaHappyPath()
+        [global::Xunit.TraitAttribute("Description", "Actualizar categoria exitosamente (Happy Path)")]
+        [global::Xunit.InlineDataAttribute("Tecnologia (Actualizado)", "Productos de tecnologia de gama alta", "4", new string[0])]
+        [global::Xunit.InlineDataAttribute("Hogar (Actualizado)", "Productos del hogar", "5", new string[0])]
+        public async global::System.Threading.Tasks.Task ActualizarCategoriaExitosamenteHappyPath(string name, string description, string @__pickleIndex, string[] exampleTags)
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = exampleTags;
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
-            string pickleIndex = "7";
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Eliminar una categoria (Happy Path)", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            argumentsOfScenario.Add("Name", name);
+            argumentsOfScenario.Add("Description", description);
+            string pickleIndex = @__pickleIndex;
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Actualizar categoria exitosamente (Happy Path)", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 63
+#line 44
 this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -331,14 +288,106 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 64
-    await testRunner.GivenAsync("Existe una categoria para eliminar", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line 3
+await this.FeatureBackgroundAsync();
 #line hidden
-#line 65
-    await testRunner.WhenAsync("Elimino la categoria", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line 45
+    await testRunner.GivenAsync("Existe una categoria creada previamente con nombre \"Tecnologia\" y descripcion \" P" +
+                        "roductos de Tecnologia\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 66
+#line 46
+    await testRunner.WhenAsync(string.Format("Actualizo la categoria con nombre \"{0}\" y descripcion \"{1}\"", name, description), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 47
     await testRunner.ThenAsync("La respuesta debe ser 200 OK", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 48
+    await testRunner.AndAsync(string.Format("La categoria debe estar actualizada en la base de datos con nombre \"{0}\"", name), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [global::Xunit.SkippableFactAttribute(DisplayName="Intentar actualizar categoria con datos invalidos (Unhappy Path)")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "Categories Management")]
+        [global::Xunit.TraitAttribute("Description", "Intentar actualizar categoria con datos invalidos (Unhappy Path)")]
+        public async global::System.Threading.Tasks.Task IntentarActualizarCategoriaConDatosInvalidosUnhappyPath()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
+            string pickleIndex = "6";
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Intentar actualizar categoria con datos invalidos (Unhappy Path)", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            string[] tagsOfRule = ((string[])(null));
+            global::Reqnroll.RuleInfo ruleInfo = null;
+#line 59
+this.ScenarioInitialize(scenarioInfo, ruleInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                await testRunner.SkipScenarioAsync();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 3
+await this.FeatureBackgroundAsync();
+#line hidden
+#line 60
+    await testRunner.GivenAsync("Existe una categoria creada previamente con nombre \"Tecnologia\" y descripcion \" P" +
+                        "roductos de Tecnologia\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 61
+    await testRunner.WhenAsync(@"Actualizo la categoria con nombre ""Tecnologia"" y descripcion ""Esta es una descripci�n extremadamente larga que est� dise�ada para fallar la validaci�n de 500 caracteres. Repetiremos esta frase varias veces para asegurarnos de que el l�mite se exceda con creces. Esta es una descripci�n extremadamente larga que est� dise�ada para fallar la validaci�n de 500 caracteres. Repetiremos esta frase varias veces para asegurarnos de que el l�mite se exceda con creces. Esta es una descripci�n extremadamente larga que est� dise�ada para fallar la validaci�n de 500 caracteres. Repetiremos esta frase varias veces para asegurarnos de que el l�mite se exceda con creces.""", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 62
+    await testRunner.ThenAsync("La respuesta debe ser 400 Bad Request", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 63
+    await testRunner.AndAsync("La categoria no debe estar actualizada en la base de datos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [global::Xunit.SkippableFactAttribute(DisplayName="Eliminar categoria exitosamente (Happy Path)")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "Categories Management")]
+        [global::Xunit.TraitAttribute("Description", "Eliminar categoria exitosamente (Happy Path)")]
+        public async global::System.Threading.Tasks.Task EliminarCategoriaExitosamenteHappyPath()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
+            string pickleIndex = "7";
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Eliminar categoria exitosamente (Happy Path)", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            string[] tagsOfRule = ((string[])(null));
+            global::Reqnroll.RuleInfo ruleInfo = null;
+#line 69
+this.ScenarioInitialize(scenarioInfo, ruleInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                await testRunner.SkipScenarioAsync();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 3
+await this.FeatureBackgroundAsync();
+#line hidden
+#line 70
+    await testRunner.WhenAsync("Creo una categoria para eliminar con nombre \"Categoria a Eliminar\" y descripcion " +
+                        "\"Descripci�n temporal\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 71
+    await testRunner.ThenAsync("La categoria creada debe tener status 1", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 72
+    await testRunner.WhenAsync("Elimino la categoria como administrador", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 73
+    await testRunner.ThenAsync("La respuesta debe ser 200 OK", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+#line 74
+    await testRunner.AndAsync("La categoria debe tener status 0 en la base de datos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
