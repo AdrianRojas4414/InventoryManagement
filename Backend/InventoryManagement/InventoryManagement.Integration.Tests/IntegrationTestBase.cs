@@ -3,6 +3,9 @@ using Microsoft.Extensions.DependencyInjection;
 using InventoryManagement.Infrastructure.Persistence;
 using InventoryManagement.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Xunit;
+
+[assembly: CollectionBehavior(DisableTestParallelization = true)]
 
 namespace InventoryManagement.Integration.Tests;
 
