@@ -21,8 +21,8 @@ namespace InventoryManagement.ReqnrollUITest.Pages
         private By MensajesDeErrorField = By.CssSelector(".error p");
         private By MensajeErrorGlobal = By.CssSelector(".error-message");
         private By MensajeExito = By.CssSelector(".success-message");
-        private By TablaCategorias = By.CssSelector("table.product-table");
-        private By FilasTabla = By.CssSelector("table.product-table tbody tr");
+        private By TablaCategorias = By.CssSelector("app-category-table table.product-table");
+        private By FilasTabla = By.CssSelector("app-category-table table.product-table tbody tr");
         private By BotonConfirmarModal = By.XPath("//app-confirm-modal//button[contains(@class, 'add')]");
 
         public CategoryPage(IWebDriver driver)

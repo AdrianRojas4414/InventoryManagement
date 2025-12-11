@@ -55,7 +55,7 @@ Scenario: Insertar categoria con datos validso desde la pagina Productos
 Scenario: Mostrar el listado de categorías en la página Productos
     Given que existe al menos 1 categoría creada previamente
     Then debe mostrarse la tabla de categorías
-    And la tablas debe contener al menos un registro
+    And la tabla debe contener al menos un registro
     And cada registro debe mostrar enlaces "Editar" y "Eliminar"
 
 # --- UPDATE (Editar) ---
@@ -94,7 +94,7 @@ Scenario Outline: Editar una categoría existente con datos invalidos
       | Comida para perros  | Este innovador set de juguetes educativos combina diversión y aprendizaje, incluyendo bloques de construcción, figuras de animales, letras y números, rompecabezas y materiales interactivos diseñados para estimular la creatividad, la coordinación, la motricidad fina y el pensamiento lógico en niños de diferentes edades. Fabricado con materiales seguros y duraderos, su diseño atractivo permite horas de entretenimiento mientras fomenta habilidades cognitivas esenciales, promoviendo el desarrollo integral    | No puede tener más de 500 caracteres. |
       | Comida para perros  | Este es un producto para ancianos@$%          | No se permiten caracteres extraños.                |
 
-Scenario Outline: Editar una categoría existente con datos validos
+Scenario: Editar una categoría existente con datos validos
     Given que existe una categoría creada previamente con nombre “Comida para perros” con descripción “Este es un producto saludable para los perros”
     When hago click en el botón “Editar” de la categoría “Comida para perros”
     And actualizo el nombre a "Comida para gatos"

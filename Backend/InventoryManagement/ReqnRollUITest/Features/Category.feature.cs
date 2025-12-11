@@ -298,7 +298,7 @@ await this.FeatureBackgroundAsync();
     await testRunner.ThenAsync("debe mostrarse la tabla de categorías", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
 #line 58
-    await testRunner.AndAsync("la tablas debe contener al menos un registro", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync("la tabla debe contener al menos un registro", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 59
     await testRunner.AndAsync("cada registro debe mostrar enlaces \"Editar\" y \"Eliminar\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");

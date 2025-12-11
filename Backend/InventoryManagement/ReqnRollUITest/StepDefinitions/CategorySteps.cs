@@ -7,6 +7,7 @@ using System.Threading;
 namespace InventoryManagement.ReqnrollUITest.StepDefinitions
 {
     [Binding]
+    [Scope(Feature = "Categories Management")]
     public class CategorySteps
     {
         private readonly IWebDriver _driver;
@@ -195,7 +196,7 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
             _categoryPage.ExisteTabla().Should().BeTrue();
         }
 
-        [Then(@"la tablas debe contener al menos un registro")]
+        [Then(@"la tabla debe contener al menos un registro")]
         public void ThenLaTablasDebeContenerAlMenosUnRegistro()
         {
             _categoryPage.ContarFilas().Should().BeGreaterThan(0);
