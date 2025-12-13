@@ -54,7 +54,7 @@ namespace InventoryManagement.ReqnrollUITest.Pages
         {
             Navegar();
             // Asegúrate que estas credenciales son las correctas en tu BD local
-            IngresarCredenciales("adrian", "password");
+            IngresarCredenciales("AdminPedro", "password123");
             ClickIngresar();
 
             // *** CORRECCIÓN CRÍTICA ***
