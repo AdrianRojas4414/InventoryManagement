@@ -15,7 +15,7 @@ Env.Load(Path.Combine(Directory.GetCurrentDirectory(), "..", ".env"));
 var dbHost = "localhost";
 var dbName = builder.Environment.IsDevelopment() 
     ? "StagingInventoryManagementDB" // Para tests
-    : "inventorymanagementdb";
+    : "StagingInventoryManagementDB";
 var dbUser = Env.GetString("DB_USER");
 var dbPass = Env.GetString("DB_PASSWORD");
 

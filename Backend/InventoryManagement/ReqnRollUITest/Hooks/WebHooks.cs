@@ -18,7 +18,22 @@ namespace InventoryManagement.ReqnrollUITest.Hooks
         [BeforeScenario]
         public void CreateWebDriver()
         {
-            var driver = new ChromeDriver();
+            var options = new ChromeOptions();
+
+            //Desactiva la advertencia específica de "Password found in a data breach"
+            options.AddUserProfilePreference("profile.password_manager_leak_detection", false);
+
+            //Argumento adicional para forzar la desactivación de la funcionalidad
+            options.AddArgument("--disable-features=PasswordLeakDetection");
+
+            //(Opcional pero recomendado) Desactivar el gestor de contraseñas completamente
+            // para evitar el popup de "¿Quieres guardar la contraseña?"
+            options.AddUserProfilePreference("credentials_enable_service", false);
+            options.AddUserProfilePreference("profile.password_manager_enabled", false);
+
+            // Pasamos las opciones al constructor
+            var driver = new ChromeDriver(options);
+            
             driver.Manage().Window.Maximize();
 
             // GUARDAMOS el driver en el contexto con una clave "WebDriver"
