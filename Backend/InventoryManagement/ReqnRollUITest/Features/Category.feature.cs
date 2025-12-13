@@ -24,8 +24,7 @@ namespace ReqnRollUITest.Features
         
         private static string[] featureTags = ((string[])(null));
         
-        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new global::System.Globalization.CultureInfo("en-US"), "Features", "Categories Management", "    Como administrador del sistema\r\n    Quiero gestionar las categorías de produc" +
-                "tos\r\n    Para organizar el inventario correctamente", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags, InitializeCucumberMessages());
+        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new global::System.Globalization.CultureInfo("en-US"), "Features", "Categories Management", null, global::Reqnroll.ProgrammingLanguage.CSharp, featureTags, InitializeCucumberMessages());
         
         private global::Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
@@ -106,12 +105,12 @@ namespace ReqnRollUITest.Features
         
         public virtual async global::System.Threading.Tasks.Task FeatureBackgroundAsync()
         {
-#line 6
+#line 3
 #line hidden
-#line 7
+#line 4
     await testRunner.GivenAsync("he iniciado sesión como \"Admin\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 8
+#line 5
     await testRunner.AndAsync("navego a la página Productos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
         }
@@ -189,7 +188,7 @@ namespace ReqnRollUITest.Features
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Insertar categoría con diferentes datos invalidos desde la página Productos", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 11
+#line 8
 this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -199,40 +198,40 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 6
+#line 3
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 12
+#line 9
     await testRunner.WhenAsync("hago click en el botón \"Agregar Categoría\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 13
+#line 10
     await testRunner.AndAsync(string.Format("ingreso el nombre \"{0}\"", name), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 14
+#line 11
     await testRunner.AndAsync(string.Format("ingreso la descripción \"{0}\"", description), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 15
+#line 12
     await testRunner.AndAsync("hago click en el botón \"Agregar\" del formulario", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 16
+#line 13
     await testRunner.ThenAsync(string.Format("se debe mostrar el mensaje \"{0}\"", expectedResult), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
-        [global::Xunit.SkippableFactAttribute(DisplayName="Insertar categoria con datos validso desde la pagina Productos")]
+        [global::Xunit.SkippableFactAttribute(DisplayName="Insertar categoria con datos validos desde la pagina Productos")]
         [global::Xunit.TraitAttribute("FeatureTitle", "Categories Management")]
-        [global::Xunit.TraitAttribute("Description", "Insertar categoria con datos validso desde la pagina Productos")]
-        public async global::System.Threading.Tasks.Task InsertarCategoriaConDatosValidsoDesdeLaPaginaProductos()
+        [global::Xunit.TraitAttribute("Description", "Insertar categoria con datos validos desde la pagina Productos")]
+        public async global::System.Threading.Tasks.Task InsertarCategoriaConDatosValidosDesdeLaPaginaProductos()
         {
             string[] tagsOfScenario = ((string[])(null));
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
             string pickleIndex = "24";
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Insertar categoria con datos validso desde la pagina Productos", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Insertar categoria con datos validos desde la pagina Productos", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 46
+#line 43
 this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -242,25 +241,25 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 6
+#line 3
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 47
+#line 44
     await testRunner.WhenAsync("hago click en el botón \"Agregar Categoría\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 48
+#line 45
     await testRunner.AndAsync("ingreso el nombre \"Comida para perros\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 49
+#line 46
     await testRunner.AndAsync("ingreso la descripción \"Es un producto para perros\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 50
+#line 47
     await testRunner.AndAsync("hago click en el botón \"Agregar\" del formulario", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 51
+#line 48
     await testRunner.ThenAsync("el modal debe cerrarse automaticamente", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 52
+#line 49
     await testRunner.AndAsync("la categoría \"Comida para perros\" debe aparecer en la tabla", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             }
@@ -278,7 +277,7 @@ await this.FeatureBackgroundAsync();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Mostrar el listado de categorías en la página Productos", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 55
+#line 52
 this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -288,19 +287,19 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 6
+#line 3
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 56
+#line 53
     await testRunner.GivenAsync("que existe al menos 1 categoría creada previamente", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 57
+#line 54
     await testRunner.ThenAsync("debe mostrarse la tabla de categorías", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 58
+#line 55
     await testRunner.AndAsync("la tabla debe contener al menos un registro", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 59
+#line 56
     await testRunner.AndAsync("cada registro debe mostrar enlaces \"Editar\" y \"Eliminar\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             }
@@ -350,7 +349,7 @@ await this.FeatureBackgroundAsync();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Editar una categoría existente con datos invalidos", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 62
+#line 59
 this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -360,26 +359,26 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 6
+#line 3
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 63
+#line 60
     await testRunner.GivenAsync("que existe una categoría creada previamente con nombre “Comida para perros” con d" +
                         "escripción “Este es un producto saludable para los perros”", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 64
+#line 61
     await testRunner.WhenAsync("hago click en el botón “Editar” de la categoría “Comida para perros”", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 65
+#line 62
     await testRunner.AndAsync(string.Format("actualizo el nombre a \"{0}\"", name), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 66
+#line 63
     await testRunner.AndAsync(string.Format("actualizo la descripción a \"{0}\"", description), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 67
+#line 64
     await testRunner.AndAsync("hago click en el botón \"Actualizar\" del formulario", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 68
+#line 65
     await testRunner.ThenAsync(string.Format("se debe mostrar el mensaje \"{0}\"", expectedResult), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -397,7 +396,7 @@ await this.FeatureBackgroundAsync();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Editar una categoría existente con datos validos", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 97
+#line 94
 this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -407,29 +406,29 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 6
+#line 3
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 98
+#line 95
     await testRunner.GivenAsync("que existe una categoría creada previamente con nombre “Comida para perros” con d" +
                         "escripción “Este es un producto saludable para los perros”", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 99
+#line 96
     await testRunner.WhenAsync("hago click en el botón “Editar” de la categoría “Comida para perros”", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 100
+#line 97
     await testRunner.AndAsync("actualizo el nombre a \"Comida para gatos\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 101
+#line 98
     await testRunner.AndAsync("actualizo la descripción a \"Este es un producto saludable para los gatos\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 102
+#line 99
     await testRunner.AndAsync("hago click en el botón \"Actualizar\" del formulario", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 103
+#line 100
     await testRunner.ThenAsync("el modal debe cerrarse automaticamente", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 104
+#line 101
     await testRunner.AndAsync("la categoria se actualizo correctamente en la tabla", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             }
@@ -447,7 +446,7 @@ await this.FeatureBackgroundAsync();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Deshabilitar categoría correctamente", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 107
+#line 104
 this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -457,20 +456,20 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 6
+#line 3
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 108
+#line 105
     await testRunner.GivenAsync("existe una categoría activa con nombre “Comida para gatos” y descripción “Este es" +
                         " un producto saludable para los gatos”", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 109
+#line 106
     await testRunner.WhenAsync("hago click en el botón Deshabilitar de la categoría “Comida para gatos”", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 110
+#line 107
     await testRunner.AndAsync("confirmo la eliminación en el modal", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 111
+#line 108
     await testRunner.ThenAsync("la categoría “Comida para gatos” ya aparece como “Inactivo” en la tabla", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }

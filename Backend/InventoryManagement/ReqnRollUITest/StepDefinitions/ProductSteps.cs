@@ -1,7 +1,12 @@
 ﻿using FluentAssertions;
+using InventoryManagement.Infrastructure.Persistence;
 using InventoryManagement.ReqnrollUITest.Pages;
+using InventoryManagement.ReqnrollUITest.Support;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using OpenQA.Selenium;
 using Reqnroll;
+using System.IO;
 using System.Threading;
 
 namespace InventoryManagement.ReqnrollUITest.StepDefinitions
@@ -13,6 +18,7 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
         private readonly IWebDriver _driver;
         private readonly ProductPage _productPage;
         private readonly LoginPage _loginPage;
+        private static DbContextOptions<InventoryDbContext> _dbContextOptions;
 
         // Variables para rastrear los datos ingresados y poder verificarlos al final
         private string _nombreProductoIngresado;
@@ -25,12 +31,37 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
             _driver = context["WebDriver"] as IWebDriver;
             _productPage = new ProductPage(_driver);
             _loginPage = new LoginPage(_driver);
+
+            if (_dbContextOptions == null)
+            {
+                var builder = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+                var connectionString = "Server=localhost;Database=StagingInventoryManagementDB;User=root;Password=mysqlroosevelt14;";
+
+                var optionsBuilder = new DbContextOptionsBuilder<InventoryDbContext>();
+                optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+
+                _dbContextOptions = optionsBuilder.Options;
+            }
         }
 
         // --- BACKGROUND ---
         [Given(@"he iniciado sesión como ""(.*)""")]
-        public void GivenHeIniciadoSesionComo(string rol)
+        public async Task GivenHeIniciadoSesionComo(string rol)
         {
+            // Ensure the user exists in the database
+            using (var dbContext = new InventoryDbContext(_dbContextOptions))
+            {
+                var helper = new UiTestHelper(dbContext);
+                var user = await helper.EnsureUserExistsAsync(rol);
+                
+                // *** KEY ADDITION: Ensure at least one category exists ***
+                await helper.EnsureCategoryExistsAsync(user.Id);
+            }
+
+            // Now perform login
             _loginPage.LoginExitosoComoAdmin();
         }
 
@@ -134,21 +165,37 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
         {
             if (!_productPage.ExisteTabla() || _productPage.ContarFilas() < cantidad)
             {
-                GivenExisteProductoPrevio("Producto Demo");
+                _productPage.ClickAgregarProducto();
+                _productPage.EsperarQueElModalEsteAbierto();
+                _productPage.LlenarNombre("Producto Demo");
+                _productPage.LlenarDescripcion("Descripcion de prueba");
+                _productPage.LlenarCodigoSerial("31652");
+                _productPage.LlenarStock("14");
+                _productPage.ClickBotonFormulario();
+                _productPage.EsperarQueElModalSeCierre();
+                Thread.Sleep(1000);
             }
         }
 
         [Given(@"que existe un producto creado previamente con nombre [""“](.*)[""”]")]
         [Given(@"existe un producto activo con nombre [""“](.*)[""”]")]
-        public void GivenExisteProductoPrevio(string nombre)
+        public async Task GivenExisteProductoPrevio(string nombre)
         {
             if (_productPage.ExisteProductoEnTabla(nombre)) return;
+
+            // Ensure category exists before creating product
+            using (var dbContext = new InventoryDbContext(_dbContextOptions))
+            {
+                var helper = new UiTestHelper(dbContext);
+                var adminUser = await helper.EnsureUserExistsAsync("Admin");
+                await helper.EnsureCategoryExistsAsync(adminUser.Id);
+            }
 
             _productPage.ClickAgregarProducto();
             _productPage.EsperarQueElModalEsteAbierto();
             _productPage.LlenarNombre(nombre);
             _productPage.LlenarDescripcion("Descripcion de prueba");
-            _productPage.LlenarCodigoSerial("34567");
+            _productPage.LlenarCodigoSerial("31652");
             _productPage.LlenarStock("14");
             _productPage.ClickBotonFormulario();
             _productPage.EsperarQueElModalSeCierre();

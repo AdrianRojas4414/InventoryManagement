@@ -1,7 +1,4 @@
 ﻿Feature: Products Management
-    Como administrador del sistema
-    Quiero gestionar los productos
-    Para organizar el inventario correctamente
 
 Background:
     Given he iniciado sesión como "Admin"
@@ -55,7 +52,7 @@ Scenario Outline: Insertar producto con diferentes datos invalidos desde la pág
       | [VACIO]              | Este es un producto saludable para ancianos | 125421     | 32768   | El nombre es obligatorio.                          |
    
 
-Scenario: Insertar producto con datos validso desde la pagina Productos
+Scenario: Insertar producto con datos validos desde la pagina Productos
     When hago click en el botón "Agregar Producto"
     And ingreso el nombre "Laptop Dell XPS 15"
     And ingreso la descripción "Este es un producto tecnologico"

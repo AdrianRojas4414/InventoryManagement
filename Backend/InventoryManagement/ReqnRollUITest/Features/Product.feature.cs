@@ -24,8 +24,7 @@ namespace ReqnRollUITest.Features
         
         private static string[] featureTags = ((string[])(null));
         
-        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new global::System.Globalization.CultureInfo("en-US"), "Features", "Products Management", "    Como administrador del sistema\r\n    Quiero gestionar los productos\r\n    Para " +
-                "organizar el inventario correctamente", global::Reqnroll.ProgrammingLanguage.CSharp, featureTags, InitializeCucumberMessages());
+        private static global::Reqnroll.FeatureInfo featureInfo = new global::Reqnroll.FeatureInfo(new global::System.Globalization.CultureInfo("en-US"), "Features", "Products Management", null, global::Reqnroll.ProgrammingLanguage.CSharp, featureTags, InitializeCucumberMessages());
         
         private global::Xunit.Abstractions.ITestOutputHelper _testOutputHelper;
         
@@ -106,12 +105,12 @@ namespace ReqnRollUITest.Features
         
         public virtual async global::System.Threading.Tasks.Task FeatureBackgroundAsync()
         {
-#line 6
+#line 3
 #line hidden
-#line 7
+#line 4
     await testRunner.GivenAsync("he iniciado sesión como \"Admin\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 8
+#line 5
     await testRunner.AndAsync("navego a la página Productos", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
         }
@@ -202,7 +201,7 @@ namespace ReqnRollUITest.Features
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Insertar producto con diferentes datos invalidos desde la página Productos", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 11
+#line 8
 this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -212,46 +211,46 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 6
+#line 3
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 12
+#line 9
     await testRunner.WhenAsync("hago click en el botón \"Agregar Producto\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 13
+#line 10
     await testRunner.AndAsync(string.Format("ingreso el nombre \"{0}\"", name), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 14
+#line 11
     await testRunner.AndAsync(string.Format("ingreso la descripción \"{0}\"", description), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 15
+#line 12
     await testRunner.AndAsync(string.Format("ingreso el codigo serial \"{0}\"", serialCode), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 16
+#line 13
     await testRunner.AndAsync(string.Format("ingreso el total stock \"{0}\"", stock), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 17
+#line 14
     await testRunner.AndAsync("hago click en el botón \"Agregar\" del formulario", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 18
+#line 15
     await testRunner.ThenAsync(string.Format("se debe mostrar el mensaje \"{0}\"", expectedResult), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
-        [global::Xunit.SkippableFactAttribute(DisplayName="Insertar producto con datos validso desde la pagina Productos")]
+        [global::Xunit.SkippableFactAttribute(DisplayName="Insertar producto con datos validos desde la pagina Productos")]
         [global::Xunit.TraitAttribute("FeatureTitle", "Products Management")]
-        [global::Xunit.TraitAttribute("Description", "Insertar producto con datos validso desde la pagina Productos")]
-        public async global::System.Threading.Tasks.Task InsertarProductoConDatosValidsoDesdeLaPaginaProductos()
+        [global::Xunit.TraitAttribute("Description", "Insertar producto con datos validos desde la pagina Productos")]
+        public async global::System.Threading.Tasks.Task InsertarProductoConDatosValidosDesdeLaPaginaProductos()
         {
             string[] tagsOfScenario = ((string[])(null));
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
             string pickleIndex = "34";
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Insertar producto con datos validso desde la pagina Productos", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Insertar producto con datos validos desde la pagina Productos", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 58
+#line 55
 this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -261,31 +260,31 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 6
+#line 3
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 59
+#line 56
     await testRunner.WhenAsync("hago click en el botón \"Agregar Producto\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 60
+#line 57
     await testRunner.AndAsync("ingreso el nombre \"Laptop Dell XPS 15\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 61
+#line 58
     await testRunner.AndAsync("ingreso la descripción \"Este es un producto tecnologico\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 62
+#line 59
     await testRunner.AndAsync("ingreso el codigo serial \"23456\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 63
+#line 60
     await testRunner.AndAsync("ingreso el total stock \"10\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 64
+#line 61
     await testRunner.AndAsync("hago click en el botón \"Agregar\" del formulario", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 65
+#line 62
     await testRunner.ThenAsync("el modal debe cerrarse automaticamente", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 66
+#line 63
     await testRunner.AndAsync("el producto \"Laptop Dell XPS 15\" debe aparecer en la tabla", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             }
@@ -303,7 +302,7 @@ await this.FeatureBackgroundAsync();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Mostrar el listado de productos en la página Productos", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 69
+#line 66
 this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -313,19 +312,19 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 6
+#line 3
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 70
+#line 67
     await testRunner.GivenAsync("que existe al menos 1 producto creado previamente", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 71
+#line 68
     await testRunner.ThenAsync("debe mostrarse la tabla de productos", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 72
+#line 69
     await testRunner.AndAsync("la tablas debe contener al menos un registro", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 73
+#line 70
     await testRunner.AndAsync("cada registro debe mostrar enlaces \"Editar\" y \"Eliminar\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             }
@@ -388,7 +387,7 @@ await this.FeatureBackgroundAsync();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Editar un producto existente con datos invalidos", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 76
+#line 73
 this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -398,31 +397,31 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 6
+#line 3
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 77
+#line 74
     await testRunner.GivenAsync("que existe un producto creado previamente con nombre “Laptop Dell XPS 15”", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 78
+#line 75
     await testRunner.WhenAsync("hago click en el botón “Editar” del producto “Laptop Dell XPS 15”", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 79
+#line 76
     await testRunner.AndAsync(string.Format("actualizo el nombre a \"{0}\"", name), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 80
+#line 77
     await testRunner.AndAsync(string.Format("actualizo la descripción a \"{0}\"", description), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 81
+#line 78
     await testRunner.AndAsync(string.Format("actualizo el codigo serial a \"{0}\"", serialCode), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 82
+#line 79
     await testRunner.AndAsync(string.Format("actualizo el stock a \"{0}\"", stock), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 83
+#line 80
     await testRunner.AndAsync("hago click en el botón \"Actualizar\" del formulario", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 84
+#line 81
     await testRunner.ThenAsync(string.Format("se debe mostrar el mensaje \"{0}\"", expectedResult), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -440,7 +439,7 @@ await this.FeatureBackgroundAsync();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Editar un producto existente con datos validos", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 123
+#line 120
 this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -450,34 +449,34 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 6
+#line 3
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 124
+#line 121
     await testRunner.GivenAsync("que existe un producto creado previamente con nombre “Laptop Dell XPS 15”", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 125
+#line 122
     await testRunner.WhenAsync("hago click en el botón “Editar” del producto “Laptop Dell XPS 15”", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 126
+#line 123
     await testRunner.AndAsync("actualizo el nombre a \"Tablet XPS 15\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 127
+#line 124
     await testRunner.AndAsync("actualizo la descripción a \"Este es un producto tecnologico del 2022\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 128
+#line 125
     await testRunner.AndAsync("actualizo el codigo serial a \"23456\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 129
+#line 126
     await testRunner.AndAsync("actualizo el stock a \"20\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 130
+#line 127
     await testRunner.AndAsync("hago click en el botón \"Guardar Cambios\" del formulario", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 131
+#line 128
     await testRunner.ThenAsync("el modal debe cerrarse automaticamente", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 132
+#line 129
     await testRunner.AndAsync("el producto se actualizo correctamente en la tabla", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             }
@@ -495,7 +494,7 @@ await this.FeatureBackgroundAsync();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Deshabilitar producto correctamente", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 135
+#line 132
 this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -505,19 +504,19 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 6
+#line 3
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 136
+#line 133
     await testRunner.GivenAsync("existe un producto activo con nombre “Tablet XPS 15”", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 137
+#line 134
     await testRunner.WhenAsync("hago click en el botón Deshabilitar del producto “Tablet XPS 15”", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 138
+#line 135
     await testRunner.AndAsync("confirmo la eliminación en el modal", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 139
+#line 136
     await testRunner.ThenAsync("el producto “Tablet XPS 15” ya aparece como “Inactivo” en la tabla", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }

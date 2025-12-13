@@ -1,7 +1,12 @@
 ﻿using FluentAssertions;
+using InventoryManagement.Infrastructure.Persistence;
 using InventoryManagement.ReqnrollUITest.Pages;
+using InventoryManagement.ReqnrollUITest.Support;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using OpenQA.Selenium;
 using Reqnroll;
+using System.IO;
 using System.Threading;
 
 namespace InventoryManagement.ReqnrollUITest.StepDefinitions
@@ -13,6 +18,7 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
         private readonly IWebDriver _driver;
         private readonly CategoryPage _categoryPage;
         private readonly LoginPage _loginPage;
+        private static DbContextOptions<InventoryDbContext> _dbContextOptions;
 
         // Variables para rastrear los datos ingresados y poder verificarlos al final
         private string _nombreCategoriaIngresada;
@@ -23,12 +29,33 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
             _driver = context["WebDriver"] as IWebDriver;
             _categoryPage = new CategoryPage(_driver);
             _loginPage = new LoginPage(_driver);
+
+            if (_dbContextOptions == null)
+            {
+                var builder = new ConfigurationBuilder()
+                    .SetBasePath(Directory.GetCurrentDirectory())
+                    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+
+                var connectionString = "Server=localhost;Database=StagingInventoryManagementDB;User=root;Password=mysqlroosevelt14;";
+
+                var optionsBuilder = new DbContextOptionsBuilder<InventoryDbContext>();
+                optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+
+                _dbContextOptions = optionsBuilder.Options;
+            }
         }
 
         // --- BACKGROUND ---
         [Given(@"he iniciado sesión como ""(.*)""")]
-        public void GivenHeIniciadoSesionComo(string rol)
+        public async Task GivenHeIniciadoSesionComo(string rol)
         {
+            // asegurar que el usuario existe en la bd
+            using (var dbContext = new InventoryDbContext(_dbContextOptions))
+            {
+                var helper = new UiTestHelper(dbContext);
+                await helper.EnsureUserExistsAsync(rol);
+            }
+
             _loginPage.LoginExitosoComoAdmin();
         }
 

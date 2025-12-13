@@ -1,7 +1,4 @@
 ﻿Feature: Categories Management
-    Como administrador del sistema
-    Quiero gestionar las categorías de productos
-    Para organizar el inventario correctamente
 
 Background:
     Given he iniciado sesión como "Admin"
@@ -43,7 +40,7 @@ Scenario Outline: Insertar categoría con diferentes datos invalidos desde la p�
       | Comida para perros  | Este es un producto para ancianos@$%          | No se permiten caracteres extraños.                |
    
 
-Scenario: Insertar categoria con datos validso desde la pagina Productos
+Scenario: Insertar categoria con datos validos desde la pagina Productos
     When hago click en el botón "Agregar Categoría"
     And ingreso el nombre "Comida para perros"
     And ingreso la descripción "Es un producto para perros"

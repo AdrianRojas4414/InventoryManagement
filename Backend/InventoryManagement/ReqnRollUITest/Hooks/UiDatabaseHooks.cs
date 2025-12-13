@@ -1,4 +1,5 @@
 using InventoryManagement.Infrastructure.Persistence;
+using InventoryManagement.ReqnrollUITest.Support;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Reqnroll;
@@ -17,18 +18,12 @@ namespace InventoryManagement.ReqnrollUITest.Hooks
         [BeforeTestRun]
         public static void ConfigureDatabaseAccess()
         {
-            // 1. Load the configuration to get the connection string
-            // We assume the .env or appsettings is in a similar location relative to the bin folder
-            // Or you can hardcode the Staging connection string here for simplicity since it is a test project.
-            
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
             
             _config = builder.Build();
 
-            // NOTE: Ensure this matches your Staging DB credentials
-            // You might want to read this from your .env file logic like you did in the Factory
             var connectionString = "Server=localhost;Database=StagingInventoryManagementDB;User=root;Password=mysqlroosevelt14;"; 
 
             var optionsBuilder = new DbContextOptionsBuilder<InventoryDbContext>();
@@ -40,24 +35,23 @@ namespace InventoryManagement.ReqnrollUITest.Hooks
         [AfterScenario]
         public async Task CleanupDatabaseAfterScenario()
         {
-            // 2. Create a temporary context just for cleaning
             using (var dbContext = new InventoryDbContext(_dbContextOptions))
             {
                 await CleanupDatabaseAsync(dbContext);
+                
+                // Recreate essential data after cleanup
+                await RecreateEssentialDataAsync(dbContext);
             }
         }
 
-        // 3. This is the exact logic copied from your IntegrationTestBase.cs
         private async Task CleanupDatabaseAsync(InventoryDbContext dbContext)
         {
             using var transaction = await dbContext.Database.BeginTransactionAsync();
         
             try
             {
-                // Disable Foreign Keys to allow deleting in any order
                 await dbContext.Database.ExecuteSqlRawAsync("SET FOREIGN_KEY_CHECKS = 0;");
 
-                // Clear all tables
                 dbContext.ProductPriceHistories.RemoveRange(dbContext.ProductPriceHistories);
                 dbContext.PurchaseDetails.RemoveRange(dbContext.PurchaseDetails);
                 dbContext.SupplierProducts.RemoveRange(dbContext.SupplierProducts);
@@ -69,7 +63,6 @@ namespace InventoryManagement.ReqnrollUITest.Hooks
             
                 await dbContext.SaveChangesAsync();
 
-                // Re-enable Foreign Keys
                 await dbContext.Database.ExecuteSqlRawAsync("SET FOREIGN_KEY_CHECKS = 1;");
 
                 await transaction.CommitAsync();
@@ -79,6 +72,24 @@ namespace InventoryManagement.ReqnrollUITest.Hooks
                 await transaction.RollbackAsync();
                 throw; 
             }
+        }
+
+        /// <summary>
+        /// Recreates essential data needed for UI tests
+        /// This runs after every scenario cleanup to ensure users and categories exist
+        /// </summary>
+        private async Task RecreateEssentialDataAsync(InventoryDbContext dbContext)
+        {
+            var helper = new UiTestHelper(dbContext);
+            
+            // Create Admin user (required for most tests)
+            var adminUser = await helper.CreateTestUserAsync("Admin");
+            
+            // Create a default category (required for product tests)
+            await helper.CreateTestCategoryAsync(adminUser.Id, "Tecnología", "Productos tecnológicos");
+            
+            // Optionally create Employee user (in case some tests need it)
+            // await helper.CreateTestUserAsync("Employee");
         }
     }
 }
