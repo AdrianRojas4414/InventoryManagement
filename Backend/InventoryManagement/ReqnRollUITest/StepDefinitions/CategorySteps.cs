@@ -45,7 +45,9 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
             }
         }
 
-        // --- BACKGROUND ---
+        // ========================================================================
+        // BACKGROUND STEPS
+        // ========================================================================
         [Given(@"he iniciado sesión como ""(.*)""")]
         public async Task GivenHeIniciadoSesionComo(string rol)
         {
@@ -65,7 +67,9 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
             _driver.Navigate().GoToUrl("http://localhost:4200/products");
         }
 
-        // --- CREATE STEPS ---
+        // ========================================================================
+        // CREATE STEPS
+        // ========================================================================
         [When(@"hago click en el botón ""(.*)""")]
         public void WhenHagoClickEnElBoton(string boton)
         {
@@ -98,7 +102,9 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
             _categoryPage.ClickBotonFormulario();
         }
 
-        // --- VALIDACIONES ---
+        // ========================================================================
+        // VALIDACIONES STEPS
+        // ========================================================================
         [Then(@"se debe mostrar el mensaje ""(.*)""")]
         public void ThenSeDebeMostrarElMensaje(string mensaje)
         {
@@ -127,7 +133,9 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
             }
         }
 
-        // --- EDITAR Y LISTAR ---
+        // ========================================================================
+        // UPDATE STEPS
+        // ========================================================================
 
         [Given(@"que existe al menos (.*) categoría creada previamente")]
         public void GivenExisteAlMenosCategoria(int cantidad)
@@ -173,7 +181,6 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
             _categoryPage.LlenarDescripcion(descripcion);
         }
 
-        // --- STEP CORREGIDO: VERIFICA NOMBRE Y DESCRIPCIÓN ---
         [Then(@"la categoria se actualizo correctamente en la tabla")]
         public void ThenLaCategoriaSeActualizo()
         {
@@ -186,7 +193,9 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
             descripcionCoincide.Should().BeTrue($"La descripción no se actualizó a '{_descripcionCategoriaIngresada}' en la fila de '{_nombreCategoriaIngresada}'.");
         }
 
-        // --- RESTO DEL CÓDIGO (Deshabilitar/Tablas) ---
+        // ========================================================================
+        // DELETE STEPS
+        // ========================================================================
         [When(@"hago click en el botón Eliminar de la categoría [""“](.*)[""”]")]
         public void WhenHagoClickEnBotonEliminarDeCategoria(string nombreCategoria)
         {
@@ -218,6 +227,10 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
         {
             _categoryPage.ExisteTabla().Should().BeTrue();
         }
+
+        // ========================================================================
+        // SELECT STEPS
+        // ========================================================================
 
         [Then(@"la tabla debe contener al menos un registro")]
         public void ThenLaTablasDebeContenerAlMenosUnRegistro()

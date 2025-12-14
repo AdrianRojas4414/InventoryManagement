@@ -6,7 +6,9 @@ Background:
     And existe un proveedor activo para compras
     And existen productos activos para compras
 
-# --- CREATE Purchase Happy Paths ---
+# -------------------------------------------------------------------------
+# ESCENARIO 1: CREATE - Happy Paths con 1 producto y 3 inserts diferentes
+# -------------------------------------------------------------------------
 Scenario Outline: Crear compra con un solo producto válido
     When hago click en el botón "Agregar Compra"
     And selecciono el proveedor disponible
@@ -21,6 +23,9 @@ Scenario Outline: Crear compra con un solo producto válido
       | Teclado Mecanico | 10       | 50.00  | 500,00        |
       | Laptop Dell      | 15       | 180.00 | 2700,00       |
 
+# -------------------------------------------------------------------------
+# ESCENARIO 2: CREATE - Happy Path con 2 productos
+# -------------------------------------------------------------------------
 Scenario: Crear compra con múltiples productos válidos
     When hago click en el botón "Agregar Compra"
     And selecciono el proveedor disponible
@@ -30,6 +35,9 @@ Scenario: Crear compra con múltiples productos válidos
     Then el modal de compra debe cerrarse automaticamente
     And la compra debe aparecer en la tabla con total "950,00"
 
+# -------------------------------------------------------------------------
+# ESCENARIO 3: CREATE - Happy Path con 1 producto y verificación de stock
+# -------------------------------------------------------------------------
 Scenario: Crear compra y verificar actualización de stock
     Given el producto "Laptop Dell" tiene stock inicial de 10
     When hago click en el botón "Agregar Compra"

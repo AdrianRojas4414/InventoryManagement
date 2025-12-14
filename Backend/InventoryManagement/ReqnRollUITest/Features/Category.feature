@@ -4,7 +4,10 @@ Background:
     Given he iniciado sesión como "Admin"
     And navego a la página Productos
 
-# --- CREATE (Insertar) con Pairwise ---
+# -------------------------------------------------------------------------
+# ESCENARIO 1: CREATE - Unhappy Paths con Pairwise y Valores Limite
+# -------------------------------------------------------------------------
+
 Scenario Outline: Insertar categoría con diferentes datos invalidos desde la página Productos
     When hago click en el botón "Agregar Categoría"
     And ingreso el nombre "<Name>"
@@ -39,6 +42,9 @@ Scenario Outline: Insertar categoría con diferentes datos invalidos desde la p�
       | Comida para perros  | Este innovador set de juguetes educativos combina diversión y aprendizaje, incluyendo bloques de construcción, figuras de animales, letras y números, rompecabezas y materiales interactivos diseñados para estimular la creatividad, la coordinación, la motricidad fina y el pensamiento lógico en niños de diferentes edades. Fabricado con materiales seguros y duraderos, su diseño atractivo permite horas de entretenimiento mientras fomenta habilidades cognitivas esenciales, promoviendo el desarrollo integral    | No puede tener más de 500 caracteres. |
       | Comida para perros  | Este es un producto para ancianos@$%          | No se permiten caracteres extraños.                |
    
+# -------------------------------------------------------------------------
+# ESCENARIO 2: CREATE - Happy Path
+# -------------------------------------------------------------------------
 
 Scenario: Insertar categoria con datos validos desde la pagina Productos
     When hago click en el botón "Agregar Categoría"
@@ -48,14 +54,20 @@ Scenario: Insertar categoria con datos validos desde la pagina Productos
     Then el modal debe cerrarse automaticamente
     And la categoría "Comida para perros" debe aparecer en la tabla
 
-# --- SELECT (Mostrar) Happy Path ---
+# -------------------------------------------------------------------------
+# ESCENARIO 3: SELECT - Happy Path
+# -------------------------------------------------------------------------
+
 Scenario: Mostrar el listado de categorías en la página Productos
     Given que existe al menos 1 categoría creada previamente
     Then debe mostrarse la tabla de categorías
     And la tabla debe contener al menos un registro
     And cada registro debe mostrar enlaces "Editar" y "Eliminar"
 
-# --- UPDATE (Editar) ---
+# -------------------------------------------------------------------------
+# ESCENARIO 4: UPDATE - Unhappy Paths con Pairwise y Valores Limite
+# -------------------------------------------------------------------------
+
 Scenario Outline: Editar una categoría existente con datos invalidos
     Given que existe una categoría creada previamente con nombre “Comida para perros” con descripción “Este es un producto saludable para los perros”
     When hago click en el botón “Editar” de la categoría “Comida para perros”
@@ -91,6 +103,10 @@ Scenario Outline: Editar una categoría existente con datos invalidos
       | Comida para perros  | Este innovador set de juguetes educativos combina diversión y aprendizaje, incluyendo bloques de construcción, figuras de animales, letras y números, rompecabezas y materiales interactivos diseñados para estimular la creatividad, la coordinación, la motricidad fina y el pensamiento lógico en niños de diferentes edades. Fabricado con materiales seguros y duraderos, su diseño atractivo permite horas de entretenimiento mientras fomenta habilidades cognitivas esenciales, promoviendo el desarrollo integral    | No puede tener más de 500 caracteres. |
       | Comida para perros  | Este es un producto para ancianos@$%          | No se permiten caracteres extraños.                |
 
+# -------------------------------------------------------------------------
+# ESCENARIO 5: UPDATE - Happy Path
+# -------------------------------------------------------------------------
+
 Scenario: Editar una categoría existente con datos validos
     Given que existe una categoría creada previamente con nombre “Comida para perros” con descripción “Este es un producto saludable para los perros”
     When hago click en el botón “Editar” de la categoría “Comida para perros”
@@ -100,7 +116,10 @@ Scenario: Editar una categoría existente con datos validos
     Then el modal debe cerrarse automaticamente
     And la categoria se actualizo correctamente en la tabla
 
-# --- DELETE (Deshabilitar) Happy Path ---
+# -------------------------------------------------------------------------
+# ESCENARIO 6: DELETE - Happy Path
+# -------------------------------------------------------------------------
+
 Scenario: Deshabilitar categoría correctamente
     Given existe una categoría activa con nombre “Comida para gatos” y descripción “Este es un producto saludable para los gatos”
     When hago click en el botón Deshabilitar de la categoría “Comida para gatos”

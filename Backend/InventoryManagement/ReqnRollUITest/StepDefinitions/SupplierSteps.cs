@@ -44,7 +44,9 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
             }
         }
 
-            // --- BACKGROUND ---
+        // ========================================================================
+        // BACKGROUND STEPS
+        // ========================================================================
         [Given(@"he iniciado sesión como ""(.*)""")]
         public async Task GivenHeIniciadoSesionComo(string rol)
         {
@@ -63,7 +65,9 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
             _driver.Navigate().GoToUrl("http://localhost:4200/suppliers");
         }
 
-        // --- CREATE STEPS ---
+        // ========================================================================
+        // CREATE STEPS
+        // ========================================================================
         [When(@"hago click en el botón ""([^""]*)""")] 
         public void WhenHagoClickEnElBoton(string boton)
         {
@@ -125,7 +129,9 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
             _supplierPage.ClickBotonFormulario();
         }
 
-        // --- VALIDACIONES ---
+        // ========================================================================
+        // VALIDACIONES STEPS
+        // ========================================================================
         [Then(@"se debe mostrar el mensaje de proveedor ""(.*)""")]
         public void ThenSeDebeMostrarElMensajeDeProveedor(string mensaje)
         {
@@ -148,7 +154,9 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
                 .Should().BeTrue($"El proveedor con nombre '{_nombreProveedorIngresado}' debería aparecer.");
         }
 
-        // --- EDITAR Y LISTAR ---
+        // ========================================================================
+        // UPDATE STEPS
+        // ========================================================================
         [Given(@"que existe al menos (.*) proveedor creado previamente")]
         public void GivenExisteAlMenosProveedor(int cantidad)
         {
@@ -231,7 +239,9 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
             datosCorrectos.Should().BeTrue($"Los datos del proveedor no se actualizaron correctamente.");
         }
 
-        // --- DESHABILITAR ---
+        // ========================================================================
+        // DELETE STEPS
+        // ========================================================================
         [When(@"hago click en el botón Deshabilitar del proveedor [""“](.*)[""“]")]
         public void WhenHagoClickEnBotonDeshabilitarDelProveedor(string nombreProveedor)
         {
@@ -252,7 +262,9 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
                 .Should().BeTrue($"El proveedor '{nombreProveedor}' debería tener estado '{estado}'");
         }
 
-        // --- TABLA ---
+        // ========================================================================
+        // SELECT STEPS
+        // ========================================================================
         [Then(@"debe mostrarse la tabla de proveedores")]
         public void ThenDebeMostrarseTablaProveedores()
         {

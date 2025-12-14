@@ -4,7 +4,9 @@ Background:
     Given he iniciado sesión como "Admin"
     And navego a la página Proveedores
 
-# --- CREATE (Insertar) con Pairwise ---
+# -------------------------------------------------------------------------
+# ESCENARIO 1: CREATE - Unhappy Paths con Pairwise y Valores Limite
+# -------------------------------------------------------------------------
 Scenario Outline: Insertar proveedor con diferentes datos invalidos desde la página Proveedores
     When hago click en el botón "Agregar Proveedor"
     And ingreso el nombre del proveedor "<Name>"
@@ -68,6 +70,9 @@ Scenario Outline: Insertar proveedor con diferentes datos invalidos desde la pá
       | Import-Sur, S.R.L.+ | 12345 | 10203040-5 | ventas@proveedorcom | 1234567 | Av. Oquendo #555, Edificio "Sol" - @Oficina4 | No puede ser solo números ni contener caracteres inválidos. |
       | [VACIO] | 71723456789 | 1020 3040 | [VACIO] | Ana María de la O | Esta es una dirección de ejemplo increíblemente larga para exceder el límite máximo de cien caracteres y ver si la validación funciona correctamente. | El nombre es obligatorio. |
 
+# -------------------------------------------------------------------------
+# ESCENARIO 2: CREATE - Happy Path
+# -------------------------------------------------------------------------
 Scenario: Insertar proveedor con datos validos desde la pagina Proveedores
     When hago click en el botón "Agregar Proveedor"
     And ingreso el nombre del proveedor "DistribuidoraABC"
@@ -80,14 +85,18 @@ Scenario: Insertar proveedor con datos validos desde la pagina Proveedores
     Then el modal de proveedor debe cerrarse automaticamente
     And el proveedor "Distribuidora ABC" debe aparecer en la tabla
 
-# --- SELECT (Mostrar) Happy Path ---
+# -------------------------------------------------------------------------
+# ESCENARIO 3: SELECT - Happy Path
+# -------------------------------------------------------------------------
 Scenario: Mostrar el listado de proveedores en la página Proveedores
     Given que existe al menos 1 proveedor creado previamente
     Then debe mostrarse la tabla de proveedores
     And la tabla de proveedores debe contener al menos un registro
     And cada registro de proveedor debe mostrar enlaces "Editar" y "Eliminar"
 
-# --- UPDATE (Editar) ---
+# -------------------------------------------------------------------------
+# ESCENARIO 4: UPDATE - Unhappy Paths con Pairwise y Valores Limite
+# -------------------------------------------------------------------------
 Scenario Outline: Editar un proveedor existente con datos invalidos
     Given que existe un proveedor creado previamente con nombre "Distribuidora ABC"
     When hago click en el botón "Editar" del proveedor "Distribuidora ABC"
@@ -152,6 +161,9 @@ Scenario Outline: Editar un proveedor existente con datos invalidos
       | Import-Sur, S.R.L.+ | 12345 | 10203040-5 | ventas@proveedorcom | 1234567 | Av. Oquendo #555, Edificio "Sol" - @Oficina4 | No puede ser solo números ni contener caracteres inválidos. |
       | [VACIO] | 71723456789 | 1020 3040 | [VACIO] | Ana María de la O | Esta es una dirección de ejemplo increíblemente larga para exceder el límite máximo de cien caracteres y ver si la validación funciona correctamente. | El nombre es obligatorio. |
 
+# -------------------------------------------------------------------------
+# ESCENARIO 5: UPDATE - Happy Path
+# -------------------------------------------------------------------------
 Scenario: Editar un proveedor existente con datos validos
     Given que existe un proveedor creado previamente con nombre "Distribuidora ABC"
     When hago click en el botón "Editar" del proveedor "Distribuidora ABC"
@@ -165,7 +177,9 @@ Scenario: Editar un proveedor existente con datos validos
     Then el modal de proveedor debe cerrarse automaticamente
     And el proveedor se actualizo correctamente en la tabla
 
-# --- DELETE (Deshabilitar) Happy Path ---
+# -------------------------------------------------------------------------
+# ESCENARIO 6: DELETE - Happy Path
+# -------------------------------------------------------------------------
 Scenario: Deshabilitar proveedor correctamente
     Given existe un proveedor activo con nombre "Distribuidora XYZ"
     When hago click en el botón Deshabilitar del proveedor "Distribuidora XYZ"

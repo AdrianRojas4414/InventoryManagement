@@ -43,7 +43,9 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
             }
         }
 
-        // --- BACKGROUND ---
+        // ========================================================================
+        // BACKGROUND STEPS
+        // ========================================================================
         [Given(@"he iniciado sesión como ""(.*)""")]
         public async Task GivenHeIniciadoSesionComo(string rol)
         {
@@ -99,7 +101,9 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
             _driver.Navigate().GoToUrl("http://localhost:4200/purchases");
         }
 
-        // --- CREATE STEPS ---
+        // ========================================================================
+        // CREATE STEPS
+        // ========================================================================
 
         [When(@"hago click en el botón ""(.*)""")]
         public void WhenHagoClickEnElBoton(string boton)
@@ -132,7 +136,9 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
             _purchasePage.AgregarProducto(nombreProducto, cantidad, precioUnitario);
         }
 
-        // --- VALIDACIONES ---
+        // ========================================================================
+        // VALIDACIONES STEPS
+        // ========================================================================
         [Then(@"el modal de compra debe cerrarse automaticamente")]
         public void ThenElModalDeCompraDebeCerrarse()
         {

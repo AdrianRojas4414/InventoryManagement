@@ -47,7 +47,9 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
             }
         }
 
-        // --- BACKGROUND ---
+        // ========================================================================
+        // BACKGROUND STEPS
+        // ========================================================================
         [Given(@"he iniciado sesión como ""(.*)""")]
         public async Task GivenHeIniciadoSesionComo(string rol)
         {
@@ -68,7 +70,9 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
             _driver.Navigate().GoToUrl("http://localhost:4200/products");
         }
 
-        // --- CREATE STEPS ---
+        // ========================================================================
+        // CREATE STEPS
+        // ========================================================================
         [When(@"hago click en el botón ""(.*)""")]
         public void WhenHagoClickEnElBoton(string boton)
         {
@@ -117,6 +121,10 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
             _productPage.ClickBotonFormulario();
         }
 
+        // ========================================================================
+        // VALIDACIONES STEPS
+        // ========================================================================
+
         [Then(@"se debe mostrar el mensaje ""(.*)""")]
         public void ThenSeDebeMostrarElMensaje(string mensaje)
         {
@@ -152,7 +160,9 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
             }
         }
 
-        // --- EDITAR Y LISTAR ---
+        // ========================================================================
+        // UPDATE STEPS
+        // ========================================================================
 
         [Given(@"que existe al menos (.*) producto creado previamente")]
         public void GivenExisteAlMenosProducto(int cantidad)
@@ -245,6 +255,10 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
             stockCoincide.Should().BeTrue($"El stock no se actualizó a '{_stockProductoIngresado}' en la fila de '{_nombreProductoIngresado}'.");
         }
 
+        // ========================================================================
+        // DELETE STEPS
+        // ========================================================================
+
         [When(@"hago click en el botón Deshabilitar del producto [""“](.*)[""”]")]
         public void WhenHagoClickEnBotonDeshabilitarDeProducto(string nombreProducto)
         {
@@ -264,6 +278,10 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
             _productPage.VerificarEstadoProducto(nombreProducto, estado)
                 .Should().BeTrue($"El producto '{nombreProducto}' debería tener estado '{estado}'");
         }
+
+        // ========================================================================
+        // SELECT STEPS
+        // ========================================================================
 
         [Then(@"debe mostrarse la tabla de productos")]
         public void ThenDebeMostrarseLaTabla()

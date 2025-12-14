@@ -4,7 +4,9 @@ Background:
     Given he iniciado sesión como "Admin"
     And navego a la página Productos
 
-# --- CREATE (Insertar) con Pairwise ---
+# -------------------------------------------------------------------------
+# ESCENARIO 1: CREATE - Unhappy Paths con Pairwise y Valores Limite
+# -------------------------------------------------------------------------
 Scenario Outline: Insertar producto con diferentes datos invalidos desde la página Productos
     When hago click en el botón "Agregar Producto"
     And ingreso el nombre "<Name>"
@@ -51,7 +53,9 @@ Scenario Outline: Insertar producto con diferentes datos invalidos desde la pág
       | [VACIO]              | Este es un producto para ancianos@$%        | 12         | -12     | El nombre es obligatorio.                          |
       | [VACIO]              | Este es un producto saludable para ancianos | 125421     | 32768   | El nombre es obligatorio.                          |
    
-
+# -------------------------------------------------------------------------
+# ESCENARIO 2: CREATE - Happy Path
+# -------------------------------------------------------------------------
 Scenario: Insertar producto con datos validos desde la pagina Productos
     When hago click en el botón "Agregar Producto"
     And ingreso el nombre "Laptop Dell XPS 15"
@@ -62,14 +66,18 @@ Scenario: Insertar producto con datos validos desde la pagina Productos
     Then el modal debe cerrarse automaticamente
     And el producto "Laptop Dell XPS 15" debe aparecer en la tabla
 
-# --- SELECT (Mostrar) Happy Path ---
+# -------------------------------------------------------------------------
+# ESCENARIO 3: SELECT - Happy Path
+# -------------------------------------------------------------------------
 Scenario: Mostrar el listado de productos en la página Productos
     Given que existe al menos 1 producto creado previamente
     Then debe mostrarse la tabla de productos
     And la tablas debe contener al menos un registro
     And cada registro debe mostrar enlaces "Editar" y "Eliminar"
 
-# --- UPDATE (Editar) ---
+# -------------------------------------------------------------------------
+# ESCENARIO 4: UPDATE - Unhappy Paths con Pairwise y Valores Limite
+# -------------------------------------------------------------------------
 Scenario Outline: Editar un producto existente con datos invalidos
     Given que existe un producto creado previamente con nombre “Laptop Dell XPS 15”
     When hago click en el botón “Editar” del producto “Laptop Dell XPS 15”
@@ -117,6 +125,9 @@ Scenario Outline: Editar un producto existente con datos invalidos
       | [VACIO]              | Este es un producto para ancianos@$%        | 12         | -12     | El nombre es obligatorio.                          |
       | [VACIO]              | Este es un producto saludable para ancianos | 125421     | 32768   | El nombre es obligatorio.                          |
 
+# -------------------------------------------------------------------------
+# ESCENARIO 5: UPDATE - Happy Path
+# -------------------------------------------------------------------------
 Scenario: Editar un producto existente con datos validos
     Given que existe un producto creado previamente con nombre “Laptop Dell XPS 15”
     When hago click en el botón “Editar” del producto “Laptop Dell XPS 15”
@@ -128,7 +139,9 @@ Scenario: Editar un producto existente con datos validos
     Then el modal debe cerrarse automaticamente
     And el producto se actualizo correctamente en la tabla
 
-# --- DELETE (Deshabilitar) Happy Path ---
+# -------------------------------------------------------------------------
+# ESCENARIO 6: DELETE - Happy Path
+# -------------------------------------------------------------------------
 Scenario: Deshabilitar producto correctamente
     Given existe un producto activo con nombre “Tablet XPS 15”
     When hago click en el botón Deshabilitar del producto “Tablet XPS 15”
