@@ -13,9 +13,6 @@ namespace InventoryManagement.ReqnrollUITest.Support
             _dbContext = dbContext;
         }
 
-        /// <summary>
-        /// Creates a test user with specific credentials that match LoginPage expectations
-        /// </summary>
         public async Task<User> CreateTestUserAsync(string role = "Admin")
         {
             var user = new User
@@ -42,9 +39,6 @@ namespace InventoryManagement.ReqnrollUITest.Support
             return user;
         }
 
-        /// <summary>
-        /// Ensures a user exists for the given role
-        /// </summary>
         public async Task<User> EnsureUserExistsAsync(string role = "Admin")
         {
             var username = role == "Admin" ? "AdminPedro" : "EmpleadoJuan";
@@ -60,9 +54,6 @@ namespace InventoryManagement.ReqnrollUITest.Support
             return await CreateTestUserAsync(role);
         }
 
-        /// <summary>
-        /// Creates a test category for product creation
-        /// </summary>
         public async Task<Category> CreateTestCategoryAsync(short userId, string? name = null, string? description = null)
         {
             var category = new Category
@@ -80,10 +71,6 @@ namespace InventoryManagement.ReqnrollUITest.Support
             return category;
         }
 
-        /// <summary>
-        /// Ensures at least one category exists in the database
-        /// Returns the first active category or creates one if none exist
-        /// </summary>
         public async Task<Category> EnsureCategoryExistsAsync(short userId)
         {
             var existingCategory = await _dbContext.Categories
@@ -97,9 +84,6 @@ namespace InventoryManagement.ReqnrollUITest.Support
             return await CreateTestCategoryAsync(userId);
         }
 
-        /// <summary>
-        /// Gets the first active category (useful after ensuring one exists)
-        /// </summary>
         public async Task<Category?> GetFirstActiveCategoryAsync()
         {
             return await _dbContext.Categories
@@ -138,6 +122,41 @@ namespace InventoryManagement.ReqnrollUITest.Support
             }
 
             return await CreateTestSupplierAsync(userId);
+        }
+
+        public async Task<Domain.Entities.Product> CreateTestProductAsync(short userId, short categoryId, string name, decimal price = 100)
+        {
+            var product = new Domain.Entities.Product
+            {
+                Name = name,
+                Description = $"Descripción de {name}",
+                SerialCode = 12547,
+                CategoryId = categoryId,
+                TotalStock = 10,
+                Status = 1,
+                CreationDate = DateTime.UtcNow,
+                ModificationDate = DateTime.UtcNow,
+                CreatedByUserId = userId
+            };
+
+            _dbContext.Products.Add(product);
+            await _dbContext.SaveChangesAsync();
+            return product;
+        }
+
+        public async Task<Domain.Entities.Product> EnsureProductExistsAsync(string productName, short userId)
+        {
+            var category = await EnsureCategoryExistsAsync(userId);
+
+            var existingProduct = await _dbContext.Products
+                .FirstOrDefaultAsync(p => p.Name == productName && p.Status == 1);
+
+            if (existingProduct != null)
+            {
+                return existingProduct;
+            }
+
+            return await CreateTestProductAsync(userId, category.Id, productName);
         }
     }
 }

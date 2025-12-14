@@ -74,22 +74,18 @@ namespace InventoryManagement.ReqnrollUITest.Hooks
             }
         }
 
-        /// <summary>
-        /// Recreates essential data needed for UI tests
-        /// This runs after every scenario cleanup to ensure users and categories exist
-        /// </summary>
         private async Task RecreateEssentialDataAsync(InventoryDbContext dbContext)
         {
             var helper = new UiTestHelper(dbContext);
             
-            // Create Admin user (required for most tests)
+            // Create Admin user
             var adminUser = await helper.CreateTestUserAsync("Admin");
             
-            // Create a default category (required for product tests)
+            // Create a default entities
             await helper.CreateTestCategoryAsync(adminUser.Id, "Tecnología", "Productos tecnológicos");
-            
-            // Optionally create Employee user (in case some tests need it)
-            // await helper.CreateTestUserAsync("Employee");
+            await helper.CreateTestSupplierAsync(adminUser.Id, "ProveedorABDCDS", "12548752023");
+            await helper.EnsureProductExistsAsync("Laptop Dell", adminUser.Id);
+            await helper.EnsureProductExistsAsync("Teclado Mecanico", adminUser.Id);
         }
     }
 }

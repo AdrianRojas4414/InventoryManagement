@@ -7,13 +7,19 @@ Background:
     And existen productos activos para compras
 
 # --- CREATE Purchase Happy Paths ---
-Scenario: Crear compra con un solo producto válido
+Scenario Outline: Crear compra con un solo producto válido
     When hago click en el botón "Agregar Compra"
     And selecciono el proveedor disponible
-    And agrego el producto "Laptop Dell" con cantidad 5 y precio unitario 100.00
+    And agrego el producto "<Name>" con cantidad <Cantidad> y precio unitario <Precio>
     And hago click en el botón "Registrar Compra"
     Then el modal de compra debe cerrarse automaticamente
-    And la compra debe aparecer en la tabla con total "500.00"
+    And la compra debe aparecer en la tabla con total "<ExpectedTotal>"
+
+    Examples:
+      | Name             | Cantidad | Precio | ExpectedTotal |
+      | Laptop Dell      | 5        | 100.00 | 500,00        |
+      | Teclado Mecanico | 10       | 50.00  | 500,00        |
+      | Laptop Dell      | 15       | 180.00 | 2700,00       |
 
 Scenario: Crear compra con múltiples productos válidos
     When hago click en el botón "Agregar Compra"
@@ -22,7 +28,7 @@ Scenario: Crear compra con múltiples productos válidos
     And agrego el producto "Teclado Mecanico" con cantidad 10 y precio unitario 50.00
     And hago click en el botón "Registrar Compra"
     Then el modal de compra debe cerrarse automaticamente
-    And la compra debe aparecer en la tabla con total "950.00"
+    And la compra debe aparecer en la tabla con total "950,00"
 
 Scenario: Crear compra y verificar actualización de stock
     Given el producto "Laptop Dell" tiene stock inicial de 10

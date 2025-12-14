@@ -51,17 +51,14 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
         [Given(@"he iniciado sesión como ""(.*)""")]
         public async Task GivenHeIniciadoSesionComo(string rol)
         {
-            // Ensure the user exists in the database
             using (var dbContext = new InventoryDbContext(_dbContextOptions))
             {
                 var helper = new UiTestHelper(dbContext);
                 var user = await helper.EnsureUserExistsAsync(rol);
                 
-                // *** KEY ADDITION: Ensure at least one category exists ***
                 await helper.EnsureCategoryExistsAsync(user.Id);
             }
 
-            // Now perform login
             _loginPage.LoginExitosoComoAdmin();
         }
 
@@ -138,11 +135,9 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
         public void ThenElProductoDebeAparecerEnLaTabla(string nombreProducto)
         {
             Thread.Sleep(1000);
-            // Verificamos nombre
             _productPage.ExisteProductoEnTabla(_nombreProductoIngresado)
                 .Should().BeTrue($"El nombre '{_nombreProductoIngresado}' debería aparecer.");
 
-            // Verificamos descripción (si se ingresó alguna)
             if (!string.IsNullOrEmpty(_descripcionProductoIngresado))
             {
                 _productPage.VerificarDescripcionProducto(_nombreProductoIngresado, _descripcionProductoIngresado)
@@ -150,7 +145,6 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
             }
 
 
-            // Verificamos stock (si se ingresó alguna)
             if (!string.IsNullOrEmpty(_stockProductoIngresado))
             {
                 _productPage.VerificarStockProducto(_nombreProductoIngresado, _stockProductoIngresado)
@@ -211,28 +205,28 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
         [When(@"actualizo el nombre a ""(.*)""")]
         public void WhenActualizoElNombreA(string nombre)
         {
-            _nombreProductoIngresado = nombre; // Actualizamos la variable de rastreo
+            _nombreProductoIngresado = nombre;
             _productPage.LlenarNombre(nombre);
         }
 
         [When(@"actualizo la descripción a ""(.*)""")]
         public void WhenActualizoLaDescripcionA(string descripcion)
         {
-            _descripcionProductoIngresado = descripcion; // Actualizamos la variable de rastreo
+            _descripcionProductoIngresado = descripcion;
             _productPage.LlenarDescripcion(descripcion);
         }
 
         [When(@"actualizo el codigo serial a ""(.*)""")]
         public void WhenActualizoElCodigoSerialA(string codigoSerial)
         {
-            _codigoSerialProductoIngresado = codigoSerial; // Actualizamos la variable de rastreo
+            _codigoSerialProductoIngresado = codigoSerial;
             _productPage.LlenarCodigoSerial(codigoSerial);
         }
 
         [When(@"actualizo el stock a ""(.*)""")]
         public void WhenActualizoElStockA(string stock)
         {
-            _stockProductoIngresado = stock; // Actualizamos la variable de rastreo
+            _stockProductoIngresado = stock;
             _productPage.LlenarStock(stock);
         }
 

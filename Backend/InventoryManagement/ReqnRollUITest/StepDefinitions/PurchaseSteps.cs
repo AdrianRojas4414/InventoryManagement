@@ -58,9 +58,8 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
 
         [Given(@"navego a la página Compras")]
         public void GivenNavegoALaPaginaCompras()
-        {
-            _driver.Navigate().GoToUrl("http://localhost:4200/purchases");
-            Thread.Sleep(1000);
+        {            
+            _loginPage.NavegarDesdeMenu("Compras");
         }
 
         [Given(@"existe un proveedor activo para compras")]
@@ -81,35 +80,13 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
             {
                 var helper = new UiTestHelper(dbContext);
                 var adminUser = await helper.EnsureUserExistsAsync("Admin");
-                var category = await helper.EnsureCategoryExistsAsync(adminUser.Id);
 
-                // Crear productos específicos para las pruebas
-                var productosNecesarios = new[] { "Laptop Dell", "Teclado Mecanico" };
-                
-                foreach (var nombreProducto in productosNecesarios)
-                {
-                    var productoExistente = await dbContext.Products
-                        .FirstOrDefaultAsync(p => p.Name == nombreProducto && p.Status == 1);
+                // 1. Asegura que la categoría por defecto exista (útil para crear nuevos productos manualmente)
+                await helper.EnsureCategoryExistsAsync(adminUser.Id);
 
-                    if (productoExistente == null)
-                    {
-                        var nuevoProducto = new Domain.Entities.Product
-                        {
-                            Name = nombreProducto,
-                            Description = $"Descripción de {nombreProducto}",
-                            SerialCode = (short)(10000 + productosNecesarios.ToList().IndexOf(nombreProducto)),
-                            CategoryId = category.Id,
-                            TotalStock = 10,
-                            Status = 1,
-                            CreationDate = DateTime.UtcNow,
-                            ModificationDate = DateTime.UtcNow,
-                            CreatedByUserId = adminUser.Id
-                        };
-                        dbContext.Products.Add(nuevoProducto);
-                    }
-                }
-                
-                await dbContext.SaveChangesAsync();
+                // 2. Asegura que los productos específicos para la prueba existan
+                await helper.EnsureProductExistsAsync("Laptop Dell", adminUser.Id);
+                await helper.EnsureProductExistsAsync("Teclado Mecanico", adminUser.Id);
             }
         }
 
@@ -117,7 +94,6 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
         public void GivenElProductoTieneStockInicialDe(string nombreProducto, int stockInicial)
         {
             _stockInicial = stockInicial;
-            // Verificar el stock actual en la interfaz
             _driver.Navigate().GoToUrl("http://localhost:4200/products");
             Thread.Sleep(1000);
             _driver.Navigate().GoToUrl("http://localhost:4200/purchases");
@@ -160,7 +136,7 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
         [Then(@"el modal de compra debe cerrarse automaticamente")]
         public void ThenElModalDeCompraDebeCerrarse()
         {
-            Thread.Sleep(2000); // Dar tiempo para que se procese
+            Thread.Sleep(2000);
             bool cerrado = _purchasePage.EsperarQueElModalSeCierre();
             cerrado.Should().BeTrue("El modal debería haberse cerrado tras registrar la compra.");
         }
@@ -176,9 +152,15 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
         [Then(@"el stock del producto ""(.*)"" debe ser (.*)")]
         public void ThenElStockDelProductoDebeSer(string nombreProducto, int stockEsperado)
         {
+            _loginPage.NavegarDesdeMenu("Productos");
+
+            var productPage = new ProductPage(_driver);
+            
             Thread.Sleep(1000);
-            int stockActual = _purchasePage.ObtenerStockProducto(nombreProducto);
-            stockActual.Should().Be(stockEsperado, $"El stock de '{nombreProducto}' debería ser {stockEsperado}");
+            
+            bool stockCorrecto = productPage.VerificarStockProducto(nombreProducto, stockEsperado.ToString());
+            
+            stockCorrecto.Should().BeTrue($"El stock de '{nombreProducto}' debería ser {stockEsperado} en la tabla de productos.");
         }
     }
 }

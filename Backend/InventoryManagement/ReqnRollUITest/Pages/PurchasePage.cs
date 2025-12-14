@@ -55,18 +55,15 @@ namespace InventoryManagement.ReqnrollUITest.Pages
 
         public void AgregarProducto(string nombreProducto, int cantidad, decimal precioUnitario)
         {
-            // Click agregar producto
             var botonAgregar = _wait.Until(ExpectedConditions.ElementToBeClickable(BotonAgregarProducto));
             botonAgregar.Click();
             Thread.Sleep(500);
 
-            // Seleccionar producto
             var selectsProducto = _driver.FindElements(CustomSelectProducto);
             var ultimoSelect = selectsProducto.Last();
             ultimoSelect.Click();
             Thread.Sleep(300);
 
-            // Buscar y seleccionar el producto específico
             var opciones = _driver.FindElements(DropdownOptionProducto);
             var opcionProducto = opciones.FirstOrDefault(o => o.Text.Contains(nombreProducto));
             if (opcionProducto != null)
@@ -76,13 +73,11 @@ namespace InventoryManagement.ReqnrollUITest.Pages
 
             Thread.Sleep(300);
 
-            // Llenar cantidad
             var inputsCantidad = _driver.FindElements(InputCantidad);
             var ultimaCantidad = inputsCantidad.Last();
             ultimaCantidad.Clear();
             ultimaCantidad.SendKeys(cantidad.ToString());
 
-            // Llenar precio
             var inputsPrice = _driver.FindElements(InputPrecio);
             var ultimoPrecio = inputsPrice.Last();
             ultimoPrecio.Clear();
@@ -111,7 +106,7 @@ namespace InventoryManagement.ReqnrollUITest.Pages
 
         public bool VerificarCompraEnTabla(string totalEsperado)
         {
-            Thread.Sleep(2000); // Esperar que la tabla se actualice
+            Thread.Sleep(2000);
             try
             {
                 var filas = _driver.FindElements(FilasTabla);
@@ -120,23 +115,6 @@ namespace InventoryManagement.ReqnrollUITest.Pages
             catch
             {
                 return false;
-            }
-        }
-
-        public int ObtenerStockProducto(string nombreProducto)
-        {
-            _driver.Navigate().GoToUrl("http://localhost:4200/products");
-            Thread.Sleep(1000);
-
-            try
-            {
-                var xpath = $"//tr[td[contains(text(), '{nombreProducto}')]]//td[4]";
-                var celdaStock = _wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(xpath)));
-                return int.Parse(celdaStock.Text.Trim());
-            }
-            catch
-            {
-                return -1;
             }
         }
     }

@@ -11,12 +11,10 @@ namespace InventoryManagement.ReqnrollUITest.Pages
 
         private const string PageUrl = "http://localhost:4200/login";
 
-        // --- LOCALIZADORES ---
         private By InputUsuario = By.Name("username");
         private By InputPassword = By.Name("password");
         private By BotonIngresar = By.CssSelector("button.login-btn");
 
-        // Elemento que SOLO existe cuando ya iniciaste sesión (ej. el Sidebar o el Header)
         // Esto confirma que el login fue exitoso.
         private By ElementoDelDashboard = By.TagName("app-sidebar");
 
@@ -25,8 +23,6 @@ namespace InventoryManagement.ReqnrollUITest.Pages
             _driver = driver;
             _wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
         }
-
-        // --- ACCIONES ---
 
         public void Navegar()
         {
@@ -53,21 +49,45 @@ namespace InventoryManagement.ReqnrollUITest.Pages
         public void LoginExitosoComoAdmin()
         {
             Navegar();
-            // Asegúrate que estas credenciales son las correctas en tu BD local
+
+            // Limpieza de sesion previa
+            ((IJavaScriptExecutor)_driver).ExecuteScript("window.localStorage.clear();");
+            ((IJavaScriptExecutor)_driver).ExecuteScript("window.sessionStorage.clear();");
+            _driver.Manage().Cookies.DeleteAllCookies();
+            
+            // Recargar la página para aplicar la limpieza
+            _driver.Navigate().Refresh(); 
+
             IngresarCredenciales("AdminPedro", "password123");
             ClickIngresar();
 
-            // *** CORRECCIÓN CRÍTICA ***
-            // Esperamos a que la URL ya NO contenga "login"
-            // Esto asegura que Angular terminó de procesar el login y redirigió.
             try
             {
                 _wait.Until(d => !d.Url.Contains("/login"));
+                _wait.Until(ExpectedConditions.ElementIsVisible(ElementoDelDashboard));
             }
             catch (WebDriverTimeoutException)
             {
-                // Si falla, es probable que las credenciales estén mal o el backend caído
-                throw new Exception("El login falló o tardó demasiado. Seguimos en la página de login.");
+                throw new Exception("El login falló o tardó demasiado. No se detectó la redirección al Dashboard.");
+            }
+        }
+
+        public void NavegarDesdeMenu(string nombrePagina)
+        {
+            try
+            {
+                _wait.Until(ExpectedConditions.ElementIsVisible(ElementoDelDashboard));
+
+                var xpathLink = $"//app-sidebar//span[contains(@class, 'nav-text') and contains(text(), '{nombrePagina}')]";
+                
+                var link = _wait.Until(ExpectedConditions.ElementToBeClickable(By.XPath(xpathLink)));
+                link.Click();
+
+                Thread.Sleep(500); 
+            }
+            catch (WebDriverTimeoutException)
+            {
+                throw new Exception($"No se pudo navegar a '{nombrePagina}'. Verifica que el menú lateral esté visible y el texto del enlace sea correcto. XPath usado: //app-sidebar//span[contains(text(), '{nombrePagina}')]");
             }
         }
     }

@@ -80,7 +80,7 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
         public void WhenIngresoElNombre(string nombre)
         {
             string valor = nombre.Contains("[VACIO]") ? "" : nombre;
-            _nombreCategoriaIngresada = valor; // Guardamos dato
+            _nombreCategoriaIngresada = valor;
             _categoryPage.LlenarNombre(valor);
         }
 
@@ -88,7 +88,7 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
         public void WhenIngresoLaDescripcion(string descripcion)
         {
             string valor = descripcion.Contains("[VACIO]") ? "" : descripcion;
-            _descripcionCategoriaIngresada = valor; // Guardamos dato
+            _descripcionCategoriaIngresada = valor;
             _categoryPage.LlenarDescripcion(valor);
         }
 
@@ -117,11 +117,9 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
         public void ThenLaCategoriaDebeAparecerEnLaTabla(string nombreCategoria)
         {
             Thread.Sleep(1000);
-            // Verificamos nombre
             _categoryPage.ExisteCategoriaEnTablaSimple(_nombreCategoriaIngresada)
                 .Should().BeTrue($"El nombre '{_nombreCategoriaIngresada}' debería aparecer.");
 
-            // Verificamos descripción (si se ingresó alguna)
             if (!string.IsNullOrEmpty(_descripcionCategoriaIngresada))
             {
                 _categoryPage.VerificarDescripcionCategoria(_nombreCategoriaIngresada, _descripcionCategoriaIngresada)
@@ -164,14 +162,14 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
         [When(@"actualizo el nombre a ""(.*)""")]
         public void WhenActualizoElNombreA(string nombre)
         {
-            _nombreCategoriaIngresada = nombre; // Actualizamos la variable de rastreo
+            _nombreCategoriaIngresada = nombre;
             _categoryPage.LlenarNombre(nombre);
         }
 
         [When(@"actualizo la descripción a ""(.*)""")]
         public void WhenActualizoLaDescripcionA(string descripcion)
         {
-            _descripcionCategoriaIngresada = descripcion; // Actualizamos la variable de rastreo
+            _descripcionCategoriaIngresada = descripcion;
             _categoryPage.LlenarDescripcion(descripcion);
         }
 
@@ -179,13 +177,11 @@ namespace InventoryManagement.ReqnrollUITest.StepDefinitions
         [Then(@"la categoria se actualizo correctamente en la tabla")]
         public void ThenLaCategoriaSeActualizo()
         {
-            Thread.Sleep(1000); // Esperar refresco de la grilla
+            Thread.Sleep(1000);
 
-            // 1. Verificar que el NOMBRE actualizado existe
             bool nombreExiste = _categoryPage.ExisteCategoriaEnTablaSimple(_nombreCategoriaIngresada);
             nombreExiste.Should().BeTrue($"El nombre de la categoría no se actualizó a '{_nombreCategoriaIngresada}' en la tabla.");
 
-            // 2. Verificar que la DESCRIPCIÓN actualizada coincide para ese nombre
             bool descripcionCoincide = _categoryPage.VerificarDescripcionCategoria(_nombreCategoriaIngresada, _descripcionCategoriaIngresada);
             descripcionCoincide.Should().BeTrue($"La descripción no se actualizó a '{_descripcionCategoriaIngresada}' en la fila de '{_nombreCategoriaIngresada}'.");
         }

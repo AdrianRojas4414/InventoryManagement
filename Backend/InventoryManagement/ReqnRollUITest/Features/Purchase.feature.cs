@@ -123,7 +123,7 @@ namespace ReqnRollUITest.Features
         
         private static global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages InitializeCucumberMessages()
         {
-            return new global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages("Features/Purchase.feature.ndjson", 5);
+            return new global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages("Features/Purchase.feature.ndjson", 7);
         }
         
         async global::System.Threading.Tasks.Task global::Xunit.IAsyncLifetime.InitializeAsync()
@@ -151,14 +151,21 @@ namespace ReqnRollUITest.Features
             await this.TestTearDownAsync();
         }
         
-        [global::Xunit.SkippableFactAttribute(DisplayName="Crear compra con un solo producto válido")]
+        [global::Xunit.SkippableTheoryAttribute(DisplayName="Crear compra con un solo producto válido")]
         [global::Xunit.TraitAttribute("FeatureTitle", "Purchases Management")]
         [global::Xunit.TraitAttribute("Description", "Crear compra con un solo producto válido")]
-        public async global::System.Threading.Tasks.Task CrearCompraConUnSoloProductoValido()
+        [global::Xunit.InlineDataAttribute("Laptop Dell", "5", "100.00", "500,00", "0", new string[0])]
+        [global::Xunit.InlineDataAttribute("Teclado Mecanico", "10", "50.00", "500,00", "1", new string[0])]
+        [global::Xunit.InlineDataAttribute("Laptop Dell", "15", "180.00", "2700,00", "2", new string[0])]
+        public async global::System.Threading.Tasks.Task CrearCompraConUnSoloProductoValido(string name, string cantidad, string precio, string expectedTotal, string @__pickleIndex, string[] exampleTags)
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = exampleTags;
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
-            string pickleIndex = "0";
+            argumentsOfScenario.Add("Name", name);
+            argumentsOfScenario.Add("Cantidad", cantidad);
+            argumentsOfScenario.Add("Precio", precio);
+            argumentsOfScenario.Add("ExpectedTotal", expectedTotal);
+            string pickleIndex = @__pickleIndex;
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Crear compra con un solo producto válido", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
@@ -182,7 +189,7 @@ await this.FeatureBackgroundAsync();
     await testRunner.AndAsync("selecciono el proveedor disponible", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 13
-    await testRunner.AndAsync("agrego el producto \"Laptop Dell\" con cantidad 5 y precio unitario 100.00", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync(string.Format("agrego el producto \"{0}\" con cantidad {1} y precio unitario {2}", name, cantidad, precio), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 14
     await testRunner.AndAsync("hago click en el botón \"Registrar Compra\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -191,7 +198,7 @@ await this.FeatureBackgroundAsync();
     await testRunner.ThenAsync("el modal de compra debe cerrarse automaticamente", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
 #line 16
-    await testRunner.AndAsync("la compra debe aparecer en la tabla con total \"500.00\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+    await testRunner.AndAsync(string.Format("la compra debe aparecer en la tabla con total \"{0}\"", expectedTotal), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
@@ -204,11 +211,11 @@ await this.FeatureBackgroundAsync();
         {
             string[] tagsOfScenario = ((string[])(null));
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
-            string pickleIndex = "1";
+            string pickleIndex = "3";
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Crear compra con múltiples productos válidos", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 18
+#line 24
 this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -221,26 +228,26 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line 3
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 19
+#line 25
     await testRunner.WhenAsync("hago click en el botón \"Agregar Compra\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 20
+#line 26
     await testRunner.AndAsync("selecciono el proveedor disponible", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 21
+#line 27
     await testRunner.AndAsync("agrego el producto \"Laptop Dell\" con cantidad 3 y precio unitario 150.00", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 22
+#line 28
     await testRunner.AndAsync("agrego el producto \"Teclado Mecanico\" con cantidad 10 y precio unitario 50.00", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 23
+#line 29
     await testRunner.AndAsync("hago click en el botón \"Registrar Compra\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 24
+#line 30
     await testRunner.ThenAsync("el modal de compra debe cerrarse automaticamente", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 25
-    await testRunner.AndAsync("la compra debe aparecer en la tabla con total \"950.00\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line 31
+    await testRunner.AndAsync("la compra debe aparecer en la tabla con total \"950,00\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
@@ -253,11 +260,11 @@ await this.FeatureBackgroundAsync();
         {
             string[] tagsOfScenario = ((string[])(null));
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
-            string pickleIndex = "2";
+            string pickleIndex = "4";
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Crear compra y verificar actualización de stock", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 27
+#line 33
 this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -270,25 +277,25 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line 3
 await this.FeatureBackgroundAsync();
 #line hidden
-#line 28
+#line 34
     await testRunner.GivenAsync("el producto \"Laptop Dell\" tiene stock inicial de 10", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 29
+#line 35
     await testRunner.WhenAsync("hago click en el botón \"Agregar Compra\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 30
+#line 36
     await testRunner.AndAsync("selecciono el proveedor disponible", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 31
+#line 37
     await testRunner.AndAsync("agrego el producto \"Laptop Dell\" con cantidad 5 y precio unitario 100.00", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 32
+#line 38
     await testRunner.AndAsync("hago click en el botón \"Registrar Compra\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 33
+#line 39
     await testRunner.ThenAsync("el modal de compra debe cerrarse automaticamente", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 34
+#line 40
     await testRunner.AndAsync("el stock del producto \"Laptop Dell\" debe ser 15", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
             }
