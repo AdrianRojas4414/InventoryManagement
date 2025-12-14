@@ -105,5 +105,39 @@ namespace InventoryManagement.ReqnrollUITest.Support
             return await _dbContext.Categories
                 .FirstOrDefaultAsync(c => c.Status == 1);
         }
+
+        public async Task<Domain.Entities.Supplier> CreateTestSupplierAsync(short userId, string? name = null, string? nit = null)
+        {
+            var supplier = new Domain.Entities.Supplier
+            {
+                Name = name ?? "ProveedorTest",
+                Nit = nit ?? "12355487236",
+                Phone = "70123456",
+                Email = "test@gmail.com",
+                ContactName = "Juan Perez",
+                Address = "Av. Test 123",
+                Status = 1,
+                CreationDate = DateTime.UtcNow,
+                ModificationDate = DateTime.UtcNow,
+                CreatedByUserId = userId
+            };
+
+            _dbContext.Suppliers.Add(supplier);
+            await _dbContext.SaveChangesAsync();
+            return supplier;
+        }
+
+        public async Task<Domain.Entities.Supplier> EnsureSupplierExistsAsync(short userId)
+        {
+            var existingSupplier = await _dbContext.Suppliers
+                .FirstOrDefaultAsync(s => s.Status == 1);
+
+            if (existingSupplier != null)
+            {
+                return existingSupplier;
+            }
+
+            return await CreateTestSupplierAsync(userId);
+        }
     }
 }

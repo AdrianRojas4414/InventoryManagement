@@ -1,12 +1,143 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
+using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
-namespace ReqnRollUITest.Pages
+namespace InventoryManagement.ReqnrollUITest.Pages
 {
-    internal class PurchasePage
+    public class PurchasePage
     {
+        private readonly IWebDriver _driver;
+        private readonly WebDriverWait _wait;
+
+        // Locators
+        private By BotonAgregarCompra = By.XPath("//button[contains(text(), '+ Agregar Compra')]");
+        private By ModalFormCard = By.CssSelector(".form-card");
+        private By CustomSelectProveedor = By.CssSelector(".supplier-row .custom-select");
+        private By DropdownOptionProveedor = By.CssSelector(".supplier-row .dropdown-option");
+        private By BotonAgregarProducto = By.CssSelector(".btn-add-product");
+        private By CustomSelectProducto = By.CssSelector(".custom-select.small");
+        private By DropdownOptionProducto = By.CssSelector(".dropdown-option");
+        private By InputCantidad = By.CssSelector("input[formControlName='quantity']");
+        private By InputPrecio = By.CssSelector("input[formControlName='unitPrice']");
+        private By BotonRegistrarCompra = By.XPath("//button[contains(text(), 'Registrar Compra')]");
+        private By TablaCompras = By.CssSelector("table.product-table");
+        private By FilasTabla = By.CssSelector("table.product-table tbody tr.main-row");
+
+        public PurchasePage(IWebDriver driver)
+        {
+            _driver = driver;
+            _wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
+        }
+
+        public void ClickAgregarCompra()
+        {
+            _wait.Until(ExpectedConditions.ElementToBeClickable(BotonAgregarCompra)).Click();
+            Thread.Sleep(500);
+        }
+
+        public void EsperarQueElModalEsteAbierto()
+        {
+            _wait.Until(ExpectedConditions.ElementIsVisible(ModalFormCard));
+        }
+
+        public void SeleccionarPrimerProveedor()
+        {
+            var selectProveedor = _wait.Until(ExpectedConditions.ElementToBeClickable(CustomSelectProveedor));
+            selectProveedor.Click();
+            Thread.Sleep(300);
+
+            var opcionProveedor = _wait.Until(ExpectedConditions.ElementToBeClickable(DropdownOptionProveedor));
+            opcionProveedor.Click();
+        }
+
+        public void AgregarProducto(string nombreProducto, int cantidad, decimal precioUnitario)
+        {
+            // Click agregar producto
+            var botonAgregar = _wait.Until(ExpectedConditions.ElementToBeClickable(BotonAgregarProducto));
+            botonAgregar.Click();
+            Thread.Sleep(500);
+
+            // Seleccionar producto
+            var selectsProducto = _driver.FindElements(CustomSelectProducto);
+            var ultimoSelect = selectsProducto.Last();
+            ultimoSelect.Click();
+            Thread.Sleep(300);
+
+            // Buscar y seleccionar el producto específico
+            var opciones = _driver.FindElements(DropdownOptionProducto);
+            var opcionProducto = opciones.FirstOrDefault(o => o.Text.Contains(nombreProducto));
+            if (opcionProducto != null)
+            {
+                opcionProducto.Click();
+            }
+
+            Thread.Sleep(300);
+
+            // Llenar cantidad
+            var inputsCantidad = _driver.FindElements(InputCantidad);
+            var ultimaCantidad = inputsCantidad.Last();
+            ultimaCantidad.Clear();
+            ultimaCantidad.SendKeys(cantidad.ToString());
+
+            // Llenar precio
+            var inputsPrice = _driver.FindElements(InputPrecio);
+            var ultimoPrecio = inputsPrice.Last();
+            ultimoPrecio.Clear();
+            ultimoPrecio.SendKeys(precioUnitario.ToString("F2"));
+
+            Thread.Sleep(300);
+        }
+
+        public void ClickRegistrarCompra()
+        {
+            var boton = _wait.Until(ExpectedConditions.ElementToBeClickable(BotonRegistrarCompra));
+            boton.Click();
+        }
+
+        public bool EsperarQueElModalSeCierre()
+        {
+            try
+            {
+                return _wait.Until(ExpectedConditions.InvisibilityOfElementLocated(ModalFormCard));
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool VerificarCompraEnTabla(string totalEsperado)
+        {
+            Thread.Sleep(2000); // Esperar que la tabla se actualice
+            try
+            {
+                var filas = _driver.FindElements(FilasTabla);
+                return filas.Any(f => f.Text.Contains(totalEsperado));
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public int ObtenerStockProducto(string nombreProducto)
+        {
+            _driver.Navigate().GoToUrl("http://localhost:4200/products");
+            Thread.Sleep(1000);
+
+            try
+            {
+                var xpath = $"//tr[td[contains(text(), '{nombreProducto}')]]//td[4]";
+                var celdaStock = _wait.Until(ExpectedConditions.ElementIsVisible(By.XPath(xpath)));
+                return int.Parse(celdaStock.Text.Trim());
+            }
+            catch
+            {
+                return -1;
+            }
+        }
     }
 }
