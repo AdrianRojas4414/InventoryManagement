@@ -363,7 +363,9 @@ export class PurchasesComponent implements OnInit {
   const purchaseData = this.purchaseForm.value;
   console.log('Enviando compra:', purchaseData);
 
-  this.purchaseService.createPurchase(purchaseData, 1).subscribe({
+  const currentUserId = Number(localStorage.getItem('userId') || 0);
+
+  this.purchaseService.createPurchase(purchaseData, currentUserId).subscribe({
     next: (response) => {
       console.log('Compra registrada:', response);
       

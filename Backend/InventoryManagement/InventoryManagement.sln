@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryManagement.Integra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReqnrollIntegrationTests", "ReqnrollIntegrationTests\ReqnrollIntegrationTests.csproj", "{F2E578A7-3DE8-4DB2-B993-2BBBB3DBAAE9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReqnRollUITest", "ReqnRollUITest\ReqnRollUITest.csproj", "{02FF1335-2597-4ED6-866C-A709023B1908}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,18 @@ Global
 		{F2E578A7-3DE8-4DB2-B993-2BBBB3DBAAE9}.Release|x64.Build.0 = Release|Any CPU
 		{F2E578A7-3DE8-4DB2-B993-2BBBB3DBAAE9}.Release|x86.ActiveCfg = Release|Any CPU
 		{F2E578A7-3DE8-4DB2-B993-2BBBB3DBAAE9}.Release|x86.Build.0 = Release|Any CPU
+		{02FF1335-2597-4ED6-866C-A709023B1908}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02FF1335-2597-4ED6-866C-A709023B1908}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02FF1335-2597-4ED6-866C-A709023B1908}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{02FF1335-2597-4ED6-866C-A709023B1908}.Debug|x64.Build.0 = Debug|Any CPU
+		{02FF1335-2597-4ED6-866C-A709023B1908}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{02FF1335-2597-4ED6-866C-A709023B1908}.Debug|x86.Build.0 = Debug|Any CPU
+		{02FF1335-2597-4ED6-866C-A709023B1908}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02FF1335-2597-4ED6-866C-A709023B1908}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02FF1335-2597-4ED6-866C-A709023B1908}.Release|x64.ActiveCfg = Release|Any CPU
+		{02FF1335-2597-4ED6-866C-A709023B1908}.Release|x64.Build.0 = Release|Any CPU
+		{02FF1335-2597-4ED6-866C-A709023B1908}.Release|x86.ActiveCfg = Release|Any CPU
+		{02FF1335-2597-4ED6-866C-A709023B1908}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
